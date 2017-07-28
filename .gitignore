@@ -40,3 +40,10 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# ignore semantic-ui default files, include our adjusments
+/semantic/
+!/semantic/src/
+/semantic/src/*
+!/semantic/src/site
+
