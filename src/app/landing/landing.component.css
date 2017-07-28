@@ -11,8 +11,12 @@
         font-size: 1em;
     }
 }
+
 .masthead.segment {
     background: #d81b60;
+    background-image: url('../../assets/masthead-bg.png');
+    background-repeat: repeat;
+    background-size: 200px;
     min-height: 700px;
     padding: 1em 0em;
 }
