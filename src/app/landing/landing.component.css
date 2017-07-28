@@ -1,0 +1,51 @@
+@media only screen and (max-width: 700px) {
+    .masthead.segment {
+        min-height: 350px;
+    }
+    .masthead h1.header {
+        font-size: 1.5em;
+        margin-top: 1.5em;
+    }
+    .masthead h2 {
+        margin-top: 0.5em;
+        font-size: 1em;
+    }
+}
+.masthead.segment {
+    background: #d81b60;
+    min-height: 700px;
+    padding: 1em 0em;
+}
+
+.ui.vertical.stripe {
+    padding: 8em 0em;
+}
+.footer.segment {
+    padding: 5em 0em;
+}
+.secondary.menu.inverted {
+    border: 0 !important;
+}
+.masthead h1.header {
+    margin-top: 3em;
+    margin-bottom: 0em;
+    font-size: 3em;
+    font-weight: Bold;
+}
+.masthead h2 {
+    font-size: 1.7em;
+    font-weight: normal;
+}
+.quote.stripe.segment {
+    padding: 0em;
+}
+.quote.stripe.segment .grid .column {
+    padding-top: 5em;
+    padding-bottom: 5em;
+}
+.ui.vertical.stripe h3 {
+    font-size: 2em;
+}
+.ui.vertical.stripe p {
+    font-size: 1.33em;
+}
