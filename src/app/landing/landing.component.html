@@ -1,14 +1,14 @@
 <div class="ui">
     <div #masthead class="ui segment vertical masthead inverted center aligned">
-         <div class="ui container">
+         <!-- <div class="ui container">
             <div class="ui large secondary inverted pointing menu">
                 <div class="item active">
                     <img src="../../assets/menu-logo.jpg" alt="">
                 </div>
-                <a class="item">کارگاه ها</a>
+                <a routerLink="/workshop" routerLinkActive="active" class="item">کارگاه ها</a>
                 <a class="item">مسابقه</a>
             </div>
-        </div> 
+        </div>  -->
         
         <div class="ui text container">
             <h1 class="header">
@@ -20,8 +20,18 @@
     </div>
 
     <div class="ui segment vertical stripe">
-        <div class="ui text container">
-            <p>سلام به همه بچه ها ما خوبیم هاهاها</p>
+        <div class="ui stackable grid middle aligned container">
+            <div class="row">
+                <div class="column eight wide">
+                    <h3 class="ui header">فکر میکنید میتونین بهتر شین؟</h3>
+                    <p>احتمالا خیلی هاتون تلاش هایی کرده باشین ولی با پکیج فوق العاده ما همه چی یارو میشه خیلی زندگی خوب میشه اصن همه چی عالی</p>
+                    <h3 class="ui header">آره ما گولاخیم</h3>
+                    <p>شایدم نباشیم. اینو شما آخرش تعیین میکنین. ممکنه تا آخر عمر بهمون فحش بدین که پولتونو خوردیم. ممکنم هست کلی حال کنین</p>
+                </div>
+                <div class="column six wide">
+                    <img src="../../assets/menu-logo.jpg" class="ui large bordered rounded image">
+                </div>
+            </div>
         </div>
     </div>
 
@@ -31,10 +41,12 @@
                 <div class="column">
                     <h3>مسابقات</h3>
                     <p>مسابقه های گولاخ</p>
+                    <button class="ui large button">اطلاعات بیشتر و ثبت نام</button>
                 </div>
                 <div class="column">
                     <h3>کارگاه ها</h3>
                     <p>۴ تا کارگاه داریم ماهِ ماه</p>
+                    <button class="ui large button">اطلاعات بیشتر و ثبت نام</button>
                 </div>
             </div>
         </div>
