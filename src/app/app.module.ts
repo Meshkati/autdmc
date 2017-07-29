@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -21,10 +22,12 @@ import { CompetitionComponent } from './competition/competition.component';
     imports: [
         BrowserModule,
         RouterModule.forRoot([
-            {path: 'landing' , component: LandingComponent},
+            {path: 'landing' , component: LandingComponent, data: { state: 'landing' }},
+            {path: 'workshop', component: WorkshopComponent, data: { state: 'workshop' }},
             {path: '', redirectTo: '/landing', pathMatch: 'full'}
 
-        ])
+        ]),
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
