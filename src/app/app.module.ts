@@ -1,3 +1,4 @@
+import { SuiModule } from 'ng2-semantic-ui/dist/public';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -27,7 +28,8 @@ import { CompetitionComponent } from './competition/competition.component';
             {path: '', redirectTo: '/landing', pathMatch: 'full'}
 
         ]),
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        SuiModule
     ],
     providers: [],
     bootstrap: [AppComponent]
