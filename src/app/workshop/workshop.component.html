@@ -9,7 +9,7 @@
     
     <div class="ui segment vertical stripe">
         <div class="ui container">
-            <div class="ui stackable cards four"> 
+            <div class="ui stackable cards four segment piled"> 
                 <div class="ui card">
                     <div class="image">
                         <img src="https://semantic-ui.com/images/wireframe/image.png">
@@ -135,12 +135,40 @@
                     </div>
                 </div>
             </div>
-            <h2 class="header">ثبت نام</h2>
-            {{ totalPrice }}
+            
+            <div class="ui top attached clearing segment">
+                <h3 class="ui left floated header" style="font-size: 1.3em">ثبت نام</h3>
+                <h3 class="ui right floated header" style="font-size: 1.3em">
+                    مبلغ قابل پرداخت:
+                    {{ totalPrice }}
+                    تومان
+                </h3>
+            </div>
+            <div class="ui attached segment">
+                <div class="ui form">
+                    <div class="field">
+                        <div class="two fields">
+                            <div class="field">
+                                <input type="text" name="fname" placeholder="نام">
+                            </div>
+                            <div class="field">
+                                <input type="text" name="lname" placeholder="نام خانوادگی">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="email" name="email" placeholder="ایمیل">
+                        </div>
+                        <div class="field">
+                            <input type="tel" name="phone" placeholder="تلفن">
+                        </div>
+                    </div>
+                    <button class="ui primary button">
+                        ثبت نام و پرداخت
+                    </button>
+                </div>
+            </div>
         </div>
-    </div>
-    
-    <div class="ui vertical stripe">
-        <h1>Hi</h1>
     </div>
 </div>
