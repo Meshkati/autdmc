@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {trigger, animate, style, group, animateChild, query, stagger, transition} from '@angular/animations';
 
 
@@ -26,8 +26,12 @@ import {trigger, animate, style, group, animateChild, query, stagger, transition
         ])
     ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
     getState(outlet) {
         return outlet.activatedRouteData.state;
+    }
+    ngOnInit() {}
+    ngAfterViewInit() {
+        
     }
 }

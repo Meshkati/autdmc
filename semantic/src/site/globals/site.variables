@@ -2,5 +2,5 @@
      User Global Variables
 *******************************/
 
-@fontName: 'IRANSans';
+@fontName: 'IRANSansWeb';
 @importGoogleFonts: false;
