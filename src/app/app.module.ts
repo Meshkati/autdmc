@@ -1,3 +1,5 @@
+import { HttpModule } from '@angular/http';
+import { DatabaseService } from './database.service';
 import { SuiModule } from 'ng2-semantic-ui/dist/public';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -29,9 +31,12 @@ import { CompetitionComponent } from './competition/competition.component';
 
         ]),
         BrowserAnimationsModule,
-        SuiModule
+        SuiModule,
+        HttpModule
     ],
-    providers: [],
+    providers: [
+        DatabaseService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
