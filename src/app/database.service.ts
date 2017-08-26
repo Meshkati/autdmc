@@ -7,21 +7,28 @@ import { HttpModule, JsonpModule, Headers, RequestOptions, Http, Response, } fro
 
 @Injectable()
 export class DatabaseService {
-    private url = "http://127.0.0.1:3000/api";
+    private url = "/api";
     
     constructor(
         private http: Http
     ) { }
     
-    workshopRegister(data) {
+    workshopRegister(data, items) {
+        console.log(data);
+        console.log(items);
+        
+        
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions ({headers: headers});
         let requestData = {
             email: data.email,
-            
+            fname: data.fname,
+            lname: data.lname,
+            phone: data.phone,
+            items: items
         }
         
-        return this.http.post(this.url, requestData, options)
+        return this.http.post(this.url + '/workshop/register', requestData, options)
         .map(this.extractData);
         
     }
