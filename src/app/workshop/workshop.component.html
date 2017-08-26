@@ -2,7 +2,7 @@
     <div class="ui segment vertical masthead inverted center aligned">
         <div class="ui text container">
             <h1 class="header">
-                کارگاه های خفن خفن
+                کارگاه های آماده سازی داده کاوی
             </h1>
         </div>
     </div>
@@ -21,13 +21,20 @@
                         </sui-dimmer>
                     </div>
                     <div class="content">
-                        <div class="header">کارگاه ۱</div>
+                        <div class="header">پایتون مقدماتی</div>
                         <div class="meta">
-                            <span class="date">۲ هفته ای</span>
+                            <span class="date">سعید دادخواه</span>
+                            <div>
+                                <i class="calendar icon"></i>
+                                ۲۲-۲۳ شهریور
+                                <i class="wait icon"></i>
+                                ۹-۱۲
+                            </div>
                         </div>
                         <div class="description">
-                            کارگاه خیلی خوبیه کلی چیز بهتون یاد میدن البته یاد گرفتن یا 
-                            نگرفتنش بستگی به استعداد داشته یا نداشتتون داره
+                            <p>
+                                پایتون مقدماتی
+                            </p>
                         </div>
                     </div>
                     <div class="extra content">
@@ -52,13 +59,20 @@
                         </sui-dimmer>
                     </div>
                     <div class="content">
-                        <div class="header">کارگاه ۲</div>
+                        <div class="header">کارگاه داده کاوی</div>
                         <div class="meta">
-                            <span class="date">۱ هفته ای</span>
+                            <span class="date">دکتر ناظر فرد - سجاد اعظمی</span>
+                            <div>
+                                <i class="calendar icon"></i>
+                                ۲۲-۲۳ شهریور
+                                <i class="wait icon"></i>
+                                ۱۳-۱۶
+                            </div>
                         </div>
                         <div class="description">
-                            کارگاه خیلی خوبیه کلی چیز بهتون یاد میدن البته یاد گرفتن یا 
-                            نگرفتنش بستگی به استعداد داشته یا نداشتتون داره
+                            <p>
+                                کارگاه داده کاوی
+                            </p>
                         </div>
                     </div>
                     <div class="extra content">
@@ -83,13 +97,20 @@
                         </sui-dimmer>
                     </div>
                     <div class="content">
-                        <div class="header">کارگاه ۳</div>
+                        <div class="header">داده کاوی با پایتون</div>
                         <div class="meta">
-                            <span class="date">۲ هفته ای</span>
+                            <span class="date">سجاد اعظمی - سینا مختار زاده</span>
+                            <div>
+                                <i class="calendar icon"></i>
+                                ۲۹-۳۰ شهریور
+                                <i class="wait icon"></i>
+                                ۹-۱۲
+                            </div>
                         </div>
                         <div class="description">
-                            کارگاه خیلی خوبیه کلی چیز بهتون یاد میدن البته یاد گرفتن یا 
-                            نگرفتنش بستگی به استعداد داشته یا نداشتتون داره
+                            <p>
+                                کارگاه داده کاوی با پایتون
+                            </p>
                         </div>
                     </div>
                     <div class="extra content">
@@ -114,13 +135,20 @@
                         </sui-dimmer>
                     </div>
                     <div class="content">
-                        <div class="header">کارگاه ۴</div>
+                        <div class="header">داده های حجیم</div>
                         <div class="meta">
-                            <span class="date">۲ هفته ای</span>
+                            <span class="date">دکتر امیرحائری</span>
+                            <div>
+                                <i class="calendar icon"></i>
+                                ۲۹-۳۰ شهریور
+                                <i class="wait icon"></i>
+                                ۱۳-۱۶
+                            </div>
                         </div>
                         <div class="description">
-                            کارگاه خیلی خوبیه کلی چیز بهتون یاد میدن البته یاد گرفتن یا 
-                            نگرفتنش بستگی به استعداد داشته یا نداشتتون داره
+                            <p>
+                                کارگاه داده های حجیم
+                            </p>
                         </div>
                     </div>
                     <div class="extra content">
@@ -140,35 +168,34 @@
                 <h3 class="ui left floated header" style="font-size: 1.3em">ثبت نام</h3>
                 <h3 class="ui right floated header" style="font-size: 1.3em">
                     مبلغ قابل پرداخت:
-                    {{ totalPrice }}
+                    {{ totalPrice | persianNumber }}
                     تومان
                 </h3>
             </div>
-            <div class="ui attached segment">
+            <form class="ui attached segment" #registerForm="ngForm" (ngSubmit)="sendRegisterRequest(registerForm)">
                 <div class="ui form">
                     <div class="field">
                         <div class="two fields">
                             <div class="field">
-                                <input type="text" name="fname" placeholder="نام">
+                                <input type="text" name="fname" placeholder="نام" ngModel required>
                             </div>
                             <div class="field">
-                                <input type="text" name="lname" placeholder="نام خانوادگی">
+                                <input type="text" name="lname" placeholder="نام خانوادگی" ngModel required>
                             </div>
                         </div>
                     </div>
                     <div class="two fields">
                         <div class="field">
-                            <input type="email" name="email" placeholder="ایمیل">
+                            <input type="email" name="email" placeholder="ایمیل" ngModel required>
                         </div>
                         <div class="field">
-                            <input type="tel" name="phone" placeholder="تلفن">
+                            <input type="tel" name="phone" placeholder="تلفن" ngModel required>
                         </div>
                     </div>
-                    <button class="ui primary button">
-                        ثبت نام و پرداخت
-                    </button>
+                    <input type="submit" class="ui primary button" value="ثبت نام و پرداخت">
+                    
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

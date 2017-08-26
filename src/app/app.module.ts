@@ -1,3 +1,6 @@
+import { FormsModule } from '@angular/forms';
+import { HourMinPipe } from './pipes/hour-min.pipe';
+import { PersianNumberPipe } from './pipes/persian-number.pipe';
 import { HttpModule } from '@angular/http';
 import { DatabaseService } from './database.service';
 import { SuiModule } from 'ng2-semantic-ui/dist/public';
@@ -20,7 +23,9 @@ import { CompetitionComponent } from './competition/competition.component';
         LandingComponent,
         FooterComponent,
         WorkshopComponent,
-        CompetitionComponent
+        CompetitionComponent,
+        PersianNumberPipe,
+        HourMinPipe
     ],
     imports: [
         BrowserModule,
@@ -32,7 +37,8 @@ import { CompetitionComponent } from './competition/competition.component';
         ]),
         BrowserAnimationsModule,
         SuiModule,
-        HttpModule
+        HttpModule,
+        FormsModule
     ],
     providers: [
         DatabaseService
