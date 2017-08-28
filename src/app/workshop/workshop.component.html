@@ -12,7 +12,7 @@
             <div class="ui stackable cards four segment piled"> 
                 <div class="ui card">
                     <div class="image">
-                        <img src="https://semantic-ui.com/images/wireframe/image.png">
+                        <img src="../../assets/python.jpg">
                         <sui-dimmer [(isDimmed)]='isDimmed0' [isClickable]="false">
                             <h3>
                                 اضافه شد
@@ -31,26 +31,24 @@
                                 ۹-۱۲
                             </div>
                         </div>
-                        <div class="description">
-                            <p>
-                                پایتون مقدماتی
+                        <div class="ui container description justified">
+                            <p class="workshop-description">
+                                در این کارگاه زبان برنامه‌نویسی پایتون معرفی و مطالب و مفاهیم پایه‌ای این زبان بررسی 
+                                و آموزش داده خواهد شد. با توجه به این که هدف اصلی آمادگی حضار برای کارگاه‌های بعدی 
+                                مربوط به مسابقات داده‌کاوی است، فقط پارادایمِ دستوری (imperative) آموزش داده خواهد شد.
                             </p>
                         </div>
                     </div>
-                    <div class="extra content">
-                        <div class="ui left labeled button" tabindex="0">
-                            <div class="ui basic label">
-                                <i class="money icon"></i> صد هزار تومن!
-                            </div>
-                            <div class="ui icon button" (click)="isDimmed0 = !isDimmed0; togglePurchaseItem(0)">
-                                خرید   <i class="shopping bag icon"></i>
-                            </div>
-                        </div>
+                    <div class="extra content center aligned">
+                        <button class="ui labeled icon button" (click)="isDimmed0 = !isDimmed0; togglePurchaseItem(0)">
+                            <i class="shopping add icon"></i>
+                            اضافه کردن
+                        </button>
                     </div>
                 </div>
                 <div class="ui card">
                     <div class="image">
-                        <img src="https://semantic-ui.com/images/wireframe/image.png">
+                        <img src="../../assets/datamining.jpg">
                         <sui-dimmer [(isDimmed)]='isDimmed1' [isClickable]="false">
                             <h3>
                                 اضافه شد
@@ -59,7 +57,7 @@
                         </sui-dimmer>
                     </div>
                     <div class="content">
-                        <div class="header">کارگاه داده کاوی</div>
+                        <div class="header">کارگاه تئوری داده کاوی</div>
                         <div class="meta">
                             <span class="date">دکتر ناظر فرد - سجاد اعظمی</span>
                             <div>
@@ -69,26 +67,23 @@
                                 ۱۳-۱۶
                             </div>
                         </div>
-                        <div class="description">
-                            <p>
-                                کارگاه داده کاوی
+                        <div class="ui justified container description">
+                            <p class="workshop-description">
+                                هدف این کارگاه آشنایی با مفاهیم پایه ای در مبحث داده کاوی می باشد. مسائل مختلف در دو دسته ی اصلی با نظارت و بدون نظارت
+                                مورد بررسی قرار می گیرند. در انتهای دوره حضار از لحاظ مفاهیم تئوری آمادگی لازم را برای حضور در دوره های عملی پیدا می کنند.
                             </p>
                         </div>
                     </div>
-                    <div class="extra content">
-                        <div class="ui left labeled button" tabindex="0">
-                            <div class="ui basic label">
-                                <i class="money icon"></i> بیستر هزار تومان!
-                            </div>
-                            <div class="ui icon button" (click)="isDimmed1 = !isDimmed1; togglePurchaseItem(1)">
-                                خرید   <i class="shopping bag icon"></i>
-                            </div>
-                        </div>
+                    <div class="extra content center aligned">
+                        <button class="ui labeled icon button" (click)="isDimmed1 = !isDimmed1; togglePurchaseItem(1)">
+                            <i class="shopping add icon"></i>
+                            اضافه کردن
+                        </button>
                     </div>
                 </div>
                 <div class="ui card">
                     <div class="image">
-                        <img src="https://semantic-ui.com/images/wireframe/image.png">
+                        <img src="../../assets/dmpython.png">
                         <sui-dimmer [(isDimmed)]='isDimmed2' [isClickable]="false">
                             <h3>
                                 اضافه شد
@@ -107,26 +102,25 @@
                                 ۹-۱۲
                             </div>
                         </div>
-                        <div class="description">
-                            <p>
-                                کارگاه داده کاوی با پایتون
+                        <div class="ui justified container description">
+                            <p class="workshop-description">
+                                در این کارگاه، نحوه استفاده از زبان پایتون و کتابخانه های مرتبط 
+                                با هدف حل مسائل داده کاوی و یادگیری ماشین آموزش داده خواهد شد. کتابخانه های
+                                numpy، pandas و scikit از جمله ابزار هایی هستند که کاربرد وسیعی در این حوزه دارند و تمرکز اصلی این کارگاه، آموزش استفاده بهینه
+                                از این ابزار می باشد.
                             </p>
                         </div>
                     </div>
-                    <div class="extra content">
-                        <div class="ui left labeled button" tabindex="0">
-                            <div class="ui basic label">
-                                <i class="money icon"></i> صد هزار تومن!
-                            </div>
-                            <div class="ui icon button" (click)="isDimmed2 = !isDimmed2; togglePurchaseItem(2)">
-                                خرید   <i class="shopping bag icon"></i>
-                            </div>
-                        </div>
+                    <div class="extra content center aligned">
+                        <button class="ui labeled icon button" (click)="isDimmed2 = !isDimmed2; togglePurchaseItem(2)">
+                            <i class="shopping add icon"></i>
+                            اضافه کردن
+                        </button>
                     </div>
                 </div>
                 <div class="ui card">
                     <div class="image">
-                        <img src="https://semantic-ui.com/images/wireframe/image.png">
+                        <img src="../../assets/bigdata.jpg">
                         <sui-dimmer [(isDimmed)]='isDimmed3' [isClickable]="false">
                             <h3>
                                 اضافه شد
@@ -145,23 +139,89 @@
                                 ۱۳-۱۶
                             </div>
                         </div>
-                        <div class="description">
-                            <p>
+                        <div class="ui justified container description">
+                            <p class="workshop-description">
                                 کارگاه داده های حجیم
                             </p>
                         </div>
                     </div>
-                    <div class="extra content">
-                        <div class="ui left labeled button" tabindex="0">
-                            <div class="ui basic label">
-                                <i class="money icon"></i> صد هزار تومن!
-                            </div>
-                            <div class="ui icon button" (click)="isDimmed3 = !isDimmed3; togglePurchaseItem(3)">
-                                خرید   <i class="shopping bag icon"></i>
-                            </div>
-                        </div>
+                    <div class="extra content center aligned">
+                        <button class="ui labeled icon button" (click)="isDimmed3 = !isDimmed3; togglePurchaseItem(3)">
+                            <i class="shopping add icon"></i>
+                            اضافه کردن
+                        </button>
                     </div>
                 </div>
+            </div>
+            
+            <div class="ui info message">
+                <div class="header">
+                    توضیح قیمت گذاری
+                </div>
+                <p>
+                    هزینه هر کارگاه به صورت محاسبه خواهد شد، مورد متناسب خود را انتخاب نمایید:
+                </p>
+                <table class="ui very basic table">
+                    <tbody>
+                        <tr>
+                            <td class="center aligned">
+                                <sui-radio-button class="ui fitted checkbox" name="paymentType" [value]=0 [(ngModel)]="paymentRadio" (currentValueChange)="priceChanged()">
+                                </sui-radio-button>
+                            </td>
+                            <td>
+                                دانشجویان دانشکده کامپیوتر امیرکبیر
+                            </td>
+                            <td>
+                                ۶۰ هزار تومان
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing">
+                                <div class="field">
+                                    <sui-radio-button class="ui fitted checkbox" name="paymentType" [value]=1 [(ngModel)]="paymentRadio" (currentValueChange)="priceChanged()">
+                                        
+                                    </sui-radio-button>
+                                </div>
+                            </td>
+                            <td>
+                                دانشجویان دانشگاه امیرکبیر
+                            </td>
+                            <td>
+                                ۹۰ هزار تومان
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing">
+                                
+                                <sui-radio-button class="ui fitted checkbox" name="paymentType" [value]=2 [(ngModel)]="paymentRadio" (currentValueChange)="priceChanged()">
+                                    
+                                </sui-radio-button>
+                                
+                            </td>
+                            <td>
+                                دانشجویان سایر دانشگاه ها
+                            </td>
+                            <td>
+                                ۱۲۰ هزار تومان
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="collapsing">
+                                
+                                <sui-radio-button class="ui fitted checkbox" name="paymentType" [value]=3 [(ngModel)]="paymentRadio" (currentValueChange)="priceChanged()">
+                                    
+                                </sui-radio-button>
+                                
+                            </td>
+                            <td>
+                                آزاد ( غیر دانشجویان )
+                            </td>
+                            <td>
+                                ۱۵۰ هزار تومان
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             
             <div class="ui top attached clearing segment">
@@ -169,7 +229,7 @@
                 <h3 class="ui right floated header" style="font-size: 1.3em">
                     مبلغ قابل پرداخت:
                     {{ totalPrice | persianNumber }}
-                    تومان
+                    هزار تومان
                 </h3>
             </div>
             <form class="ui attached segment" #registerForm="ngForm" (ngSubmit)="sendRegisterRequest(registerForm)">

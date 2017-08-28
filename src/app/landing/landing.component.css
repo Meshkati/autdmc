@@ -13,7 +13,7 @@
 }
 
 .masthead.segment {
-    background: #d81b60;
+    background: #26a69a;
     background-image: url('../../assets/masthead-bg.png');
     background-repeat: repeat;
     background-size: 200px;
@@ -52,4 +52,18 @@
 }
 .ui.vertical.stripe p {
     font-size: 1.33em;
+}
+
+.hashtag-container {
+    background: #26a69a !important;
+    background-image: url('../../assets/masthead-bg.png') !important;
+    background-repeat: repeat !important;
+    background-size: 200px !important;
+    min-height: 300px;
+    padding: 1em 0em;
+}
+
+.hashtag-container img {
+    width: 100%;
+    height: 100%;
 }

@@ -13,7 +13,7 @@
 }
 
 .masthead.segment {
-    background: #d81b60;
+    background: #26a69a;
     background-image: url('../../assets/masthead-bg.png');
     background-repeat: repeat;
     background-size: 200px;
@@ -56,4 +56,12 @@
 .stripe.segment.vertical {
     padding-right: 1em;
     padding-left: 1em;
+}
+.workshop-description {
+    font-weight: lighter;
+    font-size: 1.1em !important;
+}
+
+img {
+    height: 250px !important;
 }

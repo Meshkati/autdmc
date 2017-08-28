@@ -9,10 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorkshopComponent implements OnInit {
     soldItems = [false, false, false ,false];
-    prices = [25000, 10000, 75000, 20000];
+    prices = [60, 90, 120, 150];
     totalPrice = 0;
     signs = [1, 1, 1, 1];
     registerResponse;
+    paymentRadio = 3;
 
     constructor(
         private dbs: DatabaseService
@@ -23,12 +24,22 @@ export class WorkshopComponent implements OnInit {
 
     public togglePurchaseItem(itemId) {
         this.soldItems[itemId] = !this.soldItems[itemId];
-        this.totalPrice += this.signs[itemId] * this.prices[itemId];
-        this.signs[itemId] *= -1;
+        this.totalPrice += this.signs[itemId] * this.prices[this.paymentRadio];
+        this.signs[itemId] *= -1;        
+    }
+
+    priceChanged() {
+        this.totalPrice = 0
+
+        this.soldItems.forEach(element => {
+            if (element) {
+                this.totalPrice += this.prices[this.paymentRadio];
+            }
+        })
     }
 
     sendRegisterRequest(loginForm: NgForm) {
-        this.dbs.workshopRegister(loginForm.value, this.soldItems).subscribe(
+        this.dbs.workshopRegister(loginForm.value, this.soldItems, this.paymentRadio).subscribe(
             res => {
                 console.log(res);
                 console.log(res.length);
