@@ -19,7 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "style/main.css",
+        "styles/main.css",
         "../semantic/dist/semantic.rtl.min.css"
       ],
       "scripts": [
