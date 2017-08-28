@@ -13,7 +13,7 @@ export class DatabaseService {
         private http: Http
     ) { }
     
-    workshopRegister(data, items) {
+    workshopRegister(data, items, mode) {
         console.log(data);
         console.log(items);
         
@@ -25,7 +25,8 @@ export class DatabaseService {
             fname: data.fname,
             lname: data.lname,
             phone: data.phone,
-            items: items
+            items: items,
+            payment_mode: mode
         }
         
         return this.http.post(this.url + '/workshop/register', requestData, options)
