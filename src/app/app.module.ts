@@ -32,6 +32,7 @@ import { CompetitionComponent } from './competition/competition.component';
         RouterModule.forRoot([
             {path: 'landing' , component: LandingComponent, data: { state: 'landing' }},
             {path: 'workshop', component: WorkshopComponent, data: { state: 'workshop' }},
+            {path: 'competition', component: CompetitionComponent, data: { state: 'competition' }},
             {path: '', redirectTo: '/landing', pathMatch: 'full'}
 
         ]),

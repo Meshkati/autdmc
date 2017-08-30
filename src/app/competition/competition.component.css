@@ -1,0 +1,67 @@
+@media only screen and (max-width: 700px) {
+    .masthead.segment {
+        min-height: 350px;
+    }
+    .masthead h1.header {
+        font-size: 2em;
+        margin-top: 1.5em;
+    }
+    .masthead h2 {
+        margin-top: 0.5em;
+        font-size: 1.5em;
+    }
+}
+
+.masthead.segment {
+    background: #26a69a;
+    background-image: url('../../assets/masthead-bg.png');
+    background-repeat: repeat;
+    background-size: 200px;
+    min-height: 700px;
+    padding: 1em 0em;
+}
+
+.ui.vertical.stripe {
+    padding: 8em 0em;
+}
+.footer.segment {
+    padding: 5em 0em;
+}
+.secondary.menu.inverted {
+    border: 0 !important;
+}
+.masthead h1.header {
+    margin-top: 3em;
+    margin-bottom: 0em;
+    font-size: 4em;
+    font-weight: Bold;
+}
+.masthead h2 {
+    font-size: 2em;
+    font-weight: normal;
+}
+.quote.stripe.segment {
+    padding: 0em;
+}
+.quote.stripe.segment .grid .column {
+    padding-top: 5em;
+    padding-bottom: 5em;
+}
+.ui.vertical.stripe h3 {
+    font-size: 2em;
+}
+.ui.vertical.stripe p {
+    font-size: 1.33em;
+}
+.stripe.segment.vertical {
+    padding-right: 1em;
+    padding-left: 1em;
+}
+.workshop-description {
+    font-weight: lighter;
+    font-size: 1.1em !important;
+}
+
+img {
+    height: 250px !important;
+}
