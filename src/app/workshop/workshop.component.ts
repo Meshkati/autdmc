@@ -42,9 +42,9 @@ export class WorkshopComponent implements OnInit {
         this.dbs.workshopRegister(loginForm.value, this.soldItems, this.paymentRadio).subscribe(
             res => {
                 console.log(res);
-                console.log(res.length);
-                if (res.length == 1) {
-                    this.registerResponse = res[0];
+                if (res['status'] == 200) {
+                    if ((window.location.href = res['url']) == undefined)
+                        window.open(res['url']);
                 }
             },
             err => {
