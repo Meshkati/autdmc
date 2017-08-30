@@ -15,6 +15,7 @@ import { LandingComponent } from './landing/landing.component';
 import { FooterComponent } from './footer/footer.component';
 import { WorkshopComponent } from './workshop/workshop.component';
 import { CompetitionComponent } from './competition/competition.component';
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +26,8 @@ import { CompetitionComponent } from './competition/competition.component';
         WorkshopComponent,
         CompetitionComponent,
         PersianNumberPipe,
-        HourMinPipe
+        HourMinPipe,
+        PaymentComponent
     ],
     imports: [
         BrowserModule,
@@ -33,6 +35,7 @@ import { CompetitionComponent } from './competition/competition.component';
             {path: 'landing' , component: LandingComponent, data: { state: 'landing' }},
             {path: 'workshop', component: WorkshopComponent, data: { state: 'workshop' }},
             {path: 'competition', component: CompetitionComponent, data: { state: 'competition' }},
+            {path: 'payment', component: PaymentComponent, data: { state: 'payment' }},
             {path: '', redirectTo: '/landing', pathMatch: 'full'}
 
         ]),

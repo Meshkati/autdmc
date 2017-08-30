@@ -1,0 +1,56 @@
+<div class="ui">
+    <div class="ui container left aligned">
+        <div class="ui segment">
+            <div class="ui grid stackable" *ngIf="dataLoaded">
+                <div class="row">
+                    <div class="four wide column">
+                        نام:
+                    </div>
+                    <div class="six wide column">
+                        {{ paymentData.fname + ' ' + paymentData.lname }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="four wide column">
+                        ایمیل:
+                    </div>
+                    <div class="six wide column">
+                        {{ paymentData.email }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="four wide column">
+                        هزینه پرداختی:
+                    </div>
+                    <div class="six wide column">
+                        {{ paymentData.amount | persianNumber }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="four wide column">
+                        موارد:
+                    </div>
+                    <div class="six wide column">
+                        {{ paymentData.amount | persianNumber }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="four wide column">
+                        وضعیت پرداخت
+                    </div>
+                    <div class="six wide column">
+                        <strong style="color: #8bc34a" *ngIf="paymentData.payment_status == 'OK'">موفق :)</strong>
+                        <strong style="color: #f44336" *ngIf="paymentData.payment_status != 'OK'">ناموفق :(</strong>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+            
+            <!-- <sui-dimmer [isClickable]="false" [(isDimmed)]="!dataLoaded">
+                <div class="ui text loader">در حال بررسی پرداخت</div>
+            </sui-dimmer> -->
+        </div>
+    </div>
+</div>
