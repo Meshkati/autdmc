@@ -38,4 +38,15 @@ export class DatabaseService {
         let body = res.json()
         return body;
     }
+
+    checkPayment(authority) {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions ({headers: headers});
+        let requestData = {
+            authority: authority
+        }
+                
+        return this.http.post(this.url + '/workshop/getuser', requestData, options)
+        .map(this.extractData);
+    }
 }
