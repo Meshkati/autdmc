@@ -33,6 +33,21 @@ export class DatabaseService {
         .map(this.extractData);
         
     }
+
+    competitionRegister(data, num, teamName) {
+        console.log(data);
+
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions ({headers: headers});
+        let requestData = {
+            users: data,
+            num: num,
+            team_name: teamName
+        }
+
+        return this.http.post(this.url + '/competition/register', requestData, options)
+        .map(this.extractData);
+    }
     
     private extractData(res: Response) {
         let body = res.json()

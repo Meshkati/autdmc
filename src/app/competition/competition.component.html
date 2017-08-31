@@ -24,7 +24,7 @@
     </div>
     
     <div class="ui segment center aligned vertical stripe">
-        <div class="ui centered grid">
+        <div class="ui centered stackable grid">
             <div class="four wide column">
                 <div class="ui fluid vertical left aligned steps">
                     <div class="active step">
@@ -99,7 +99,10 @@
             <div class="four wide column">
                 <div class="ui segment">
                     <div class="header">
-                        <h3>جوایز</h3>
+                        <h3>
+                            جوایز
+                            <i class="trophy icon"></i>
+                        </h3>
                     </div>
                     <hr>
                     <a class="ui yellow ribbon label">تیم اول</a>
@@ -114,13 +117,57 @@
     </div>
     
     <div class="ui segment vertical stripe">
-        <div class="ui stackable grid container">
-            <h3 class="header">
-                ثبت نام
-            </h3>
-            <p>
+        <div class="ui stackable container">
+            <form class="ui form" #registerForm="ngForm" (ngSubmit)="sendRegisterRequest(registerForm)">
+                <h4 class="ui dividing header">
+                    ثبت نام
+                    {{ selected | json }}
+                </h4>
                 
-            </p>
+                <div class="field">
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="text" name="tname" placeholder="نام تیم" ngModel required>
+                        </div>
+                        <div class="field">
+                            تعداد اعضا:
+                            <div class="ui icon buttons">
+                                <div class="ui button" (click)="addMember()" [ngClass]="{'disabled': teamNumber.length > 4}">
+                                    <i class="add icon"></i>
+                                </div>
+                                <div class="ui button disabled">
+                                    {{ teamNumber.length | persianNumber }}
+                                </div>
+                                <div class="ui button" (click)="removeMember()" [ngClass]="{'disabled': teamNumber.length < 2}">
+                                    <i class="minus icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngFor="let member of teamNumber;">
+                    <div class="field">
+                        <label>عضو {{ member | persianNumber }}</label>
+                        <div class="two fields">
+                            <div class="field">
+                                <input type="text" name="{{'fname' + member}}" placeholder="نام" ngModel required>
+                            </div>
+                            <div class="field">
+                                <input type="text" name="{{'lname' + member}}" placeholder="نام خانوادگی" ngModel required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="two fields">
+                        <div class="field">
+                            <input type="email" name="{{'email' + member}}" placeholder="ایمیل" ngModel required>
+                        </div>
+                        <div class="field">
+                            <input type="tel" name="{{'phone' + member}}" placeholder="تلفن" ngModel required>
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="ui primary button" value="ثبت نام و پرداخت">
+            </form>
         </div>
     </div>
 </div>

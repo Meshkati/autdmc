@@ -1,3 +1,6 @@
 .container .segment {
     margin-top: 10%;
 }
+.payment-container {
+    min-height: 400px;
+}

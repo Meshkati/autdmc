@@ -9,6 +9,7 @@ axios.defaults.baseURL = "https://www.zarinpal.com/pg/rest/WebGate/";
 const dbUrl = "mongodb://localhost:27017/scc-landing";
 
 const prices = [60000, 90000, 120000, 150000]
+const competitionPrice = 10000
 
 /* GET api listing. */
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
@@ -34,7 +35,7 @@ app.get('/pay', (req, res) => {
     })
 })
 
-app.get('/pay/callback', (req, res) => {
+app.get('/pay/wcallback', (req, res) => {
     console.log(req.query)
     const authority = req.query['Authority'];
     const status = req.query['Status'];
@@ -44,6 +45,30 @@ app.get('/pay/callback', (req, res) => {
             throw err;
 
         db.collection('workshopUsers').update(
+            {"authority": authority},
+            {$set: {"payment_status": status}}, doc => {
+                let data = {
+                    status: status,
+                    message: 'failed',
+                    authority: authority,
+                    data: doc
+                }
+
+                res.redirect('http://autdmc.ir/payment?authority=' + authority)
+            })
+    })
+})
+
+app.get('/pay/ccallback', (req, res) => {
+    console.log(req.query)
+    const authority = req.query['Authority'];
+    const status = req.query['Status'];
+
+    mongoClient.connect(dbUrl, (err, db) => {
+        if (err)
+            throw err;
+
+        db.collection('competitionTeams').update(
             {"authority": authority},
             {$set: {"payment_status": status}}, doc => {
                 let data = {
@@ -94,7 +119,7 @@ app.post('/workshop/register', (req, res) => {
                             if (!err) {
                                 const payData = {
                                     "MerchantID": "2df8f514-8ae8-11e7-aa93-005056a205be",
-                                    "CallbackURL": "http://autdmc.ir/api/pay/callback",
+                                    "CallbackURL": "http://autdmc.ir/api/pay/wcallback",
                                     "Amount": calculateAmount(req.body['items'], req.body['payment_mode']),
                                     "Description": req.body['email']
                                 }
@@ -146,6 +171,72 @@ app.post('/workshop/getuser', (req, res) => {
                     throw err
 
                 res.send(doc[0])
+            })
+        }
+    })
+})
+
+app.post('/competition/register', (req, res) => {
+    mongoClient.connect(dbUrl, (err, db) => {
+        if (err)
+            throw err;
+
+        console.log(req.body)
+
+        const teamSize = req.body['num']
+        const teamMembers = req.body['data']
+        const teamName = req.body['team_name']
+
+        if (teamSize < 6 && teamSize > 0) {
+            teamMembers.forEach(element => {
+                if (!element['email'] || !element['fname'] || !element['lname'] || !element['phone']) {
+                    res.send('empty field');
+                } else {
+                    if (!validateEmail(req.body['email'])) {
+                        res.send('invalid email');
+                    }
+                }
+            })
+
+            db.collection('competitionTeams').insert({
+                "members": teamMembers,
+                "size": teamSize,
+                "name": teamName,
+                "authority": '',
+                "payment_status": '',
+                "amount": competitionPrice
+            }, (err, newDoc) => {
+                if (!err) {
+                    const payData = {
+                        "MerchantID": "2df8f514-8ae8-11e7-aa93-005056a205be",
+                        "CallbackURL": "http://autdmc.ir/api/pay/ccallback",
+                        "Amount": competitionPrice,
+                        "Description": teamName
+                    }
+
+                    paymentRequest(payData)
+                    .then(authority => {
+                        if (authority) {
+                        db.collection('competitionTeams').update(
+                            {"name": teamName},
+                            {$set: {"authority": authority}}, doc => {
+                                const url = 'https://www.zarinpal.com/pg/StartPay/' + authority;
+                                console.log(authority);
+                                const response = {
+                                    authority: authority,
+                                    url: url,
+                                    status: 200
+                                }
+                                res.send(response);
+                            }
+                        )
+                    } else {
+                        db.collection('competitionTeams').remove({"name": teamName}, (err, doc) => {
+                            res.send('failed')
+                        })
+                    }
+                    })
+                }
             })
         }
     })
