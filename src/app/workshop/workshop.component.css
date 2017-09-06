@@ -65,3 +65,12 @@
 img {
     height: 250px !important;
 }
+
+.workshop-items-container {
+    padding-right: 10%;
+    padding-left: 10%;
+}
+
+.detail {
+    font-size: 1em !important;
+}
