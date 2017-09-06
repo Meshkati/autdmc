@@ -61,11 +61,18 @@
     background-size: 200px !important;
     min-height: 300px;
     padding: 1em 0em;
+    padding-top: 4.5em;
 }
 
 .hashtag-container img {
     width: 100%;
     height: 100%;
+}
+
+.hashtag-header {
+    font-size: 15em;
+    font-weight: bold;
+    font-family: 'Libre Barcode 128 Text' !important;
 }
 
 .eight img {
