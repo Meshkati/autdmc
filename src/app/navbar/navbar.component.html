@@ -4,13 +4,6 @@
             <img src="../../assets/menu-logo.jpg" alt="">
         </a>
         <a routerLink="/workshop" routerLinkActive="active" class="item">کارگاه ها</a>
-        <!-- <a routerLink="/competition" routerLinkActive="active" class="item" routerLinkActive="active">مسابقه</a> -->
-        <a class="item" (click)="pageDimmed=true">مسابقه</a>
+        <a routerLink="/competition" routerLinkActive="active" class="item" routerLinkActive="active">مسابقه</a>
     </div>
 </div> 
-<sui-dimmer class="page" [(isDimmed)]="pageDimmed">
-    <h2 class="ui inverted icon header">
-        <i class="lightning icon"></i>
-        به زودی
-    </h2>
-</sui-dimmer>
