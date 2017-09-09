@@ -152,16 +152,43 @@
                         <label>عضو {{ member | persianNumber }}</label>
                         <div class="two fields">
                             <div class="field">
-                                <input type="text" name="{{'fname' + member}}" placeholder="نام" ngModel required>
+                                <input type="text" name="{{'fname' + member}}" placeholder="نام" [(ngModel)]="member.fname" required minlength="2" #fname="ngModel">
+                                <div *ngIf="fname.invalid && (fname.dirty || fname.touched)" class="alert alert-danger" class="error-message">
+                                    
+                                    <div *ngIf="fname.errors.required">
+                                        این فیلد الزامی است
+                                    </div>
+                                    <div *ngIf="fname.errors.minlength">
+                                        نام حداقل باید ۲ کاراکتر باشد
+                                    </div>                    
+                                </div>
                             </div>
                             <div class="field">
-                                <input type="text" name="{{'lname' + member}}" placeholder="نام خانوادگی" ngModel required>
+                                <input type="text" name="{{'lname' + member}}" placeholder="نام خانوادگی" [(ngModel)]="member.lname" required minlength="2" #lname="ngModel">
+                                <div *ngIf="lname.invalid && (lname.dirty || lname.touched)" class="alert alert-danger" class="error-message">
+                                    
+                                    <div *ngIf="lname.errors.required">
+                                        این فیلد الزامی است
+                                    </div>
+                                    <div *ngIf="lname.errors.minlength">
+                                        نام حداقل باید ۲ کاراکتر باشد
+                                    </div>                    
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="two fields">
                         <div class="field">
-                            <input type="email" name="{{'email' + member}}" placeholder="ایمیل" ngModel required>
+                            <input type="email" name="{{'email' + member}}" placeholder="ایمیل" [(ngModel)]="member.email" required email #email="ngModel">
+                            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger" class="error-message">
+                                
+                                <div *ngIf="email.errors.required">
+                                    این فیلد الزامی است
+                                </div>
+                                <div *ngIf="email.errors.email">
+                                    ایمیل معتبر نیست
+                                </div>                    
+                            </div>
                         </div>
                         <div class="field">
                             <input type="tel" name="{{'phone' + member}}" placeholder="تلفن" ngModel required>

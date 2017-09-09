@@ -65,3 +65,7 @@
 img {
     height: 250px !important;
 }
+
+.error-message {
+    color: #e53935
+}
