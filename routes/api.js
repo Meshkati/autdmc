@@ -172,6 +172,21 @@ app.post('/workshop/getuser', (req, res) => {
 
                 res.send(doc[0])
             })
+
+            db.collection('competitionTeams').find({
+                "authority": req.body['authority']
+            }).toArray((err, doc) => {
+                if (err)
+                    throw err
+                
+                responseData = {
+                    fname: doc[0]['name'],
+                    email: doc[0]['members'][0]['email'],
+                    amount: doc[0]['amount'],
+                    payment_status: doc[0]['payment_status']
+                }
+                res.send(responseData)
+            })
         }
     })
 })
@@ -184,11 +199,11 @@ app.post('/competition/register', (req, res) => {
         console.log(req.body)
 
         const teamSize = req.body['num']
-        const teamMembers = req.body['data']
+        const teamMembers = req.body['users']
         const teamName = req.body['team_name']
 
         if (teamSize < 6 && teamSize > 0) {
-            teamMembers.forEach(element => {
+            /*teamMembers.forEach(element => {
                 if (!element['email'] || !element['fname'] || !element['lname'] || !element['phone']) {
                     res.send('empty field');
                 } else {
@@ -196,7 +211,7 @@ app.post('/competition/register', (req, res) => {
                         res.send('invalid email');
                     }
                 }
-            })
+            })*/
 
             db.collection('competitionTeams').insert({
                 "members": teamMembers,
@@ -214,28 +229,12 @@ app.post('/competition/register', (req, res) => {
                         "Description": teamName
                     }
 
-                    paymentRequest(payData)
-                    .then(authority => {
-                        if (authority) {
-                        db.collection('competitionTeams').update(
-                            {"name": teamName},
-                            {$set: {"authority": authority}}, doc => {
-                                const url = 'https://www.zarinpal.com/pg/StartPay/' + authority;
-                                console.log(authority);
-                                const response = {
-                                    authority: authority,
-                                    url: url,
-                                    status: 200
-                                }
-                                res.send(response);
-                            }
-                        )
-                    } else {
-                        db.collection('competitionTeams').remove({"name": teamName}, (err, doc) => {
-                            res.send('failed')
-                        })
+                    const url = 'https://educenter.aut.ac.ir/autdmc';
+                    const response = {
+                        url: url,
+                        status: 200
                     }
-                    })
+                    res.send(response);
                 }
             })
         }
