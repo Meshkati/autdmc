@@ -192,53 +192,56 @@ app.post('/workshop/getuser', (req, res) => {
 })
 
 app.post('/competition/register', (req, res) => {
-    mongoClient.connect(dbUrl, (err, db) => {
-        if (err)
-            throw err;
+    console.log(req.body)
+    
+    const teamSize = req.body['num']
+    const teamMembers = req.body['users']
+    const teamName = req.body['team_name']
+    let isValid = true
 
-        console.log(req.body)
-
-        const teamSize = req.body['num']
-        const teamMembers = req.body['users']
-        const teamName = req.body['team_name']
-
-        if (teamSize < 6 && teamSize > 0) {
-            /*teamMembers.forEach(element => {
-                if (!element['email'] || !element['fname'] || !element['lname'] || !element['phone']) {
-                    res.send('empty field');
-                } else {
-                    if (!validateEmail(req.body['email'])) {
-                        res.send('invalid email');
-                    }
-                }
-            })*/
-
-            db.collection('competitionTeams').insert({
-                "members": teamMembers,
-                "size": teamSize,
-                "name": teamName,
-                "authority": '',
-                "payment_status": '',
-                "amount": competitionPrice
-            }, (err, newDoc) => {
-                if (!err) {
-                    const payData = {
-                        "MerchantID": "2df8f514-8ae8-11e7-aa93-005056a205be",
-                        "CallbackURL": "http://autdmc.ir/api/pay/ccallback",
-                        "Amount": competitionPrice,
-                        "Description": teamName
-                    }
-
-                    const url = 'https://educenter.aut.ac.ir/autdmc';
-                    const response = {
-                        url: url,
-                        status: 200
-                    }
-                    res.send(response);
-                }
-            })
+    teamMembers.forEach(element => {
+        console.log(element)
+        if (element['fname'] == '' || element['lname'] == '' || !validateEmail(element['email'])) {
+            console.log('falsed')
+            isValid = false
         }
     })
+
+    if (!isValid) {
+        console.log('failed')
+        res.send('failed')
+    } else {
+        mongoClient.connect(dbUrl, (err, db) => {
+            if (err)
+                throw err;
+            if (teamSize < 6 && teamSize > 0) {
+                db.collection('competitionTeams').insert({
+                    "members": teamMembers,
+                    "size": teamSize,
+                    "name": teamName,
+                    "authority": '',
+                    "payment_status": '',
+                    "amount": competitionPrice
+                }, (err, newDoc) => {
+                    if (!err) {
+                        const payData = {
+                            "MerchantID": "2df8f514-8ae8-11e7-aa93-005056a205be",
+                            "CallbackURL": "http://autdmc.ir/api/pay/ccallback",
+                            "Amount": competitionPrice,
+                            "Description": teamName
+                        }
+
+                        const url = 'https://educenter.aut.ac.ir/autdmc';
+                        const response = {
+                            url: url,
+                            status: 200
+                        }
+                        res.send(response);
+                    }
+                })
+            }
+        })
+    }
 })
 
 function validateEmail(email) {
