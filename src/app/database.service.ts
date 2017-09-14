@@ -64,4 +64,15 @@ export class DatabaseService {
         return this.http.post(this.url + '/workshop/getuser', requestData, options)
         .map(this.extractData);
     }
+
+    panelLogin(data) {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions ({headers: headers});
+        const requestData = {
+            username: data['username'],
+            password: data['password']
+        }
+        return this.http.post(this.url + '/panel/getCompetition', requestData, options)
+        .map(this.extractData)
+    }
 }
