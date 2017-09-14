@@ -1,0 +1,59 @@
+<form class="ui form" #loginForm="ngForm" (ngSubmit)="login(loginForm)" *ngIf="!loggedIn">
+    <div class="ui middle aligned center aligned grid">
+        <div class="four wide column">
+            <div class="field">
+                <input type="text" name="username" placeholder="نام کاربری" ngModel required>
+            </div>
+            <div class="field">
+                <input type="password" name="password" placeholder="رمز عبور" ngModel required>
+            </div>
+            <button class="ui button">
+                ورود
+            </button>
+        </div>
+    </div>
+</form>
+
+
+<div class="ui container">
+    <table class="ui celled table" *ngFor="let team of teams">
+        <thead>
+            <tr>
+                <th>نام</th>
+                <th>نام خانوادگی</th>
+                <th>ایمیل</th>
+                <th>تلفن</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr *ngFor="let member of team.members">
+                <td>
+                    {{ member.fname }}
+                </td>
+                <td>
+                    {{ member.lname }}
+                </td>
+                <td>
+                    {{ member.email }}
+                </td>
+                <td>
+                    {{ member.phone }}
+                </td>
+            </tr>
+        </tbody>
+        
+        <tfoot>
+            <tr>
+                <th>
+                    نام تیم:
+                    {{ team.name }}
+                </th>
+                <th>
+                    تعداد اعضا:
+                    {{ team.size }}
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</div>
