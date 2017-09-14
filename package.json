@@ -23,6 +23,7 @@
     "@angular/router": "^4.0.0",
     "@types/jquery": "^3.2.9",
     "axios": "^0.16.2",
+    "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
     "core-js": "^2.4.1",
     "express": "^4.15.4",
