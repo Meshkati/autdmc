@@ -4,6 +4,7 @@ const mongo = require('mongodb');
 const app = express();
 const bodyParser = require('body-parser');
 const axios = require('axios');
+const bcrypt = require('bcrypt');
 
 axios.defaults.baseURL = "https://www.zarinpal.com/pg/rest/WebGate/";
 const dbUrl = "mongodb://localhost:27017/scc-landing";
@@ -244,6 +245,39 @@ app.post('/competition/register', (req, res) => {
     }
 })
 
+app.post('/panel/getCompetition', (req, res) => {
+
+    mongoClient.connect(dbUrl, (err, db) => {
+        if (err)
+            throw err
+
+        const username = req.body['username']
+        const password = req.body['password']
+        console.log(username + ' ' + password)
+        console.log(bcrypt.hashSync(password, 10))
+        if (username == null || username == undefined || password == null || username == undefined) {
+            res.send('failed')
+        } else {
+            db.collection('admin').findOne({username: username})
+            .then(doc => {
+                if (doc == null) {
+                    res.send('failed')
+                }
+                console.log(doc)
+                if(bcrypt.compareSync(password, doc.password)) {
+                    db.collection('competitionTeams').find({}).toArray()
+                    .then(teams => {
+                        console.log(teams)
+                        res.send(teams)
+                    }) 
+                } else {
+                    res.send('failed')
+                }
+            })
+        }
+    })
+})
+
 function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
@@ -277,5 +311,7 @@ function calculateAmount(items, mode) {
     
     return amount.toString();
 }
+
+
 
 module.exports = app;
