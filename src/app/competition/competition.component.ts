@@ -17,6 +17,7 @@ export interface IMember {
 })
 export class CompetitionComponent implements OnInit {
     teamNumber = Array<number>();
+    private errorMessage
     
     constructor(
         private dbs: DatabaseService
@@ -50,9 +51,17 @@ export class CompetitionComponent implements OnInit {
         this.dbs.competitionRegister(members, this.teamNumber.length, teamName).subscribe(
             res => {
                 console.log(res);
-                if (res['status'] == 200) {
-                    if ((window.location.href = res['url']) == undefined)
+                let status = res['status']
+                if (status == 200) {
+                    if ((window.location.href = res['url']) == undefined) {
                         window.open(res['url']);
+                    }
+                } else if (status == 1001) {
+                    this.errorMessage = 'تمام ورودی ها را پر کنید'
+                } else if (status == 1002) {
+                    this.errorMessage = 'تیمی با این نام وجود دارد'
+                } else if (status == 1003) {
+                    this.errorMessage = 'کاربر با ایمیل ' + res['data'] + ' در یکی از تیم ها وجود دارد'   
                 }
             },
             err => {

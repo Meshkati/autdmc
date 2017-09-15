@@ -196,6 +196,14 @@
                     </div>
                 </div>
                 <input type="submit" class="ui primary button" value="ثبت نام و پرداخت">
+                <div class="ui negative message" *ngIf="errorMessage">
+                    <div class="heade">
+                        خطا
+                    </div>
+                    <p>
+                        {{ errorMessage }}
+                    </p>
+                </div>
             </form>
         </div>
     </div>

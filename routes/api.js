@@ -12,6 +12,10 @@ const dbUrl = "mongodb://localhost:27017/scc-landing";
 const prices = [60000, 90000, 120000, 150000]
 const competitionPrice = 10000
 
+// Error codes:
+// 1001 --> fill all the inputs
+// 1002 --> team name exists
+// 1003 --> user is already in team
 /* GET api listing. */
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -193,8 +197,7 @@ app.post('/workshop/getuser', (req, res) => {
 })
 
 app.post('/competition/register', (req, res) => {
-    console.log(req.body)
-    
+    let response
     const teamSize = req.body['num']
     const teamMembers = req.body['users']
     const teamName = req.body['team_name']
@@ -210,37 +213,60 @@ app.post('/competition/register', (req, res) => {
 
     if (!isValid) {
         console.log('failed')
-        res.send('failed')
+        response = {
+            status: 1001
+        }
+        res.send(response)
     } else {
         mongoClient.connect(dbUrl, (err, db) => {
             if (err)
                 throw err;
-            if (teamSize < 6 && teamSize > 0) {
-                db.collection('competitionTeams').insert({
-                    "members": teamMembers,
-                    "size": teamSize,
-                    "name": teamName,
-                    "authority": '',
-                    "payment_status": '',
-                    "amount": competitionPrice
-                }, (err, newDoc) => {
-                    if (!err) {
-                        const payData = {
-                            "MerchantID": "2df8f514-8ae8-11e7-aa93-005056a205be",
-                            "CallbackURL": "http://autdmc.ir/api/pay/ccallback",
-                            "Amount": competitionPrice,
-                            "Description": teamName
-                        }
-
-                        const url = 'https://educenter.aut.ac.ir/autdmc';
-                        const response = {
-                            url: url,
-                            status: 200
-                        }
-                        res.send(response);
+            // check team name
+            db.collection('competitionTeams').find({name: teamName}).count()
+            .then(num => {
+                if (num != 0) {
+                    response = {
+                        status: 1002
                     }
-                })
-            }
+                    res.send(response)
+                } else {
+                    teamMembers.forEach(element => {
+                        db.collection('competitionTeams').findOne({'members.email': element['email']})
+                        .then((eUser) => {
+                            if (eUser) {
+                                response = {
+                                    status: 1003,
+                                    data: element['email']
+                                }
+                                isValid = false
+                                res.send(response)
+                            }
+                        })
+                    })
+                    if (isValid) {
+                        if (teamSize < 6 && teamSize > 0) {
+                            db.collection('competitionTeams').insert({
+                                "members": teamMembers,
+                                "size": teamSize,
+                                "name": teamName,
+                                "authority": '',
+                                "payment_status": '',
+                                "amount": competitionPrice
+                            }, (err, newDoc) => {
+                                if (!err) {            
+                                    const url = 'https://educenter.aut.ac.ir/autdmc';
+                                    response = {
+                                        url: url,
+                                        status: 200
+                                    }
+                                    res.send(response);
+                                }
+                            })
+                        }
+                    }
+                }
+            })
+            
         })
     }
 })
