@@ -200,7 +200,7 @@ app.post('/competition/register', (req, res) => {
     let response
     const teamSize = req.body['num']
     const teamMembers = req.body['users']
-    const teamName = req.body['team_name'].replace(/\s\s+/g, ' ').trim();
+    const teamName = req.body['team_name'].replace(/\s\s+/g, ' ').trim().toLowerCase();
     let isValid = true
 
     teamMembers.forEach(element => {
