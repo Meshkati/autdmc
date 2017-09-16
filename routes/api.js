@@ -242,28 +242,30 @@ app.post('/competition/register', (req, res) => {
                                 res.send(response)
                             }
                         })
-                    })
-                    if (isValid) {
-                        if (teamSize < 6 && teamSize > 0) {
-                            db.collection('competitionTeams').insert({
-                                "members": teamMembers,
-                                "size": teamSize,
-                                "name": teamName,
-                                "authority": '',
-                                "payment_status": '',
-                                "amount": competitionPrice
-                            }, (err, newDoc) => {
-                                if (!err) {            
-                                    const url = 'https://educenter.aut.ac.ir/autdmc';
-                                    response = {
-                                        url: url,
-                                        status: 200
-                                    }
-                                    res.send(response);
+                        .then(() => {
+                            if (isValid) {
+                                if (teamSize < 6 && teamSize > 0) {
+                                    db.collection('competitionTeams').insert({
+                                        "members": teamMembers,
+                                        "size": teamSize,
+                                        "name": teamName,
+                                        "authority": '',
+                                        "payment_status": '',
+                                        "amount": competitionPrice
+                                    }, (err, newDoc) => {
+                                        if (!err) {            
+                                            const url = 'https://educenter.aut.ac.ir/autdmc';
+                                            response = {
+                                                url: url,
+                                                status: 200
+                                            }
+                                            res.send(response);
+                                        }
+                                    })
                                 }
-                            })
-                        }
-                    }
+                            }
+                        })
+                    })
                 }
             })
             
