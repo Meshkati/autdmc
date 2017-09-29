@@ -18,6 +18,7 @@ import { WorkshopComponent } from './workshop/workshop.component';
 import { CompetitionComponent } from './competition/competition.component';
 import { PaymentComponent } from './payment/payment.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { DayCounterComponent } from './day-counter/day-counter.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
         HourMinPipe,
         PaymentComponent,
         AdminPanelComponent,
-        DayCounterPipe
+        DayCounterPipe,
+        DayCounterComponent
     ],
     imports: [
         BrowserModule,
