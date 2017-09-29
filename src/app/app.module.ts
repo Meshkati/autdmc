@@ -1,3 +1,4 @@
+import { DayCounterPipe } from './pipes/day-counter.pipe';
 import { FormsModule } from '@angular/forms';
 import { HourMinPipe } from './pipes/hour-min.pipe';
 import { PersianNumberPipe } from './pipes/persian-number.pipe';
@@ -29,7 +30,8 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
         PersianNumberPipe,
         HourMinPipe,
         PaymentComponent,
-        AdminPanelComponent
+        AdminPanelComponent,
+        DayCounterPipe
     ],
     imports: [
         BrowserModule,
