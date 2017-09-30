@@ -28,6 +28,7 @@
     "core-js": "^2.4.1",
     "express": "^4.15.4",
     "jquery": "^3.2.1",
+    "jsonwebtoken": "^8.0.1",
     "mongodb": "^2.2.31",
     "ng2-semantic-ui": "^0.9.4",
     "rxjs": "^5.1.0",
