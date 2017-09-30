@@ -5,17 +5,23 @@ const app = express();
 const bodyParser = require('body-parser');
 const axios = require('axios');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 axios.defaults.baseURL = "https://www.zarinpal.com/pg/rest/WebGate/";
 const dbUrl = "mongodb://localhost:27017/scc-landing";
 
 const prices = [60000, 90000, 120000, 150000]
 const competitionPrice = 10000
+const secret = 'Zr9sEPw^cysG8xz'
 
 // Error codes:
 // 1001 --> fill all the inputs
 // 1002 --> team name exists
 // 1003 --> user is already in team
+
+// 2001 --> empty field
+// 2002 --> user not found
+// 2003 --> wrong password
 /* GET api listing. */
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -281,8 +287,7 @@ app.post('/panel/getCompetition', (req, res) => {
 
         const username = req.body['username']
         const password = req.body['password']
-        console.log(username + ' ' + password)
-        console.log(bcrypt.hashSync(password, 10))
+        
         if (username == null || username == undefined || password == null || username == undefined) {
             res.send('failed')
         } else {
@@ -304,6 +309,56 @@ app.post('/panel/getCompetition', (req, res) => {
             })
         }
     })
+})
+
+app.post('/login', (req, res) => {
+    const username = req.body['username']
+    const password = req.body['password']
+
+    if (username == null || username == undefined || password == null || password == undefined) {
+        const response = {
+            status: 2001
+        }
+
+        res.send(response)
+    } else {
+        mongoClient.connect(dbUrl, (err, db) => {
+            if (err)
+                throw err
+            
+            db.collection('teams').findOne({username: username})
+            .then(doc => {
+                if (doc == null) {
+                    const response = {
+                        status: 2002
+                    }
+                    res.send(response)
+                } else {
+                    if (bcrypt.compareSync(password, doc.password)) {
+                        let token = jwt.sign({user: doc.name}, secret);
+                        const team = {
+                            name: doc.name,
+                            username: doc.username,
+                            members: doc.members
+                        }
+                        const response = {
+                            status: 200,
+                            user: team,
+                            token: token
+                        }
+
+                        res.send(response)
+                    } else {
+                        const response = {
+                            status: 2003
+                        }
+
+                        res.send(response)
+                    }
+                }
+            })
+        })
+    }
 })
 
 function validateEmail(email) {
@@ -339,7 +394,6 @@ function calculateAmount(items, mode) {
     
     return amount.toString();
 }
-
 
 
 module.exports = app;
