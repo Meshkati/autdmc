@@ -1,5 +1,5 @@
 import { NgForm } from '@angular/forms/src/directives';
-import { DatabaseService } from '../database.service';
+import { DatabaseService } from '../_service/database.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

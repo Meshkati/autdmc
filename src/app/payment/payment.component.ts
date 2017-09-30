@@ -1,4 +1,4 @@
-import { DatabaseService } from '../database.service';
+import { DatabaseService } from '../_service/database.service';
 import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 

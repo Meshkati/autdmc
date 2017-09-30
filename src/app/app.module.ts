@@ -1,9 +1,10 @@
+import { AuthenticationService } from './_service/authentication.service';
 import { DayCounterPipe } from './pipes/day-counter.pipe';
 import { FormsModule } from '@angular/forms';
 import { HourMinPipe } from './pipes/hour-min.pipe';
 import { PersianNumberPipe } from './pipes/persian-number.pipe';
 import { HttpModule } from '@angular/http';
-import { DatabaseService } from './database.service';
+import { DatabaseService } from './_service/database.service';
 import { SuiModule } from 'ng2-semantic-ui/dist/public';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
@@ -52,7 +53,8 @@ import { DayCounterComponent } from './day-counter/day-counter.component';
         FormsModule
     ],
     providers: [
-        DatabaseService
+        DatabaseService,
+        AuthenticationService
     ],
     bootstrap: [AppComponent]
 })
