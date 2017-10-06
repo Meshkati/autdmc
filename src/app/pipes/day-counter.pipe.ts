@@ -17,9 +17,9 @@ export class DayCounterPipe implements PipeTransform {
         const secDif = (dif / 1000) % 60;
         
         
-        return dayDif.toFixed() + ' روز '
-            + hourDif.toFixed() + ' ساعت '
-            + minDif.toFixed() + ' دقیقه '
-            + secDif.toFixed() + ' ثانیه '
+        return Math.floor(dayDif) + ' روز '
+            + Math.floor(hourDif) + ' ساعت '
+            + Math.floor(minDif) + ' دقیقه '
+            + Math.floor(secDif) + ' ثانیه ';
     }
 }
