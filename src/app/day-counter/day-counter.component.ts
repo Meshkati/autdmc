@@ -11,6 +11,9 @@ export class DayCounterComponent implements OnInit {
     constructor() { }
     
     ngOnInit() {
+        setInterval((day) => {
+            day = day
+        }, 1000, this.startDay)
     }
 
     checkDayCounter() {
