@@ -45,8 +45,8 @@ export class DatabaseService {
             team_name: teamName
         }
 
-        return this.http.post(this.url + '/competition/register', requestData, options)
-        .map(this.extractData);
+        // return this.http.post(this.url + '/competition/register', requestData, options)
+        // .map(this.extractData);
     }
     
     private extractData(res: Response) {

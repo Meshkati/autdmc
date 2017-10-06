@@ -203,6 +203,9 @@ app.post('/workshop/getuser', (req, res) => {
 })
 
 app.post('/competition/register', (req, res) => {
+    res.send('ended')
+
+    if (false) {
     let response
     const teamSize = req.body['num']
     const teamMembers = req.body['users']
@@ -277,6 +280,7 @@ app.post('/competition/register', (req, res) => {
             
         })
     }
+}
 })
 
 app.post('/panel/getCompetition', (req, res) => {
