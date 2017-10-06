@@ -49,4 +49,12 @@ export class AuthenticationService {
         let body = res.json()
         return body;
     }
+
+    public getUser() {
+        if (this.token) {
+            return JSON.parse(localStorage.getItem('currentUser'))
+        } else {
+            return null
+        }
+    }
 }
