@@ -1,22 +1,22 @@
 <div class="ui container">
     <div class="ui secondary pointing menu">
-        <a class="active item">
+        <a class="item" (click)="menuState = 0" [ngClass]="{'active': menuState == 0}">
             سوالات
         </a>
-        <a class="item">
+        <a class="item" (click)="menuState = 1" [ngClass]="{'active': menuState == 1}">
             ارسال پاسخ
         </a>
-        <a class="item">
+        <a class="item" (click)="menuState = 2" [ngClass]="{'active': menuState == 2}">
             اطلاعات تیم
         </a>
         <div class="right menu">
-            <a class="ui item">
+            <a class="ui item" (click)="logout()">
                 خروج
             </a>
         </div>
     </div>
     
-    <div class="ui segment">
+    <div class="ui segment" *ngIf="menuState == 0">
         <h3 class="ui header">
             توضیحات
         </h3>
@@ -24,10 +24,22 @@
             فایلی که در اختیار شما قرار گرفته است شامل توضیحاتی پیرامون مسابقه، تسک کلی و دیتا های
             مورد نیاز است، از قسمت زیر می‌توانید فایل را دانلود کنید.
         </p>
-
-        <div class="ui button">
+        
+        <div class="ui loading button">
             <i class="cloud download icon"></i>
             دانلود فایل
         </div>
+    </div>
+    
+    <div class="ui segment submit-section" *ngIf="menuState == 1">
+        <div class="ui active dimmer">
+            <div class="ui text loader">
+                آغاز نشده است
+            </div>
+        </div>
+    </div>
+    
+    <div class="ui segment" *ngIf="menuState == 2">
+        
     </div>
 </div>
