@@ -1,0 +1,19 @@
+.grid {
+    margin-top: 2em;
+}
+
+.grid h2 {
+    text-align: right;
+}
+
+.grid label {
+    text-align: right;
+}
+
+.column {
+    max-width: 450px;
+}
+
+button {
+    width: 100%;
+}

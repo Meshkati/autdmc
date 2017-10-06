@@ -1,0 +1,20 @@
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <h2 class="ui dividing header">
+            ورود
+        </h2>
+        <form class="ui form" #loginForm="ngForm" (ngSubmit)="loginForm.form.valid && login()">
+            <div class="field" [ngClass]="{'error':loginForm.submitted && !username.valid}">
+                <label>نام کاربری</label>
+                <input type="text" name="username" #username="ngModel" required placeholder="نام کاربری" [(ngModel)]="model.username">
+            </div>
+            <div class="field" [ngClass]="{'error': loginForm.submitted && !password.valid}">
+                <label>رمز عبور</label>
+                <input type="password" name="password" #password="ngModel" required placeholder="رمز عبور" [(ngModel)]="model.password">
+            </div>
+            
+            <button class="ui primary button" type="submit">ورود</button>
+            
+        </form>
+    </div>
+</div>
