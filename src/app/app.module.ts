@@ -1,3 +1,4 @@
+import { AuthGuard } from './_guard/auth.guard';
 import { AuthenticationService } from './_service/authentication.service';
 import { DayCounterPipe } from './pipes/day-counter.pipe';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +21,8 @@ import { CompetitionComponent } from './competition/competition.component';
 import { PaymentComponent } from './payment/payment.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DayCounterComponent } from './day-counter/day-counter.component';
+import { LoginComponent } from './login/login.component';
+import { TeamPanelComponent } from './team-panel/team-panel.component';
 
 @NgModule({
     declarations: [
@@ -34,7 +37,9 @@ import { DayCounterComponent } from './day-counter/day-counter.component';
         PaymentComponent,
         AdminPanelComponent,
         DayCounterPipe,
-        DayCounterComponent
+        DayCounterComponent,
+        LoginComponent,
+        TeamPanelComponent
     ],
     imports: [
         BrowserModule,
@@ -44,6 +49,8 @@ import { DayCounterComponent } from './day-counter/day-counter.component';
             {path: 'competition', component: CompetitionComponent, data: { state: 'competition' }},
             {path: 'payment', component: PaymentComponent, data: { state: 'payment' }},
             {path: 'spanel', component: AdminPanelComponent},
+            {path: 'login', component: LoginComponent},
+            {path: 'panel', component: TeamPanelComponent, canActivate: [AuthGuard]},
             {path: '', redirectTo: '/landing', pathMatch: 'full'}
 
         ]),
@@ -54,7 +61,8 @@ import { DayCounterComponent } from './day-counter/day-counter.component';
     ],
     providers: [
         DatabaseService,
-        AuthenticationService
+        AuthenticationService,
+        AuthGuard
     ],
     bootstrap: [AppComponent]
 })
