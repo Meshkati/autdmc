@@ -40,6 +40,11 @@ export class AuthenticationService {
         });
     }
 
+    logout() {
+        this.token = null;
+        localStorage.setItem('currentUser', '')
+    }
+
     private extractData(res: Response) {
         let body = res.json()
         return body;
