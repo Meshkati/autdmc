@@ -403,16 +403,15 @@ function calculateAmount(items, mode) {
 
 app.post('/getData', (req, res) => {
     const decoded = jwt.decode(req.body['token'])
+    const filesName = req.body['file']
 
     mongoClient.connect(dbUrl, (err, db) => {
         if (err)
             throw err
 
-        db.collection('downloads').insert(decoded)
-        
-        res.download('src/assets/data.zip')
+        db.collection('downloads').insert({decoded: decoded, file: filesName})
+
+        res.download('src/assets/' + filesName)
     })
-
-
 })
 module.exports = app;
