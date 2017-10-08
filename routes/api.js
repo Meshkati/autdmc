@@ -417,6 +417,11 @@ app.post('/getData', (req, res) => {
 
 app.get('/getData', (req, res) => {
     const filesName = req.query['file']
-    res.download('files/' + filesName)
+    if (filesName == 'AUT DMC 2017 - Task.pdf' || filesName == 'AUT DMC 2017 - Features.pdf' || filesName == 'data.zip'){
+        res.download('files/' + filesName)
+    } else {
+        res.send('failed')
+    }
+
 })
 module.exports = app;
