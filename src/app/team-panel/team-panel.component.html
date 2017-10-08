@@ -25,9 +25,17 @@
             تیم ها تا قبل از پایان مسابقه فرصت دارند یک فایل csv با فرمتی که در توضیحات مساله شرح داده شده است، در صفحه تیم خود بارگذاری کنند. این فایل به عنوان پیش بینی های تیم شرکت کننده روی داده test در نظر گرفته خواهد شد و با مقادیر واقعی مقایسه و امتیاز تیم محاسبه خواهد شد. امکان بارگذاری مجدد وجود دارد، ولی فقط آخرین بارگذاری به عنوان پاسخ نهایی تیم در نظر گرفته خواهد شد.
         </p>
         
-        <div class="ui loading button">
+        <div class="ui primary button" (click)="downloadFile('AUT DMC 2017 - Task.pdf')">
             <i class="cloud download icon"></i>
-            دانلود فایل
+            فایل تسک
+        </div>
+        <div class="ui primary button" (click)="downloadFile('AUT DMC 2017 - Features.pdf')">
+            <i class="cloud download icon"></i>
+            فایل ویژگی ها
+        </div>
+        <div class="ui primary button" (click)="downloadFile('data.zip')">
+            <i class="cloud download icon"></i>
+            فایل دیتاها
         </div>
     </div>
     

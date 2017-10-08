@@ -411,7 +411,12 @@ app.post('/getData', (req, res) => {
 
         db.collection('downloads').insert({decoded: decoded, file: filesName})
 
-        res.download('src/assets/' + filesName)
+        res.send(200)
     })
+})
+
+app.get('/getData', (req, res) => {
+    const filesName = req.query['file']
+    res.download('files/' + filesName)
 })
 module.exports = app;
