@@ -348,6 +348,7 @@ app.post('/login', (req, res) => {
                         const response = {
                             status: 200,
                             user: team,
+                            verification: doc.verification,
                             token: token
                         }
 
