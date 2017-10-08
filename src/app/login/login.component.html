@@ -16,5 +16,14 @@
             <button class="ui primary button" type="submit">ورود</button>
             
         </form>
+
+        <div class="ui negative message" *ngIf="errorMessage">
+            <div class="header">
+                خطا
+            </div>
+            <p>
+                {{ errorMessage }}
+            </p>
+        </div>
     </div>
 </div>

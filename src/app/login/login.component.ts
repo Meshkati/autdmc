@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
     model: any = {};
+    private errorMessage: string = ''
     constructor(
         private auth: AuthenticationService,
         private router: Router
@@ -21,13 +22,15 @@ export class LoginComponent implements OnInit {
         console.log(this.model);
         this.auth.login(this.model.username, this.model.password)
         .subscribe(
-            res => {
-                console.log(res);
-                
-                if (res) {
-                    console.log(res);
-                    
+            res => {                
+                if (res == 200) {
                     this.router.navigate(['/panel'])
+                } else {
+                    if (res == 2001) {
+                        this.errorMessage = 'تمام فیلد ها را پر کنید'
+                    } else if (res == 2002 || res == 2003) {
+                        this.errorMessage = 'نام کاربری یا رمز عبور اشتباه است'
+                    }                    
                 }
                 
             }
