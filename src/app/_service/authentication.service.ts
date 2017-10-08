@@ -12,7 +12,7 @@ export class AuthenticationService {
         private http: Http
     ) { }
 
-    login(username: string, password: string):Observable<boolean> {
+    login(username: string, password: string):Observable<number> {
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions ({headers: headers});
         const requestData = {
@@ -23,19 +23,16 @@ export class AuthenticationService {
         return this.http.post(this.url + '/login', requestData, options)
         .map((response: Response) => {
             console.log(response);
-            
+
             let token = response.json() && response.json().token
+
             if (token) {
                 this.token = token
-                const currentUser = {
-                    username: username,
-                    token: token
-                }
 
-                localStorage.setItem('currentUser', JSON.stringify(currentUser))
-                return true
+                localStorage.setItem('currentUser', JSON.stringify(response.json()))
+                return response.json().status
             } else {
-                return false
+                return response.json().status
             }
         });
     }

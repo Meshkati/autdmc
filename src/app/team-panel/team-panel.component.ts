@@ -17,13 +17,17 @@ enum MenuState {
 
 export class TeamPanelComponent implements OnInit {
     private menuState = MenuState.questions
+    private team: any;
 
     constructor(
         private auth: AuthenticationService,
         private router: Router
-    ) { }
+    ) {
+
+    }
     
     ngOnInit() {
+        this.team = JSON.parse(localStorage.getItem('currentUser'))
     }
     
     logout() {

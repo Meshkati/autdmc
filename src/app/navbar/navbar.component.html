@@ -6,15 +6,15 @@
         <a routerLink="/workshop" routerLinkActive="active" class="item">کارگاه ها</a>
         <a routerLink="/competition" routerLinkActive="active" class="item" routerLinkActive="active">مسابقه</a>
         <div class="right menu">
-            <div class="item">
+            <a class="item" routerLinkActive="active">
                 <div class="ui primary button" *ngIf="!haveUser" routerLink="/panel">
                     <i class="sign in icon"></i>
                     ورود
                 </div>
                 <div *ngIf="haveUser" routerLink="/panel">
-                    {{ user.name }}
+                    {{ user.user.name }}
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 </div> 

@@ -16,11 +16,14 @@ export class NavbarComponent implements OnInit {
     ) { }
     
     ngOnInit() {
-        console.log(this.auth.getUser());
+        let user = localStorage.getItem('currentUser')
         
-        if (this.auth.getUser()) {
+        if (user) {
+            user = JSON.parse(user)
+            console.log(user);
+            
             this.haveUser = true;
-            this.user = this.auth.getUser()
+            this.user = user
         }
     }
     
