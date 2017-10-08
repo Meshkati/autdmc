@@ -68,9 +68,13 @@
                         نام تیم:
                         {{ team.user.name }}
                     </th>
-                    <th>
+                    <th *ngIf="team.verification">
                         وضعیت پرداخت:
-                        {{ team.verification }}
+                        موفق
+                    </th>
+                    <th *ngIf="!team.verification">
+                        وضعیت پرداخت:
+                        انجام نشده
                     </th>
                 </tr>
             </tfoot>
