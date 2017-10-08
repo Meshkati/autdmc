@@ -13,6 +13,47 @@ webpackEmptyContext.id = "../../../../../src async recursive";
 
 /***/ }),
 
+/***/ "../../../../../src/app/_guard/auth.guard.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthGuard; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AuthGuard = (function () {
+    function AuthGuard(router) {
+        this.router = router;
+    }
+    AuthGuard.prototype.canActivate = function () {
+        if (localStorage.getItem('currentUser')) {
+            return true;
+        }
+        this.router.navigate(['/login']);
+        return false;
+    };
+    return AuthGuard;
+}());
+AuthGuard = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["c" /* Injectable */])(),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* Router */]) === "function" && _a || Object])
+], AuthGuard);
+
+var _a;
+//# sourceMappingURL=auth.guard.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/_service/authentication.service.ts":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -43,27 +84,39 @@ var AuthenticationService = (function () {
         var _this = this;
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Headers */]({ 'Content-Type': 'application/json' });
         var options = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* RequestOptions */]({ headers: headers });
-        var requestData = {};
+        var requestData = {
+            username: username,
+            password: password
+        };
         return this.http.post(this.url + '/login', requestData, options)
             .map(function (response) {
+            console.log(response);
             var token = response.json() && response.json().token;
             if (token) {
                 _this.token = token;
-                var currentUser = {
-                    username: username,
-                    token: token
-                };
-                localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                return true;
+                localStorage.setItem('currentUser', JSON.stringify(response.json()));
+                return response.json().status;
             }
             else {
-                return false;
+                return response.json().status;
             }
         });
+    };
+    AuthenticationService.prototype.logout = function () {
+        this.token = null;
+        localStorage.setItem('currentUser', '');
     };
     AuthenticationService.prototype.extractData = function (res) {
         var body = res.json();
         return body;
+    };
+    AuthenticationService.prototype.getUser = function () {
+        if (this.token) {
+            return JSON.parse(localStorage.getItem('currentUser'));
+        }
+        else {
+            return null;
+        }
     };
     return AuthenticationService;
 }());
@@ -131,8 +184,8 @@ var DatabaseService = (function () {
             num: num,
             team_name: teamName
         };
-        return this.http.post(this.url + '/competition/register', requestData, options)
-            .map(this.extractData);
+        // return this.http.post(this.url + '/competition/register', requestData, options)
+        // .map(this.extractData);
     };
     DatabaseService.prototype.extractData = function (res) {
         var body = res.json();
@@ -328,27 +381,30 @@ AppComponent = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__service_authentication_service__ = __webpack_require__("../../../../../src/app/_service/authentication.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pipes_day_counter_pipe__ = __webpack_require__("../../../../../src/app/pipes/day-counter.pipe.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pipes_hour_min_pipe__ = __webpack_require__("../../../../../src/app/pipes/hour-min.pipe.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pipes_persian_number_pipe__ = __webpack_require__("../../../../../src/app/pipes/persian-number.pipe.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__service_database_service__ = __webpack_require__("../../../../../src/app/_service/database.service.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ng2_semantic_ui_dist_public__ = __webpack_require__("../../../../ng2-semantic-ui/dist/public.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/@angular/platform-browser/animations.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__navbar_navbar_component__ = __webpack_require__("../../../../../src/app/navbar/navbar.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__landing_landing_component__ = __webpack_require__("../../../../../src/app/landing/landing.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__footer_footer_component__ = __webpack_require__("../../../../../src/app/footer/footer.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__workshop_workshop_component__ = __webpack_require__("../../../../../src/app/workshop/workshop.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__competition_competition_component__ = __webpack_require__("../../../../../src/app/competition/competition.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__payment_payment_component__ = __webpack_require__("../../../../../src/app/payment/payment.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__admin_panel_admin_panel_component__ = __webpack_require__("../../../../../src/app/admin-panel/admin-panel.component.ts");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__day_counter_day_counter_component__ = __webpack_require__("../../../../../src/app/day-counter/day-counter.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__guard_auth_guard__ = __webpack_require__("../../../../../src/app/_guard/auth.guard.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_authentication_service__ = __webpack_require__("../../../../../src/app/_service/authentication.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pipes_day_counter_pipe__ = __webpack_require__("../../../../../src/app/pipes/day-counter.pipe.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__("../../../forms/@angular/forms.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pipes_hour_min_pipe__ = __webpack_require__("../../../../../src/app/pipes/hour-min.pipe.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pipes_persian_number_pipe__ = __webpack_require__("../../../../../src/app/pipes/persian-number.pipe.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__("../../../http/@angular/http.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__service_database_service__ = __webpack_require__("../../../../../src/app/_service/database.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_ng2_semantic_ui_dist_public__ = __webpack_require__("../../../../ng2-semantic-ui/dist/public.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_platform_browser_animations__ = __webpack_require__("../../../platform-browser/@angular/platform-browser/animations.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_platform_browser__ = __webpack_require__("../../../platform-browser/@angular/platform-browser.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__app_component__ = __webpack_require__("../../../../../src/app/app.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__navbar_navbar_component__ = __webpack_require__("../../../../../src/app/navbar/navbar.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__landing_landing_component__ = __webpack_require__("../../../../../src/app/landing/landing.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__footer_footer_component__ = __webpack_require__("../../../../../src/app/footer/footer.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__workshop_workshop_component__ = __webpack_require__("../../../../../src/app/workshop/workshop.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__competition_competition_component__ = __webpack_require__("../../../../../src/app/competition/competition.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__payment_payment_component__ = __webpack_require__("../../../../../src/app/payment/payment.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__admin_panel_admin_panel_component__ = __webpack_require__("../../../../../src/app/admin-panel/admin-panel.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__day_counter_day_counter_component__ = __webpack_require__("../../../../../src/app/day-counter/day-counter.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__login_login_component__ = __webpack_require__("../../../../../src/app/login/login.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__team_panel_team_panel_component__ = __webpack_require__("../../../../../src/app/team-panel/team-panel.component.ts");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -377,47 +433,55 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
+
+
+
 var AppModule = (function () {
     function AppModule() {
     }
     return AppModule;
 }());
 AppModule = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_11__angular_core__["b" /* NgModule */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_12__angular_core__["b" /* NgModule */])({
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_12__app_component__["a" /* AppComponent */],
-            __WEBPACK_IMPORTED_MODULE_13__navbar_navbar_component__["a" /* NavbarComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__landing_landing_component__["a" /* LandingComponent */],
-            __WEBPACK_IMPORTED_MODULE_15__footer_footer_component__["a" /* FooterComponent */],
-            __WEBPACK_IMPORTED_MODULE_16__workshop_workshop_component__["a" /* WorkshopComponent */],
-            __WEBPACK_IMPORTED_MODULE_17__competition_competition_component__["a" /* CompetitionComponent */],
-            __WEBPACK_IMPORTED_MODULE_4__pipes_persian_number_pipe__["a" /* PersianNumberPipe */],
-            __WEBPACK_IMPORTED_MODULE_3__pipes_hour_min_pipe__["a" /* HourMinPipe */],
-            __WEBPACK_IMPORTED_MODULE_18__payment_payment_component__["a" /* PaymentComponent */],
-            __WEBPACK_IMPORTED_MODULE_19__admin_panel_admin_panel_component__["a" /* AdminPanelComponent */],
-            __WEBPACK_IMPORTED_MODULE_1__pipes_day_counter_pipe__["a" /* DayCounterPipe */],
-            __WEBPACK_IMPORTED_MODULE_20__day_counter_day_counter_component__["a" /* DayCounterComponent */]
+            __WEBPACK_IMPORTED_MODULE_13__app_component__["a" /* AppComponent */],
+            __WEBPACK_IMPORTED_MODULE_14__navbar_navbar_component__["a" /* NavbarComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__landing_landing_component__["a" /* LandingComponent */],
+            __WEBPACK_IMPORTED_MODULE_16__footer_footer_component__["a" /* FooterComponent */],
+            __WEBPACK_IMPORTED_MODULE_17__workshop_workshop_component__["a" /* WorkshopComponent */],
+            __WEBPACK_IMPORTED_MODULE_18__competition_competition_component__["a" /* CompetitionComponent */],
+            __WEBPACK_IMPORTED_MODULE_5__pipes_persian_number_pipe__["a" /* PersianNumberPipe */],
+            __WEBPACK_IMPORTED_MODULE_4__pipes_hour_min_pipe__["a" /* HourMinPipe */],
+            __WEBPACK_IMPORTED_MODULE_19__payment_payment_component__["a" /* PaymentComponent */],
+            __WEBPACK_IMPORTED_MODULE_20__admin_panel_admin_panel_component__["a" /* AdminPanelComponent */],
+            __WEBPACK_IMPORTED_MODULE_2__pipes_day_counter_pipe__["a" /* DayCounterPipe */],
+            __WEBPACK_IMPORTED_MODULE_21__day_counter_day_counter_component__["a" /* DayCounterComponent */],
+            __WEBPACK_IMPORTED_MODULE_22__login_login_component__["a" /* LoginComponent */],
+            __WEBPACK_IMPORTED_MODULE_23__team_panel_team_panel_component__["a" /* TeamPanelComponent */]
         ],
         imports: [
-            __WEBPACK_IMPORTED_MODULE_10__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_9__angular_router__["a" /* RouterModule */].forRoot([
-                { path: 'landing', component: __WEBPACK_IMPORTED_MODULE_14__landing_landing_component__["a" /* LandingComponent */], data: { state: 'landing' } },
-                { path: 'workshop', component: __WEBPACK_IMPORTED_MODULE_16__workshop_workshop_component__["a" /* WorkshopComponent */], data: { state: 'workshop' } },
-                { path: 'competition', component: __WEBPACK_IMPORTED_MODULE_17__competition_competition_component__["a" /* CompetitionComponent */], data: { state: 'competition' } },
-                { path: 'payment', component: __WEBPACK_IMPORTED_MODULE_18__payment_payment_component__["a" /* PaymentComponent */], data: { state: 'payment' } },
-                { path: 'spanel', component: __WEBPACK_IMPORTED_MODULE_19__admin_panel_admin_panel_component__["a" /* AdminPanelComponent */] },
+            __WEBPACK_IMPORTED_MODULE_11__angular_platform_browser__["a" /* BrowserModule */],
+            __WEBPACK_IMPORTED_MODULE_10__angular_router__["a" /* RouterModule */].forRoot([
+                { path: 'landing', component: __WEBPACK_IMPORTED_MODULE_15__landing_landing_component__["a" /* LandingComponent */], data: { state: 'landing' } },
+                { path: 'workshop', component: __WEBPACK_IMPORTED_MODULE_17__workshop_workshop_component__["a" /* WorkshopComponent */], data: { state: 'workshop' } },
+                { path: 'competition', component: __WEBPACK_IMPORTED_MODULE_18__competition_competition_component__["a" /* CompetitionComponent */], data: { state: 'competition' } },
+                { path: 'payment', component: __WEBPACK_IMPORTED_MODULE_19__payment_payment_component__["a" /* PaymentComponent */], data: { state: 'payment' } },
+                { path: 'spanel', component: __WEBPACK_IMPORTED_MODULE_20__admin_panel_admin_panel_component__["a" /* AdminPanelComponent */] },
+                { path: 'login', component: __WEBPACK_IMPORTED_MODULE_22__login_login_component__["a" /* LoginComponent */] },
+                { path: 'panel', component: __WEBPACK_IMPORTED_MODULE_23__team_panel_team_panel_component__["a" /* TeamPanelComponent */], canActivate: [__WEBPACK_IMPORTED_MODULE_0__guard_auth_guard__["a" /* AuthGuard */]] },
                 { path: '', redirectTo: '/landing', pathMatch: 'full' }
             ]),
-            __WEBPACK_IMPORTED_MODULE_8__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
-            __WEBPACK_IMPORTED_MODULE_7_ng2_semantic_ui_dist_public__["a" /* SuiModule */],
-            __WEBPACK_IMPORTED_MODULE_5__angular_http__["a" /* HttpModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */]
+            __WEBPACK_IMPORTED_MODULE_9__angular_platform_browser_animations__["a" /* BrowserAnimationsModule */],
+            __WEBPACK_IMPORTED_MODULE_8_ng2_semantic_ui_dist_public__["a" /* SuiModule */],
+            __WEBPACK_IMPORTED_MODULE_6__angular_http__["a" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormsModule */]
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_6__service_database_service__["a" /* DatabaseService */],
-            __WEBPACK_IMPORTED_MODULE_0__service_authentication_service__["a" /* AuthenticationService */]
+            __WEBPACK_IMPORTED_MODULE_7__service_database_service__["a" /* DatabaseService */],
+            __WEBPACK_IMPORTED_MODULE_1__service_authentication_service__["a" /* AuthenticationService */],
+            __WEBPACK_IMPORTED_MODULE_0__guard_auth_guard__["a" /* AuthGuard */]
         ],
-        bootstrap: [__WEBPACK_IMPORTED_MODULE_12__app_component__["a" /* AppComponent */]]
+        bootstrap: [__WEBPACK_IMPORTED_MODULE_13__app_component__["a" /* AppComponent */]]
     })
 ], AppModule);
 
@@ -446,7 +510,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/competition/competition.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui\">\n    <div class=\"ui segment vertical masthead inverted center aligned\">\n        <div class=\"ui text container\">\n            <h1 class=\"header\">\n                اولین دوره مسابقات داده‌‌کاوی امیرکبیر\n            </h1>\n        </div>\n    </div>\n    \n    <div class=\"ui segment vertical stripe\">\n        <div class=\"ui grid middle aligned container\">\n            <div class=\"row\">\n                <div class=\"ui justified container\">\n                    <p>\n                        اولین دوره مسابقات داده‌کاوی امیرکبیر با محوریت کاوش داده‌های حجیم بانکی و تراکنشات آن‌ها برگزار می‌شود که\n                        طی آن شرکت‌کنندگان با چالش‌‌های واقعی روبرو شده و با استفاده \n                        از دانش فنی خود، به حل کردن و مقابله با این چالش‌ها می‌پردازند و سطح دانش علمی و توانایی فنی خود را بالا می‌برند.\n                        طی این مسابقه، مسائلی از چالش‌هایی که بانک‌ها با آن‌ها روبرو هستند مطرح شده و شرکت‌کنندگان \n                        می‌بایست قسمتی از مشکلات واقعی بانکی را حل کنند و راه‌حل مناسب ارائه دهند.\n                    </p>\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    <div class=\"ui segment center aligned vertical stripe\">\n        <div class=\"ui centered stackable grid\">\n            <div class=\"four wide column\">\n                <div class=\"ui fluid vertical left aligned steps\">\n                    <div class=\"active step\">\n                        <i class=\"hourglass start icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                افتتاحیه \n                            </div>\n                            <div class=\"description\">\n                                ۱۶ مهر۱۳۹۶\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"step\">\n                        <i class=\"hourglass end icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                شروع مسابقه غیر حضوری\n                            </div>\n                            <div class=\"description\">\n                                ۱۶ مهر ۱۳۹۶\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"step\">\n                        <i class=\"list icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                اتمام مهلت مرحله اول\n                                \n                            </div>\n                            <div class=\"description\">\n                                ۱ آبان ۱۳۹۶\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"step\">\n                        <i class=\"calendar outline icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                اعلام نتایج مرحله اول                                \n                                \n                            </div>\n                            <div class=\"description\">\n                                ۳ آبان ۱۳۹۶\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"step\">\n                        <i class=\"idea icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                ارائه نتایج ( تیم های برتر)\n                            </div>\n                            <div class=\"description\">\n                                ۵ آبان ۱۳۹۶\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"step\">\n                        <i class=\"trophy icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                اختتامیه و اهدای جوایز\n                            </div>\n                            <div class=\"description\">\n                                ۵ آبان\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"ui vertical divider\"></div>\n            <div class=\"four wide column\">\n                <div class=\"ui segment\">\n                    <div class=\"header\">\n                        <h3>\n                            جوایز\n                            <i class=\"trophy icon\"></i>\n                        </h3>\n                    </div>\n                    <hr>\n                    <a class=\"ui yellow ribbon label\">تیم اول</a>\n                    <p><strong>۴ میلیون تومان</strong></p>\n                    <a class=\"ui gray ribbon label\">تیم دوم</a>\n                    <p><strong>۳ میلیون تومان</strong></p>\n                    <a class=\"ui brown ribbon label\">تیم سوم</a>\n                    <p><strong>۲ میلیون تومان</strong></p>\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    <div class=\"ui segment vertical stripe\">\n        <div class=\"ui stackable container\">\n            <div class=\"ui info message\">\n                <p>\n                    <i class=\"info icon\"></i>\n                    هزینه ثبت نام برای هر تیم ۱۰ هزار تومان است\n                </p>\n                <p>\n                    <i class=\"info icon\"></i>\n                    حداکثر تعداد اعضای تیم، ۵ نفر می‌باشد\n                </p>\n            </div>\n            <div class=\"ui yellow message\">\n                <div class=\"header\">\n                    توجه\n                </div>\n                <p>\n                    بعد از ثبت نام ، به صفحه ای دیگر برای پرداخت منتقل خواهید شد.\n                </p>\n            </div>\n            <form class=\"ui form\" #registerForm=\"ngForm\" (ngSubmit)=\"sendRegisterRequest(registerForm)\">\n                <h4 class=\"ui dividing header\">\n                    ثبت نام\n                    {{ selected | json }}\n                </h4>\n                \n                <div class=\"field\">\n                    <div class=\"two fields\">\n                        <div class=\"field\">\n                            <input type=\"text\" name=\"tname\" placeholder=\"نام تیم\" ngModel required>\n                        </div>\n                        <div class=\"field\">\n                            تعداد اعضا:\n                            <div class=\"ui icon buttons\">\n                                <div class=\"ui button\" (click)=\"addMember()\" [ngClass]=\"{'disabled': teamNumber.length > 4}\">\n                                    <i class=\"add icon\"></i>\n                                </div>\n                                <div class=\"ui button disabled\">\n                                    {{ teamNumber.length | persianNumber }}\n                                </div>\n                                <div class=\"ui button\" (click)=\"removeMember()\" [ngClass]=\"{'disabled': teamNumber.length < 2}\">\n                                    <i class=\"minus icon\"></i>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div *ngFor=\"let member of teamNumber;\">\n                    <div class=\"field\">\n                        <label>عضو {{ member | persianNumber }}</label>\n                        <div class=\"two fields\">\n                            <div class=\"field\">\n                                <input type=\"text\" name=\"{{'fname' + member}}\" placeholder=\"نام\" [(ngModel)]=\"member.fname\" required minlength=\"2\" #fname=\"ngModel\">\n                                <div *ngIf=\"fname.invalid && (fname.dirty || fname.touched)\" class=\"alert alert-danger\" class=\"error-message\">\n                                    \n                                    <div *ngIf=\"fname.errors.required\">\n                                        این فیلد الزامی است\n                                    </div>\n                                    <div *ngIf=\"fname.errors.minlength\">\n                                        نام حداقل باید ۲ کاراکتر باشد\n                                    </div>                    \n                                </div>\n                            </div>\n                            <div class=\"field\">\n                                <input type=\"text\" name=\"{{'lname' + member}}\" placeholder=\"نام خانوادگی\" [(ngModel)]=\"member.lname\" required minlength=\"2\" #lname=\"ngModel\">\n                                <div *ngIf=\"lname.invalid && (lname.dirty || lname.touched)\" class=\"alert alert-danger\" class=\"error-message\">\n                                    \n                                    <div *ngIf=\"lname.errors.required\">\n                                        این فیلد الزامی است\n                                    </div>\n                                    <div *ngIf=\"lname.errors.minlength\">\n                                        نام حداقل باید ۲ کاراکتر باشد\n                                    </div>                    \n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"two fields\">\n                        <div class=\"field\">\n                            <input type=\"email\" name=\"{{'email' + member}}\" placeholder=\"ایمیل\" [(ngModel)]=\"member.email\" required email #email=\"ngModel\">\n                            <div *ngIf=\"email.invalid && (email.dirty || email.touched)\" class=\"alert alert-danger\" class=\"error-message\">\n                                \n                                <div *ngIf=\"email.errors.required\">\n                                    این فیلد الزامی است\n                                </div>\n                                <div *ngIf=\"email.errors.email\">\n                                    ایمیل معتبر نیست\n                                </div>                    \n                            </div>\n                        </div>\n                        <div class=\"field\">\n                            <input type=\"tel\" name=\"{{'phone' + member}}\" placeholder=\"تلفن\" ngModel required>\n                        </div>\n                    </div>\n                </div>\n                <input type=\"submit\" class=\"ui primary button\" value=\"ثبت نام و پرداخت\">\n                <div class=\"ui negative message\" *ngIf=\"errorMessage\">\n                    <div class=\"heade\">\n                        خطا\n                    </div>\n                    <p>\n                        {{ errorMessage }}\n                    </p>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n\n<app-footer></app-footer>\n"
+module.exports = "<div class=\"ui\">\n    <div class=\"ui segment vertical masthead inverted center aligned\">\n        <div class=\"ui text container\">\n            <h1 class=\"header\">\n                اولین دوره مسابقات داده‌‌کاوی امیرکبیر\n            </h1>\n        </div>\n    </div>\n    \n    <div class=\"ui segment vertical stripe\">\n        <div class=\"ui grid middle aligned container\">\n            <div class=\"row\">\n                <div class=\"ui justified container\">\n                    <p>\n                        اولین دوره مسابقات داده‌کاوی امیرکبیر با محوریت کاوش داده‌های حجیم بانکی و تراکنشات آن‌ها برگزار می‌شود که\n                        طی آن شرکت‌کنندگان با چالش‌‌های واقعی روبرو شده و با استفاده \n                        از دانش فنی خود، به حل کردن و مقابله با این چالش‌ها می‌پردازند و سطح دانش علمی و توانایی فنی خود را بالا می‌برند.\n                        طی این مسابقه، مسائلی از چالش‌هایی که بانک‌ها با آن‌ها روبرو هستند مطرح شده و شرکت‌کنندگان \n                        می‌بایست قسمتی از مشکلات واقعی بانکی را حل کنند و راه‌حل مناسب ارائه دهند.\n                    </p>\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    <div class=\"ui segment center aligned vertical stripe\">\n        <div class=\"ui centered stackable grid\">\n            <div class=\"four wide column\">\n                <div class=\"ui fluid vertical left aligned steps\">\n                    <div class=\"active step\">\n                        <i class=\"hourglass start icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                افتتاحیه \n                            </div>\n                            <div class=\"description\">\n                                ۱۶ مهر۱۳۹۶\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"step\">\n                        <i class=\"hourglass end icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                شروع مسابقه غیر حضوری\n                            </div>\n                            <div class=\"description\">\n                                ۱۶ مهر ۱۳۹۶\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"step\">\n                        <i class=\"list icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                اتمام مهلت \n                                \n                            </div>\n                            <div class=\"description\">\n                                ۱ آبان ۱۳۹۶\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"step\">\n                        <i class=\"calendar outline icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                اعلام نتایج                                 \n                                \n                            </div>\n                            <div class=\"description\">\n                                ۳ آبان ۱۳۹۶\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"step\">\n                        <i class=\"idea icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                ارائه نتایج ( تیم های برتر)\n                            </div>\n                            <div class=\"description\">\n                                ۷ آبان ۱۳۹۶\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"step\">\n                        <i class=\"trophy icon\"></i>\n                        <div class=\"content\">\n                            <div class=\"title\">\n                                اختتامیه و اهدای جوایز\n                            </div>\n                            <div class=\"description\">\n                                ۱۰ آبان\n                            </div>\n                        </div>\n                    </div>\n                </div>\n            </div>\n            <div class=\"ui vertical divider\"></div>\n            <div class=\"four wide column\">\n                <div class=\"ui segment\">\n                    <div class=\"header\">\n                        <h3>\n                            جوایز\n                            <i class=\"trophy icon\"></i>\n                        </h3>\n                    </div>\n                    <hr>\n                    <a class=\"ui yellow ribbon label\">تیم اول</a>\n                    <p><strong>۴ میلیون تومان</strong></p>\n                    <a class=\"ui gray ribbon label\">تیم دوم</a>\n                    <p><strong>۳ میلیون تومان</strong></p>\n                    <a class=\"ui brown ribbon label\">تیم سوم</a>\n                    <p><strong>۲ میلیون تومان</strong></p>\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    <div class=\"ui segment vertical stripe\">\n        <div class=\"ui active dimmer\">\n            <div class=\"content\">\n                <div class=\"center\">\n                    <h2 class=\"ui inverted icon header\">\n                        <i class=\"hourglass end icon\"></i>\n                        مهلت ثبت نام به پایان رسید\n                    </h2>\n                </div>\n            </div>\n        </div>\n        \n        <div class=\"ui stackable container\">\n            <div class=\"ui info message\">\n                <p>\n                    <i class=\"info icon\"></i>\n                    هزینه ثبت نام برای هر تیم ۱۰ هزار تومان است\n                </p>\n                <p>\n                    <i class=\"info icon\"></i>\n                    حداکثر تعداد اعضای تیم، ۵ نفر می‌باشد\n                </p>\n            </div>\n            <div class=\"ui yellow message\">\n                <div class=\"header\">\n                    توجه\n                </div>\n                <p>\n                    بعد از ثبت نام ، به صفحه ای دیگر برای پرداخت منتقل خواهید شد.\n                </p>\n            </div>\n            <form class=\"ui form\" #registerForm=\"ngForm\" (ngSubmit)=\"sendRegisterRequest(registerForm)\">\n                <h4 class=\"ui dividing header\">\n                    ثبت نام\n                    {{ selected | json }}\n                </h4>\n                \n                <div class=\"field\">\n                    <div class=\"two fields\">\n                        <div class=\"field\">\n                            <input type=\"text\" name=\"tname\" placeholder=\"نام تیم\" ngModel required>\n                        </div>\n                        <div class=\"field\">\n                            تعداد اعضا:\n                            <div class=\"ui icon buttons\">\n                                <div class=\"ui button\" (click)=\"addMember()\" [ngClass]=\"{'disabled': teamNumber.length > 4}\">\n                                    <i class=\"add icon\"></i>\n                                </div>\n                                <div class=\"ui button disabled\">\n                                    {{ teamNumber.length | persianNumber }}\n                                </div>\n                                <div class=\"ui button\" (click)=\"removeMember()\" [ngClass]=\"{'disabled': teamNumber.length < 2}\">\n                                    <i class=\"minus icon\"></i>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                </div>\n                <div *ngFor=\"let member of teamNumber;\">\n                    <div class=\"field\">\n                        <label>عضو {{ member | persianNumber }}</label>\n                        <div class=\"two fields\">\n                            <div class=\"field\">\n                                <input type=\"text\" name=\"{{'fname' + member}}\" placeholder=\"نام\" [(ngModel)]=\"member.fname\" required minlength=\"2\" #fname=\"ngModel\">\n                                <div *ngIf=\"fname.invalid && (fname.dirty || fname.touched)\" class=\"alert alert-danger\" class=\"error-message\">\n                                    \n                                    <div *ngIf=\"fname.errors.required\">\n                                        این فیلد الزامی است\n                                    </div>\n                                    <div *ngIf=\"fname.errors.minlength\">\n                                        نام حداقل باید ۲ کاراکتر باشد\n                                    </div>                    \n                                </div>\n                            </div>\n                            <div class=\"field\">\n                                <input type=\"text\" name=\"{{'lname' + member}}\" placeholder=\"نام خانوادگی\" [(ngModel)]=\"member.lname\" required minlength=\"2\" #lname=\"ngModel\">\n                                <div *ngIf=\"lname.invalid && (lname.dirty || lname.touched)\" class=\"alert alert-danger\" class=\"error-message\">\n                                    \n                                    <div *ngIf=\"lname.errors.required\">\n                                        این فیلد الزامی است\n                                    </div>\n                                    <div *ngIf=\"lname.errors.minlength\">\n                                        نام حداقل باید ۲ کاراکتر باشد\n                                    </div>                    \n                                </div>\n                            </div>\n                        </div>\n                    </div>\n                    <div class=\"two fields\">\n                        <div class=\"field\">\n                            <input type=\"email\" name=\"{{'email' + member}}\" placeholder=\"ایمیل\" [(ngModel)]=\"member.email\" required email #email=\"ngModel\">\n                            <div *ngIf=\"email.invalid && (email.dirty || email.touched)\" class=\"alert alert-danger\" class=\"error-message\">\n                                \n                                <div *ngIf=\"email.errors.required\">\n                                    این فیلد الزامی است\n                                </div>\n                                <div *ngIf=\"email.errors.email\">\n                                    ایمیل معتبر نیست\n                                </div>                    \n                            </div>\n                        </div>\n                        <div class=\"field\">\n                            <input type=\"tel\" name=\"{{'phone' + member}}\" placeholder=\"تلفن\" ngModel required>\n                        </div>\n                    </div>\n                </div>\n                <input type=\"submit\" class=\"ui primary button\" value=\"ثبت نام و پرداخت\">\n                <div class=\"ui negative message\" *ngIf=\"errorMessage\">\n                    <div class=\"heade\">\n                        خطا\n                    </div>\n                    <p>\n                        {{ errorMessage }}\n                    </p>\n                </div>\n            </form>\n        </div>\n    </div>\n</div>\n\n<app-footer></app-footer>\n"
 
 /***/ }),
 
@@ -476,43 +540,42 @@ var CompetitionComponent = (function () {
     CompetitionComponent.prototype.ngOnInit = function () {
         this.teamNumber.push(1);
     };
-    CompetitionComponent.prototype.sendRegisterRequest = function (registerForm) {
-        var _this = this;
-        var data = registerForm.value;
-        console.log(data);
-        var teamName = registerForm.value['tname'];
-        var members = new Array();
-        console.log(members.length);
-        for (var index = 1; index <= this.teamNumber.length; index++) {
-            var member = {
-                fname: data['fname' + index],
-                lname: data['lname' + index],
-                email: data['email' + index],
-                phone: data['phone' + index]
-            };
-            members.push(member);
-        }
-        this.dbs.competitionRegister(members, this.teamNumber.length, teamName).subscribe(function (res) {
-            console.log(res);
-            var status = res['status'];
-            if (status == 200) {
-                if ((window.location.href = res['url']) == undefined) {
-                    window.open(res['url']);
-                }
-            }
-            else if (status == 1001) {
-                _this.errorMessage = 'تمام ورودی ها را پر کنید';
-            }
-            else if (status == 1002) {
-                _this.errorMessage = 'تیمی با این نام وجود دارد';
-            }
-            else if (status == 1003) {
-                _this.errorMessage = 'کاربر با ایمیل ' + res['data'] + ' در یکی از تیم ها وجود دارد';
-            }
-        }, function (err) {
-            console.log('competition register error');
-        });
-    };
+    // sendRegisterRequest(registerForm: NgForm) {
+    //     let data = registerForm.value;
+    //     console.log(data);
+    //     let teamName = registerForm.value['tname']
+    //     let members = new Array<IMember>();
+    //     console.log(members.length);
+    //     for (let index = 1; index <= this.teamNumber.length; index++) {
+    //         let member: IMember = {
+    //             fname: data['fname' + index],
+    //             lname: data['lname' + index],
+    //             email: data['email' + index],
+    //             phone: data['phone' + index]
+    //         }
+    //         members.push(member)
+    //     }
+    //     this.dbs.competitionRegister(members, this.teamNumber.length, teamName).subscribe(
+    //         res => {
+    //             console.log(res);
+    //             let status = res['status']
+    //             if (status == 200) {
+    //                 if ((window.location.href = res['url']) == undefined) {
+    //                     window.open(res['url']);
+    //                 }
+    //             } else if (status == 1001) {
+    //                 this.errorMessage = 'تمام ورودی ها را پر کنید'
+    //             } else if (status == 1002) {
+    //                 this.errorMessage = 'تیمی با این نام وجود دارد'
+    //             } else if (status == 1003) {
+    //                 this.errorMessage = 'کاربر با ایمیل ' + res['data'] + ' در یکی از تیم ها وجود دارد'   
+    //             }
+    //         },
+    //         err => {
+    //             console.log('competition register error');
+    //         }
+    //     )
+    // }
     CompetitionComponent.prototype.addMember = function () {
         if (this.teamNumber.length < 5) {
             this.teamNumber.push(this.teamNumber.length + 1);
@@ -560,7 +623,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/day-counter/day-counter.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n  <h3 *ngIf=\"checkDayCounter()\">\n      {{ startDay | dayCounter | persianNumber }}\n      به شروع مسابقه باقی مانده\n  </h3>\n  <h3 *ngIf=\"!checkDayCounter()\">\n      مسابقه آغاز شده است\n  </h3>\n</div>"
+module.exports = "<div>\n  <h3 *ngIf=\"checkDayCounter()\">\n      {{ startDay | dayCounter | persianNumber }}\n      به شروع مسابقه\n  </h3>\n  <h3 *ngIf=\"!checkDayCounter()\">\n      مسابقه آغاز شده است\n  </h3>\n</div>"
 
 /***/ }),
 
@@ -584,6 +647,9 @@ var DayCounterComponent = (function () {
     function DayCounterComponent() {
     }
     DayCounterComponent.prototype.ngOnInit = function () {
+        setInterval(function (day) {
+            day = day;
+        }, 1000, this.startDay);
     };
     DayCounterComponent.prototype.checkDayCounter = function () {
         var today = new Date().getTime();
@@ -693,7 +759,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/landing/landing.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"ui\">\n    <div #masthead class=\"ui segment vertical masthead inverted center aligned\">\n        <div class=\"ui text container\">\n            <h1 class=\"header\">\n                مسابقات داده‌‌کاوی امیرکبیر\n            </h1>\n            <h2>\n                پاییز ۹۶ - دانشکده مهندسی کامپیوتر و فناوری اطلاعات\n            </h2>\n        </div>\n        \n        <div class=\"counter\">\n            <app-day-counter [startDay]=\"1507420800000\"></app-day-counter>\n        </div>\n    </div>\n    \n    <div class=\"ui segment vertical stripe\">\n        <div class=\"ui stackable grid middle aligned container\">\n            <div class=\"row\">\n                <div class=\"column eight wide\">\n                    <div class=\"ui justified container\">\n                        <p>\n                            در سال‌های گذشته انجمن علمی دانشکده‌ مهندسی کامپیوتر و فناوری اطلاعات دانشگاه امیرکبیر\n                            با برگزاری مسابقات مختلف در حوزه‌ علوم و مهندسی کامپیوتر تلاش کرده‌ است سطح علمی دانشکده\n                            و نیز جامعه‌ی دانشجویان و علاقه مندان به دنياى علوم و مهندسى كامپيوتر، \n                            را در این حوزه بالا ببرد. در این راستا این بار با توجه به افزایش روز افزون تقاضا برای حل مسائل داده‌کاوی،\n                            تصمیم به برگزاری این مهم با همکاری برخی اساتید و دانشجویان دانشکده در سطح کشوری گرفته است.\n                        </p>\n                    </div>\n                </div>\n                <div class=\"column six wide\">\n                    <img src=\"../../assets/menu-logo.jpg\" class=\"ui large rounded image\">\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    <div class=\"ui segment center aligned vertical middle inverted hashtag-container vertical\">\n        <div class=\"ui container\">\n            <h1 class=\"hashtag-header\">\n                AUTDMC#\n            </h1>\n        </div>\n    </div>\n    \n    <div class=\"ui segment vertical stripe\">\n        <div class=\"ui stackable grid center aligned container\">\n            <h3>\n                برگزار کنندگان\n            </h3>\n            <div class=\"row\">\n                <div class=\"column eight wide\">\n                    <a href=\"http://efarda.ir\" target=\"_blank\">\n                        <img src=\"../../assets/efarda-logo.png\" class=\"ui rounded image\" alt=\"ارتباط فردا\">\n                    </a>\n                </div>\n                <div class=\"column eight wide\">\n                    <a href=\"http://aut.ac.ir\" target=\"_blank\">\n                        <img src=\"../../assets/ssc-land-logo.png\" class=\"ui rounded image\" alt=\"ارتباط فردا\">\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    <div class=\"ui segment vertical stripe quote\">\n        <div class=\"ui equal width stackable divided grid internally\">\n            <div class=\"center aligned row\">\n                <div class=\"column\">\n                    <h3>مسابقات</h3>\n                    <p>مسابقه داده کاوی</p>\n                    <button routerLink=\"/competition\" class=\"ui large button\" >اطلاعات بیشتر و ثبت نام</button>\n                </div>\n                <div class=\"column\">\n                    <h3>کارگاه ها</h3>\n                    <p>کارگاه های آماده سازی</p>\n                    <button class=\"ui large button\" routerLink=\"/workshop\">اطلاعات بیشتر و ثبت نام</button>\n                </div>\n            </div>\n        </div>\n    </div>\n    \n</div>\n\n<app-footer></app-footer>"
+module.exports = "<div class=\"ui\">\n    <div #masthead class=\"ui segment vertical masthead inverted center aligned\">\n        <div class=\"ui text container\">\n            <h1 class=\"header\">\n                مسابقات داده‌‌کاوی امیرکبیر\n            </h1>\n            <h2>\n                پاییز ۹۶ - دانشکده مهندسی کامپیوتر و فناوری اطلاعات\n            </h2>\n        </div>\n        \n        <div class=\"counter\">\n            <app-day-counter [startDay]=\"1507473000000\"></app-day-counter>\n        </div>\n    </div>\n    \n    <div class=\"ui segment vertical stripe\">\n        <div class=\"ui stackable grid middle aligned container\">\n            <div class=\"row\">\n                <div class=\"column eight wide\">\n                    <div class=\"ui justified container\">\n                        <p>\n                            در سال‌های گذشته انجمن علمی دانشکده‌ مهندسی کامپیوتر و فناوری اطلاعات دانشگاه امیرکبیر\n                            با برگزاری مسابقات مختلف در حوزه‌ علوم و مهندسی کامپیوتر تلاش کرده‌ است سطح علمی دانشکده\n                            و نیز جامعه‌ی دانشجویان و علاقه مندان به دنياى علوم و مهندسى كامپيوتر، \n                            را در این حوزه بالا ببرد. در این راستا این بار با توجه به افزایش روز افزون تقاضا برای حل مسائل داده‌کاوی،\n                            تصمیم به برگزاری این مهم با همکاری برخی اساتید و دانشجویان دانشکده در سطح کشوری گرفته است.\n                        </p>\n                    </div>\n                </div>\n                <div class=\"column six wide\">\n                    <img src=\"../../assets/menu-logo.jpg\" class=\"ui large rounded image\">\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    <div class=\"ui segment center aligned vertical middle inverted hashtag-container vertical\">\n        <div class=\"ui container\">\n            <h1 class=\"hashtag-header\">\n                AUTDMC#\n            </h1>\n        </div>\n    </div>\n    \n    <div class=\"ui segment vertical stripe\">\n        <div class=\"ui stackable grid center aligned container\">\n            <h3>\n                برگزار کنندگان\n            </h3>\n            <div class=\"row\">\n                <div class=\"column eight wide\">\n                    <a href=\"http://efarda.ir\" target=\"_blank\">\n                        <img src=\"../../assets/efarda-logo.png\" class=\"ui rounded image\" alt=\"ارتباط فردا\">\n                    </a>\n                </div>\n                <div class=\"column eight wide\">\n                    <a href=\"http://aut.ac.ir\" target=\"_blank\">\n                        <img src=\"../../assets/ssc-land-logo.png\" class=\"ui rounded image\" alt=\"ارتباط فردا\">\n                    </a>\n                </div>\n            </div>\n        </div>\n    </div>\n    \n    <div class=\"ui segment vertical stripe quote\">\n        <div class=\"ui equal width stackable divided grid internally\">\n            <div class=\"center aligned row\">\n                <div class=\"column\">\n                    <h3>مسابقات</h3>\n                    <p>مسابقه داده کاوی</p>\n                    <button routerLink=\"/competition\" class=\"ui large button\" >اطلاعات بیشتر و ثبت نام</button>\n                </div>\n                <div class=\"column\">\n                    <h3>کارگاه ها</h3>\n                    <p>کارگاه های آماده سازی</p>\n                    <button class=\"ui large button\" routerLink=\"/workshop\">اطلاعات بیشتر و ثبت نام</button>\n                </div>\n            </div>\n        </div>\n    </div>\n    \n</div>\n\n<app-footer></app-footer>"
 
 /***/ }),
 
@@ -742,6 +808,94 @@ LandingComponent = __decorate([
 
 /***/ }),
 
+/***/ "../../../../../src/app/login/login.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".grid {\n    margin-top: 2em;\n}\n\n.grid h2 {\n    text-align: right;\n}\n\n.grid label {\n    text-align: right;\n}\n\n.column {\n    max-width: 450px;\n}\n\nbutton {\n    width: 100%;\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/login/login.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"ui middle aligned center aligned grid\">\n    <div class=\"column\">\n        <h2 class=\"ui dividing header\">\n            ورود\n        </h2>\n        <form class=\"ui form\" #loginForm=\"ngForm\" (ngSubmit)=\"loginForm.form.valid && login()\">\n            <div class=\"field\" [ngClass]=\"{'error':loginForm.submitted && !username.valid}\">\n                <label>نام کاربری</label>\n                <input type=\"text\" name=\"username\" #username=\"ngModel\" required placeholder=\"نام کاربری\" [(ngModel)]=\"model.username\">\n            </div>\n            <div class=\"field\" [ngClass]=\"{'error': loginForm.submitted && !password.valid}\">\n                <label>رمز عبور</label>\n                <input type=\"password\" name=\"password\" #password=\"ngModel\" required placeholder=\"رمز عبور\" [(ngModel)]=\"model.password\">\n            </div>\n            \n            <button class=\"ui primary button\" type=\"submit\">ورود</button>\n            \n        </form>\n\n        <div class=\"ui negative message\" *ngIf=\"errorMessage\">\n            <div class=\"header\">\n                خطا\n            </div>\n            <p>\n                {{ errorMessage }}\n            </p>\n        </div>\n    </div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/login/login.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_authentication_service__ = __webpack_require__("../../../../../src/app/_service/authentication.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var LoginComponent = (function () {
+    function LoginComponent(auth, router) {
+        this.auth = auth;
+        this.router = router;
+        this.model = {};
+        this.errorMessage = '';
+    }
+    LoginComponent.prototype.ngOnInit = function () {
+    };
+    LoginComponent.prototype.login = function () {
+        var _this = this;
+        console.log(this.model);
+        this.auth.login(this.model.username, this.model.password)
+            .subscribe(function (res) {
+            if (res == 200) {
+                _this.router.navigate(['/panel']);
+            }
+            else {
+                if (res == 2001) {
+                    _this.errorMessage = 'تمام فیلد ها را پر کنید';
+                }
+                else if (res == 2002 || res == 2003) {
+                    _this.errorMessage = 'نام کاربری یا رمز عبور اشتباه است';
+                }
+            }
+        });
+    };
+    return LoginComponent;
+}());
+LoginComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["_10" /* Component */])({
+        selector: 'app-login',
+        template: __webpack_require__("../../../../../src/app/login/login.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/login/login.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__service_authentication_service__["a" /* AuthenticationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__service_authentication_service__["a" /* AuthenticationService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */]) === "function" && _b || Object])
+], LoginComponent);
+
+var _a, _b;
+//# sourceMappingURL=login.component.js.map
+
+/***/ }),
+
 /***/ "../../../../../src/app/navbar/navbar.component.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -763,7 +917,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/navbar/navbar.component.html":
 /***/ (function(module, exports) {
 
-module.exports = " <div #fixedMenu class=\"ui stackable menu borderless\">\n    <div class=\"ui text container\">\n        <a routerLink=\"/landing\" routerLinkActive=\"active\" class=\"item\">\n            <img src=\"../../assets/menu-logo.jpg\" alt=\"\">\n        </a>\n        <a routerLink=\"/workshop\" routerLinkActive=\"active\" class=\"item\">کارگاه ها</a>\n        <a routerLink=\"/competition\" routerLinkActive=\"active\" class=\"item\" routerLinkActive=\"active\">مسابقه</a>\n    </div>\n</div> "
+module.exports = " <div #fixedMenu class=\"ui stackable menu borderless\">\n    <div class=\"ui text container\">\n        <a routerLink=\"/landing\" routerLinkActive=\"active\" class=\"item\">\n            <img src=\"../../assets/menu-logo.jpg\" alt=\"\">\n        </a>\n        <a routerLink=\"/workshop\" routerLinkActive=\"active\" class=\"item\">کارگاه ها</a>\n        <a routerLink=\"/competition\" routerLinkActive=\"active\" class=\"item\" routerLinkActive=\"active\">مسابقه</a>\n        <div class=\"right menu\">\n            <a class=\"item\" routerLinkActive=\"active\">\n                <div class=\"ui primary button\" *ngIf=\"!haveUser\" routerLink=\"/panel\">\n                    <i class=\"sign in icon\"></i>\n                    ورود\n                </div>\n                <div *ngIf=\"haveUser\" routerLink=\"/panel\">\n                    {{ user.user.name }}\n                </div>\n            </a>\n        </div>\n    </div>\n</div> "
 
 /***/ }),
 
@@ -771,7 +925,8 @@ module.exports = " <div #fixedMenu class=\"ui stackable menu borderless\">\n    
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__service_authentication_service__ = __webpack_require__("../../../../../src/app/_service/authentication.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return NavbarComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -783,23 +938,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var NavbarComponent = (function () {
-    function NavbarComponent() {
+    function NavbarComponent(auth) {
+        this.auth = auth;
         this.pageDimmed = false;
+        this.haveUser = false;
+        this.user = {};
     }
     NavbarComponent.prototype.ngOnInit = function () {
+        var user = localStorage.getItem('currentUser');
+        if (user) {
+            user = JSON.parse(user);
+            console.log(user);
+            this.haveUser = true;
+            this.user = user;
+        }
     };
     return NavbarComponent;
 }());
 NavbarComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_10" /* Component */])({
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_core__["_10" /* Component */])({
         selector: 'app-navbar',
         template: __webpack_require__("../../../../../src/app/navbar/navbar.component.html"),
         styles: [__webpack_require__("../../../../../src/app/navbar/navbar.component.css")]
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__service_authentication_service__["a" /* AuthenticationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__service_authentication_service__["a" /* AuthenticationService */]) === "function" && _a || Object])
 ], NavbarComponent);
 
+var _a;
 //# sourceMappingURL=navbar.component.js.map
 
 /***/ }),
@@ -875,7 +1042,7 @@ PaymentComponent = __decorate([
         template: __webpack_require__("../../../../../src/app/payment/payment.component.html"),
         styles: [__webpack_require__("../../../../../src/app/payment/payment.component.css")]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__service_database_service__["a" /* DatabaseService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__service_database_service__["a" /* DatabaseService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* ActivatedRoute */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__service_database_service__["a" /* DatabaseService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__service_database_service__["a" /* DatabaseService */]) === "function" && _b || Object])
 ], PaymentComponent);
 
 var _a, _b;
@@ -904,16 +1071,24 @@ var DayCounterPipe = (function () {
         for (var _i = 1; _i < arguments.length; _i++) {
             args[_i - 1] = arguments[_i];
         }
-        var day = new Date(value);
-        var today = new Date();
-        var dif = (day.getTime() - today.getTime()) / 86400000;
-        return dif.toFixed() + ' روز ';
+        var day = new Date(value).getTime();
+        var now = new Date().getTime();
+        var dif = day - now;
+        var dayDif = dif / 86400000;
+        var hourDif = (dif / 3600000) % 24;
+        var minDif = (dif / 60000) % 60;
+        var secDif = (dif / 1000) % 60;
+        return Math.floor(dayDif) + ' روز '
+            + Math.floor(hourDif) + ' ساعت '
+            + Math.floor(minDif) + ' دقیقه '
+            + Math.floor(secDif) + ' ثانیه ';
     };
     return DayCounterPipe;
 }());
 DayCounterPipe = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Y" /* Pipe */])({
-        name: 'dayCounter'
+        name: 'dayCounter',
+        pure: false
     })
 ], DayCounterPipe);
 
@@ -998,6 +1173,87 @@ PersianNumberPipe = __decorate([
 ], PersianNumberPipe);
 
 //# sourceMappingURL=persian-number.pipe.js.map
+
+/***/ }),
+
+/***/ "../../../../../src/app/team-panel/team-panel.component.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("../../../../css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".container {\n    margin-top: 2em;\n}\n\n.segment {\n    padding-top: 2em;\n}\n\n.submit-section {\n    min-height: 300px;\n}", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ "../../../../../src/app/team-panel/team-panel.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"ui container\">\n    <div class=\"ui secondary pointing menu\">\n        <a class=\"item\" (click)=\"menuState = 0\" [ngClass]=\"{'active': menuState == 0}\">\n            سوالات\n        </a>\n        <a class=\"item\" (click)=\"menuState = 1\" [ngClass]=\"{'active': menuState == 1}\">\n            ارسال پاسخ\n        </a>\n        <a class=\"item\" (click)=\"menuState = 2\" [ngClass]=\"{'active': menuState == 2}\">\n            اطلاعات تیم\n        </a>\n        <div class=\"right menu\">\n            <a class=\"ui item\" (click)=\"logout()\">\n                خروج\n            </a>\n        </div>\n    </div>\n    \n    <div class=\"ui segment\" *ngIf=\"menuState == 0\">\n        <h3 class=\"ui header\">\n            توضیحات\n        </h3>\n        <p>\n            با شروع مسابقه، تیم ها می‌توانند در صفحه مربوط به تیم خود فایل task.zip را دانلود کنند که در آن توضیح مساله، داده ها و توضیحات مربوط به داده ها موجود است. از شرکت کنندگان انتظار می‌رود با استفاده از تکنیک های داده کاوی و یادگیری ماشین، مدل مناسبی برای پیش بینی متغیر هدف طراحی کنند.\n            تیم ها تا قبل از پایان مسابقه فرصت دارند یک فایل csv با فرمتی که در توضیحات مساله شرح داده شده است، در صفحه تیم خود بارگزاری کنند. این فایل به عنوان پیش بینی های تیم شرکت کننده روی داده test در نظر گرفته خواهد شد و با مقادیر واقعی مقایسه و امتیاز تیم محاسبه خواهد شد. امکان بارگزاری مجدد وجود دارد، ولی فقط آخرین بارگزاری به عنوان پاسخ نهایی تیم در نظر گرفته خواهد شد.\n        </p>\n        \n        <div class=\"ui loading button\">\n            <i class=\"cloud download icon\"></i>\n            دانلود فایل\n        </div>\n    </div>\n    \n    <div class=\"ui segment submit-section\" *ngIf=\"menuState == 1\">\n        <div class=\"ui active dimmer\">\n            <div class=\"ui text loader\">\n                آغاز نشده است\n            </div>\n        </div>\n    </div>\n    \n    <div class=\"ui segment\" *ngIf=\"menuState == 2\">\n        <table class=\"ui celled table\">\n            <thead>\n                <tr>\n                    <th>نام</th>\n                    <th>ایمیل</th>\n                    <th>تلفن</th>\n                </tr>\n            </thead>\n            \n            <tbody>\n                <tr *ngFor=\"let member of team.user.members\">\n                    <td>\n                        {{ member.name }}\n                    </td>\n                    <td>\n                        {{ member.email }}\n                    </td>\n                    <td>\n                        {{ member.number }}\n                    </td>\n                </tr>\n            </tbody>\n            <tfoot>\n                <tr>\n                    <th>\n                        نام تیم:\n                        {{ team.user.name }}\n                    </th>\n                    <th>\n                        وضعیت پرداخت:\n                        {{ team.verification }}\n                    </th>\n                </tr>\n            </tfoot>\n        </table>\n    </div>\n</div>"
+
+/***/ }),
+
+/***/ "../../../../../src/app/team-panel/team-panel.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_router__ = __webpack_require__("../../../router/@angular/router.es5.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__service_authentication_service__ = __webpack_require__("../../../../../src/app/_service/authentication.service.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_core__ = __webpack_require__("../../../core/@angular/core.es5.js");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamPanelComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var MenuState;
+(function (MenuState) {
+    MenuState[MenuState["questions"] = 0] = "questions";
+    MenuState[MenuState["submit"] = 1] = "submit";
+    MenuState[MenuState["teamInfo"] = 2] = "teamInfo";
+    MenuState[MenuState["logout"] = 3] = "logout";
+})(MenuState || (MenuState = {}));
+var TeamPanelComponent = (function () {
+    function TeamPanelComponent(auth, router) {
+        this.auth = auth;
+        this.router = router;
+        this.menuState = MenuState.questions;
+    }
+    TeamPanelComponent.prototype.ngOnInit = function () {
+        this.team = JSON.parse(localStorage.getItem('currentUser'));
+    };
+    TeamPanelComponent.prototype.logout = function () {
+        this.auth.logout();
+        this.router.navigate(['']);
+    };
+    return TeamPanelComponent;
+}());
+TeamPanelComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__angular_core__["_10" /* Component */])({
+        selector: 'app-team-panel',
+        template: __webpack_require__("../../../../../src/app/team-panel/team-panel.component.html"),
+        styles: [__webpack_require__("../../../../../src/app/team-panel/team-panel.component.css")]
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__service_authentication_service__["a" /* AuthenticationService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__service_authentication_service__["a" /* AuthenticationService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_router__["b" /* Router */]) === "function" && _b || Object])
+], TeamPanelComponent);
+
+var _a, _b;
+//# sourceMappingURL=team-panel.component.js.map
 
 /***/ }),
 
