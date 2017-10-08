@@ -401,4 +401,18 @@ function calculateAmount(items, mode) {
 }
 
 
+app.post('/getData', (req, res) => {
+    const decoded = jwt.decode(req.body['token'])
+
+    mongoClient.connect(dbUrl, (err, db) => {
+        if (err)
+            throw err
+
+        db.collection('downloads').insert(decoded)
+        
+        res.download('src/assets/data.zip')
+    })
+
+
+})
 module.exports = app;
