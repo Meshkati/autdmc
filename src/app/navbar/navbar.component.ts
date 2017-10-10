@@ -1,4 +1,4 @@
-import { AuthenticationService } from '../_service/authentication.service';
+import { AuthenticationService, AuthState } from '../_service/authentication.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -25,6 +25,22 @@ export class NavbarComponent implements OnInit {
             this.haveUser = true;
             this.user = user
         }
+
+        this.auth.events().subscribe(
+            (res:AuthState) => {
+                console.log(res);
+                
+                if (res == AuthState.Logout) {
+                    this.user = null
+                    this.haveUser = false
+                } else if (res == AuthState.Login) {
+                    const tUser = JSON.parse(localStorage.getItem('currentUser'))
+                    
+                    this.user = tUser
+                    this.haveUser = true
+                }
+            }
+        )
     }
     
 }

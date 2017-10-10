@@ -1,12 +1,18 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
+
+export enum AuthState{
+    Logout = 0,
+    Login
+}
 
 @Injectable()
 export class AuthenticationService {
     private url = "/api";
     token: string;
+    private authEvents: Subject<AuthState>
 
     constructor(
         private http: Http
@@ -30,6 +36,7 @@ export class AuthenticationService {
                 this.token = token
 
                 localStorage.setItem('currentUser', JSON.stringify(response.json()))
+                this.authEvents.next(AuthState.Login)
                 return response.json().status
             } else {
                 return response.json().status
@@ -38,8 +45,12 @@ export class AuthenticationService {
     }
 
     logout() {
+        console.log('logout');
+        
         this.token = null;
         localStorage.setItem('currentUser', '')
+        
+        this.authEvents.next(AuthState.Logout)
     }
 
     private extractData(res: Response) {
@@ -53,5 +64,13 @@ export class AuthenticationService {
         } else {
             return null
         }
+    }
+
+    public events() {
+        if (!this.authEvents) {
+            this.authEvents = new Subject<AuthState>()
+        }
+
+        return this.authEvents
     }
 }
