@@ -417,7 +417,7 @@ app.post('/getData', (req, res) => {
 
 app.get('/getData', (req, res) => {
     const filesName = req.query['file']
-    if (filesName == 'AUT DMC 2017 - Task.pdf' || filesName == 'AUT DMC 2017 - Features.pdf' || filesName == 'data.zip'){
+    if (filesName == 'AUT DMC 2017 - Task.pdf' || filesName == 'AUT DMC 2017 - Features.pdf' || filesName == 'data_v2.zip'){
         res.download('files/' + filesName)
     } else {
         res.send('failed')
