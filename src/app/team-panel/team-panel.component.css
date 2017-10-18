@@ -9,3 +9,14 @@
 .submit-section {
     min-height: 300px;
 }
+
+.item-details {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    direction: ltr;
+    display: inline-block;
+}
+
+.submittion-history {
+    margin-top: 1em;
+}
