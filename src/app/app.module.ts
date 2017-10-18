@@ -1,3 +1,5 @@
+import { PersianDatePipe } from './pipes/persian-date.pipe';
+import { FileSelectDirective } from 'ng2-file-upload/file-upload/file-select.directive';
 import { AuthGuard } from './_guard/auth.guard';
 import { AuthenticationService } from './_service/authentication.service';
 import { DayCounterPipe } from './pipes/day-counter.pipe';
@@ -39,7 +41,9 @@ import { TeamPanelComponent } from './team-panel/team-panel.component';
         DayCounterPipe,
         DayCounterComponent,
         LoginComponent,
-        TeamPanelComponent
+        TeamPanelComponent,
+        FileSelectDirective,
+        PersianDatePipe
     ],
     imports: [
         BrowserModule,
