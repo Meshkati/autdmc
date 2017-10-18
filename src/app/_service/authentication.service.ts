@@ -16,7 +16,10 @@ export class AuthenticationService {
 
     constructor(
         private http: Http
-    ) { }
+    ) {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        this.token = currentUser['token']
+    }
 
     login(username: string, password: string):Observable<number> {
         let headers = new Headers({'Content-Type': 'application/json'});
