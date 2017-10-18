@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const fileUpload = require('express-fileupload')
 
 axios.defaults.baseURL = "https://www.zarinpal.com/pg/rest/WebGate/";
 const dbUrl = "mongodb://localhost:27017/scc-landing";
@@ -27,6 +28,10 @@ app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 })); 
+
+app.use(fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 }
+}))
 
 app.get('/pay', (req, res) => {
     
@@ -424,4 +429,49 @@ app.get('/getData', (req, res) => {
     }
 
 })
+
+app.get('/submittion/upload', (req, res) => {
+    res.end('For submittion :)')
+})
+
+app.post('/submittion/upload', (req, res) => {
+    let files = req.files;
+    const token = req.headers.authorization
+    const decoded = jwt.decode(token)
+    console.log(decoded)
+
+    if (files !== undefined && files !== null) {
+        console.log(req.files.file)
+        const fileName = token + '__' + Date.now() + '__' + req.files.file.name
+        req.files.file.mv('./subs/upload/files/' + fileName, (err) => {
+            console.log('START')
+            console.error(err)
+            if (err) {
+                res.status(500)
+            } else {
+                mongoClient.connect(dbUrl, (err, db) => {
+                    if (err)
+                        throw err
+
+                    db.collection('submittions').insert({user: decoded['user'], uploadTime: Date.now(), fileName: req.files.file.name})
+                })
+                console.log('File uploaded')
+                res.end('File uploaded')
+            }
+        })
+    }
+})
+
+app.post('/submittion/getHistory', (req, res) => {
+    const token = req.body['token']
+    const decoded = jwt.decode(token)
+
+    mongoClient.connect(dbUrl, (err, db) => {
+        db.collection('submittions').find({user: decoded['user']}).toArray((err, docs) => {
+
+            res.send(docs)
+        })
+    })
+})
+
 module.exports = app;
