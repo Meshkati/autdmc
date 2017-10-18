@@ -1,3 +1,4 @@
+import { AuthenticationService } from './authentication.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/catch';
@@ -10,7 +11,8 @@ export class DatabaseService {
     private url = "/api";
     
     constructor(
-        private http: Http
+        private http: Http,
+        private auth: AuthenticationService
     ) { }
     
     workshopRegister(data, items, mode) {
@@ -73,6 +75,17 @@ export class DatabaseService {
             password: data['password']
         }
         return this.http.post(this.url + '/panel/getCompetition', requestData, options)
+        .map(this.extractData)
+    }
+
+    getSubmittionHistory() {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions ({headers: headers});
+        const requestData = {
+            token: this.auth.token
+        }
+
+        return this.http.post(this.url + '/submittion/getHistory', requestData, options)
         .map(this.extractData)
     }
 }
