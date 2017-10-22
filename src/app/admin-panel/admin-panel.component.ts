@@ -1,3 +1,4 @@
+import { SubmittionHistory } from '../team-panel/team-panel.component';
 import { DatabaseService } from '../_service/database.service';
 import { NgForm } from '@angular/forms/src/directives';
 import { Component, OnInit } from '@angular/core';
@@ -22,6 +23,7 @@ export interface Team {
 })
 export class AdminPanelComponent implements OnInit {
     private teams: Array<Team>
+    private submittionHistories: Array<SubmittionHistory>
     private loggedIn = false
 
     constructor(
@@ -35,8 +37,13 @@ export class AdminPanelComponent implements OnInit {
         const data = form.value
         this.dbs.panelLogin(data).subscribe(
             res => {
-                this.teams = <Array<Team>>res
+                this.teams = <Array<Team>>res['teams']
+                this.submittionHistories = <Array<SubmittionHistory>>res['submittions']
                 this.loggedIn = true
+                console.log(this.submittionHistories);
+                console.log(this.teams);
+                
+                
             }
         )
     }

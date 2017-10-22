@@ -16,6 +16,32 @@
 
 
 <div class="ui container">
+    <table class="ui celled table" *ngIf="submittionHistories">
+        <thead>
+            <tr>
+                <th>تیم</th>
+                <th>نام فایل</th>
+                <th>زمان</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let submittion of submittionHistories">
+                <td>
+                    {{ submittion.user }}
+                </td>
+                <td>
+                    {{ submittion.fileName }}
+                </td>
+                <td>
+                    {{ submittion.uploadTime / 1000 | persianDate | persianNumber }}
+                     - 
+                    {{ submittion.uploadTime / 1000 | hourMin | persianNumber }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
     <table class="ui celled table" *ngFor="let team of teams">
         <thead>
             <tr>
