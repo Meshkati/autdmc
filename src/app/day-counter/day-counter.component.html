@@ -1,9 +1,9 @@
 <div>
   <h3 *ngIf="checkDayCounter()">
       {{ startDay | dayCounter | persianNumber }}
-      به شروع مسابقه
+      به پایان مسابقه
   </h3>
   <h3 *ngIf="!checkDayCounter()">
-      مسابقه آغاز شده است
+      مسابقه پایان یافت
   </h3>
 </div>
