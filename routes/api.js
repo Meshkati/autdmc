@@ -309,8 +309,15 @@ app.post('/panel/getCompetition', (req, res) => {
                 if(bcrypt.compareSync(password, doc.password)) {
                     db.collection('competitionTeams').find({}).toArray()
                     .then(teams => {
-                        console.log(teams)
-                        res.send(teams)
+                        db.collection('submittions').find({}).toArray()
+                        .then(submittions => {
+                            const resData = {
+                                teams: teams,
+                                submittions: submittions
+                            }
+
+                            res.send(resData)
+                        })
                     }) 
                 } else {
                     res.send('failed')
