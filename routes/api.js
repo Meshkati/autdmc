@@ -473,12 +473,14 @@ app.post('/submittion/getHistory', (req, res) => {
     const token = req.body['token']
     const decoded = jwt.decode(token)
 
-    mongoClient.connect(dbUrl, (err, db) => {
-        db.collection('submittions').find({user: decoded['user']}).toArray((err, docs) => {
-
-            res.send(docs)
+    if (!(decoded == undefined || decoded == null)) {
+        mongoClient.connect(dbUrl, (err, db) => {
+            db.collection('submittions').find({user: decoded['user']}).toArray((err, docs) => {
+    
+                res.send(docs)
+            })
         })
-    })
+    }
 })
 
 module.exports = app;
