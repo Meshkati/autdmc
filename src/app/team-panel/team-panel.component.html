@@ -65,34 +65,6 @@
             </p>
         </div>
         
-        <label for="file" class="ui icon button" (click)="clearUploader()">
-            <i class="file icon"></i>
-            انتخاب فایل
-        </label>
-        <input id="file" type="file" ng2FileSelect [uploader]="uploader" style="display: none;" name="subFile"/>
-        <div class="item-details" *ngIf="uploader.queue.length">
-            <strong>{{ uploader.queue[0]?.file?.name }}</strong>
-            - 
-            <span nowrap>{{ uploader.queue[0]?.file?.size/1024/1024 | number:'.2' }} MB</span>
-        </div>
-        
-        <div *ngIf="uploader.queue.length">
-            <sui-progress [value]="uploader.progress" [showProgress]="uploader.progress" *ngIf="isUploading">
-                {{ uploader.queue[0]?.isSuccess?'انجام شد':'در حال آپلود' }}
-            </sui-progress>
-            
-            <div class="ui primary button" (click)="upload()" [ngClass]="{'loading': isUploading && !uploader.queue[0]?.isSuccess, 'disabled': isUploading}">
-                <i class="cloud upload icon"></i>
-                {{ uploader.queue[0]?.isSuccess?'انجام شد':'آپلود' }}
-            </div>
-        </div>
-
-        <div class="ui negative message" *ngIf="errorMessage">
-            <h4 class="header">
-                خطا
-            </h4>
-            {{ errorMessage }}
-        </div>
         <div class="ui divider"></div>
         <div *ngIf="submittionHistory" class="submittion-history">
             <h4 class="ui header">
@@ -118,6 +90,12 @@
                 </tbody>
             </table>
         </div>
+        <sui-dimmer [isDimmed]="!!1">
+            <h2 class="ui inverted icon header">
+                <i class="hourglass empty icon"></i>
+                پایان یافت
+            </h2>
+        </sui-dimmer>
         <div class="ui segment" *ngIf="menuState == 2">
             <table class="ui celled table">
                 <thead>

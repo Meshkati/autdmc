@@ -446,27 +446,27 @@ app.post('/submittion/upload', (req, res) => {
     const token = req.headers.authorization
     const decoded = jwt.decode(token)
     console.log(decoded)
+    res.end('expired')
+    // if (files !== undefined && files !== null) {
+    //     console.log(req.files.file)
+    //     const fileName = token + '__' + Date.now() + '__' + req.files.file.name
+    //     req.files.file.mv('./subs/upload/files/' + fileName, (err) => {
+    //         console.log('START')
+    //         console.error(err)
+    //         if (err) {
+    //             res.status(500)
+    //         } else {
+    //             mongoClient.connect(dbUrl, (err, db) => {
+    //                 if (err)
+    //                     throw err
 
-    if (files !== undefined && files !== null) {
-        console.log(req.files.file)
-        const fileName = token + '__' + Date.now() + '__' + req.files.file.name
-        req.files.file.mv('./subs/upload/files/' + fileName, (err) => {
-            console.log('START')
-            console.error(err)
-            if (err) {
-                res.status(500)
-            } else {
-                mongoClient.connect(dbUrl, (err, db) => {
-                    if (err)
-                        throw err
-
-                    db.collection('submittions').insert({user: decoded['user'], uploadTime: Date.now(), fileName: req.files.file.name})
-                })
-                console.log('File uploaded')
-                res.end('File uploaded')
-            }
-        })
-    }
+    //                 db.collection('submittions').insert({user: decoded['user'], uploadTime: Date.now(), fileName: req.files.file.name})
+    //             })
+    //             console.log('File uploaded')
+    //             res.end('File uploaded')
+    //         }
+    //     })
+    // }
 })
 
 app.post('/submittion/getHistory', (req, res) => {
