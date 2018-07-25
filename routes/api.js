@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const pg = require('generate-password');
 const fileUpload = require('express-fileupload')
 
 axios.defaults.baseURL = "https://www.zarinpal.com/pg/rest/WebGate/";
@@ -351,7 +352,7 @@ app.post('/login', (req, res) => {
                     res.send(response)
                 } else {
                     if (bcrypt.compareSync(password, doc.password)) {
-                        let token = jwt.sign({user: doc.name}, secret);
+                        let token = jwt.sign({user: doc.name, username:doc.username}, secret);
                         const team = {
                             name: doc.name,
                             username: doc.username,
@@ -412,6 +413,41 @@ function calculateAmount(items, mode) {
     return amount.toString();
 }
 
+function refactorRecords() {
+    mongoClient.connect(dbUrl, (err, db) => {
+        if (err)
+            throw err
+
+        db.collection('teams').find({}).toArray((err, docs) => {
+            docs.forEach(doc => {
+                var password = pg.generate({
+                    length: 10,
+                    numbers: true
+                });
+                let passhsh = bcrypt.hashSync(password, 10)
+                if (doc.password == "") {
+                    db.collection('teams').updateOne(
+                        {"_id": doc._id},
+                        {$set: {"password": passhsh}}
+                    )
+                }
+
+                db.collection('teams').updateOne(
+                    {"_id": doc._id},
+                    {$set: {"username": doc.members[0].email}}
+                )
+
+                console.log(doc.name + '||' + doc.username + '||' + password + '||' + passhsh)
+            })
+        })
+    })
+}
+
+app.get('/sina', (req, res) => {
+    refactorRecords()
+    // const crypt = bcrypt.hashSync('KyUqpfMDDG', 10)
+    // console.log(crypt)
+})
 
 app.post('/getData', (req, res) => {
     const decoded = jwt.decode(req.body['token'])
@@ -436,6 +472,11 @@ app.get('/getData', (req, res) => {
     }
 
 })
+
+// app.use(multer({
+//     storage: storage,
+//     fileFilter: fileFilter
+//   }).any();
 
 app.get('/submittion/upload', (req, res) => {
     res.end('For submittion :)')
@@ -482,5 +523,16 @@ app.post('/submittion/getHistory', (req, res) => {
         })
     }
 })
+
+function fileFilter (req, file, cb) {
+    const token = req.headers.authorization
+    try {
+        const decoded = jwt.decode(token)
+
+        cb(null, true)
+    } catch (e) {
+
+    }
+}
 
 module.exports = app;
