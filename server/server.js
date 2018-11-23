@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.use('/apiv2', route);
+app.use('/api/v2', route);
 
 app.set('port', port);
 
@@ -25,8 +25,7 @@ then(
     () => {
     server.listen(port);
     server.on('listening', onListening);
-}
-);
+});
 
 
 function onListening() {
