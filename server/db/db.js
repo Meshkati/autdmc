@@ -6,7 +6,9 @@ let mongoDb = null;
 
 module.exports.connect = async () => {
     return new Promise((resolve, reject) => {
-        MongoClient.connect(`mongodb://${config.DB_HOST}:${config.DB_PORT}/${config.DB_NAME}`, (err, db) => {
+        let connectionString = `mongodb://${config.DB_HOST}:${config.DB_PORT}/${config.DB_NAME}`;
+        console.log(connectionString);
+        MongoClient.connect(connectionString, (err, db) => {
             if (err) {
                 reject(err);
             } else {
