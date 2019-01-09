@@ -13,7 +13,7 @@
 }
 
 .masthead.segment {
-    background: #26a69a;
+    background: #324D72;
     background-image: url('../../assets/masthead-bg.png');
     background-repeat: repeat;
     background-size: 200px;
@@ -55,7 +55,7 @@
 }
 
 .hashtag-container {
-    background: #26a69a !important;
+    background: #324D72 !important;
     background-image: url('../../assets/masthead-bg.png') !important;
     background-repeat: repeat !important;
     background-size: 200px !important;

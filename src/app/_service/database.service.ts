@@ -8,7 +8,7 @@ import { HttpModule, JsonpModule, Headers, RequestOptions, Http, Response, } fro
 
 @Injectable()
 export class DatabaseService {
-    private url = "/api";
+    private url = "http://localhost:3000/api/v2";
     
     constructor(
         private http: Http,
@@ -36,19 +36,19 @@ export class DatabaseService {
         
     }
 
-    competitionRegister(data, num, teamName) {
+    competitionRegister(data, teamName, teamLead) {
         console.log(data);
 
         let headers = new Headers({'Content-Type': 'application/json'});
         let options = new RequestOptions ({headers: headers});
         let requestData = {
-            users: data,
-            num: num,
-            team_name: teamName
+            team_members: data,
+            team_name: teamName,
+            team_lead: teamLead
         }
 
-        // return this.http.post(this.url + '/competition/register', requestData, options)
-        // .map(this.extractData);
+        return this.http.post(this.url + '/signup', requestData, options)
+        .map(this.extractData);
     }
     
     private extractData(res: Response) {

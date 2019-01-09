@@ -25,6 +25,7 @@ import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { DayCounterComponent } from './day-counter/day-counter.component';
 import { LoginComponent } from './login/login.component';
 import { TeamPanelComponent } from './team-panel/team-panel.component';
+import { PastCompetitionComponent } from './past-competition/past-competition.component';
 
 @NgModule({
     declarations: [
@@ -43,15 +44,17 @@ import { TeamPanelComponent } from './team-panel/team-panel.component';
         LoginComponent,
         TeamPanelComponent,
         FileSelectDirective,
-        PersianDatePipe
+        PersianDatePipe,
+        PastCompetitionComponent
     ],
     imports: [
         BrowserModule,
         RouterModule.forRoot([
             {path: 'landing' , component: LandingComponent, data: { state: 'landing' }},
-            {path: 'workshop', component: WorkshopComponent, data: { state: 'workshop' }},
+            // {path: 'workshop', component: WorkshopComponent, data: { state: 'workshop' }},
             {path: 'competition', component: CompetitionComponent, data: { state: 'competition' }},
             {path: 'payment', component: PaymentComponent, data: { state: 'payment' }},
+            {path: 'past', component: PastCompetitionComponent},
             {path: 'spanel', component: AdminPanelComponent},
             {path: 'login', component: LoginComponent},
             {path: 'panel', component: TeamPanelComponent, canActivate: [AuthGuard]},

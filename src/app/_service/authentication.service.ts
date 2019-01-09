@@ -17,7 +17,10 @@ export class AuthenticationService {
     constructor(
         private http: Http
     ) {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        let currentUser = null;
+        if (localStorage.getItem('currentUser')) {
+            currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        }
         if (!(currentUser == null || currentUser == undefined)) {
             this.token = currentUser['token']
         }

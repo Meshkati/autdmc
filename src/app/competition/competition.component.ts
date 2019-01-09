@@ -4,10 +4,10 @@ import { SuiSelectOption } from 'ng2-semantic-ui/dist';
 import { Component, OnInit } from '@angular/core';
 
 export interface IMember {
-    fname: string;
-    lname: string;
+    first_name: string;
+    last_name: string;
     email: string;
-    phone: any;
+    cellphone: any;
 }
 
 @Component({
@@ -17,6 +17,7 @@ export interface IMember {
 })
 export class CompetitionComponent implements OnInit {
     teamNumber = Array<number>();
+    teamSizeLimitation = 3;
     private errorMessage
     private isRegisterOver: boolean = false;
     constructor(
@@ -39,29 +40,29 @@ export class CompetitionComponent implements OnInit {
         
         for (let index = 1; index <= this.teamNumber.length; index++) {
             let member: IMember = {
-                fname: data['fname' + index],
-                lname: data['lname' + index],
+                first_name: data['fname' + index],
+                last_name: data['lname' + index],
                 email: data['email' + index],
-                phone: data['phone' + index]
+                cellphone: data['phone' + index]
             }
             
             members.push(member)
         }
         
-        this.dbs.competitionRegister(members, this.teamNumber.length, teamName).subscribe(
+        this.dbs.competitionRegister(members, teamName, members.pop()).subscribe(
             res => {
                 console.log(res);
                 let status = res['status']
                 if (status == 200) {
                     if ((window.location.href = res['url']) == undefined) {
-                        window.open(res['url']);
+                        window.open("https://educenter.aut.ac.ir/dmc2019");
                     }
                 } else if (status == 1001) {
-                    this.errorMessage = 'تمام ورودی ها را پر کنید'
+                    this.errorMessage = 'تمام ورودی‌ها را پر کنید'
                 } else if (status == 1002) {
                     this.errorMessage = 'تیمی با این نام وجود دارد'
                 } else if (status == 1003) {
-                    this.errorMessage = 'کاربر با ایمیل ' + res['data'] + ' در یکی از تیم ها وجود دارد'   
+                    this.errorMessage = 'کاربر با ایمیل ' + res['data'] + ' در یکی از تیم‌ها وجود دارد'   
                 }
             },
             err => {
@@ -72,7 +73,7 @@ export class CompetitionComponent implements OnInit {
     }
     
     addMember() {
-        if (this.teamNumber.length < 5) {
+        if (this.teamNumber.length < this.teamSizeLimitation) {
             this.teamNumber.push(this.teamNumber.length + 1);
         }
     }

@@ -1,3 +1,7 @@
 .hidden.menu {
     display: none;
 }
+
+.nav-color {
+    background-color: #99A6B9;
+}
