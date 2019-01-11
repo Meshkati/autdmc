@@ -24,7 +24,7 @@
                 <th>زمان</th>
             </tr>
         </thead>
-
+        
         <tbody>
             <tr *ngFor="let submittion of submittionHistories">
                 <td>
@@ -35,14 +35,14 @@
                 </td>
                 <td>
                     {{ submittion.uploadTime / 1000 | persianDate | persianNumber }}
-                     - 
+                    - 
                     {{ submittion.uploadTime / 1000 | hourMin | persianNumber }}
                 </td>
             </tr>
         </tbody>
     </table>
-
-    <table class="ui celled table" *ngFor="let team of teams">
+    
+    <table class="ui celled table" *ngFor="let team of teams" [ngClass]="{orange: !team.validated, green: team.validated}">
         <thead>
             <tr>
                 <th>نام</th>
@@ -53,18 +53,34 @@
         </thead>
         
         <tbody>
-            <tr *ngFor="let member of team.members">
+            <tr>
                 <td>
-                    {{ member.fname }}
+                    <i class="user icon"></i>
+                    {{ team.team_lead.first_name }}
                 </td>
                 <td>
-                    {{ member.lname }}
+                    {{ team.team_lead.last_name }}
+                </td>
+                <td>
+                    {{ team.team_lead.email }}
+                </td>
+                <td>
+                    {{ team.team_lead.cellphone }}
+                </td>
+            </tr>
+            <tr *ngFor="let member of team.team_members">
+                <td>
+                    <i class="user outline icon"></i>
+                    {{ member.first_name }}
+                </td>
+                <td>
+                    {{ member.last_name }}
                 </td>
                 <td>
                     {{ member.email }}
                 </td>
                 <td>
-                    {{ member.phone }}
+                    {{ member.cellphone }}
                 </td>
             </tr>
         </tbody>
@@ -73,11 +89,16 @@
             <tr>
                 <th>
                     نام تیم:
-                    {{ team.name }}
+                    {{ team.team_name }}
                 </th>
                 <th>
                     تعداد اعضا:
                     {{ team.size }}
+                </th>
+                <th>
+                    <button *ngIf="!team.validated" (click)="validateTeam(team._id)" class="positive ui button">
+                        تایید تیم
+                    </button>
                 </th>
             </tr>
         </tfoot>

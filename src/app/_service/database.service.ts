@@ -9,7 +9,8 @@ import { HttpModule, JsonpModule, Headers, RequestOptions, Http, Response, } fro
 @Injectable()
 export class DatabaseService {
     private url = "http://localhost:3000/api/v2";
-    
+    tokenType = "Bearer "
+
     constructor(
         private http: Http,
         private auth: AuthenticationService
@@ -74,7 +75,25 @@ export class DatabaseService {
             username: data['username'],
             password: data['password']
         }
-        return this.http.post(this.url + '/panel/getCompetition', requestData, options)
+        return this.http.post(this.url + '/admin-login', requestData, options)
+        .map(this.extractData)
+    }
+
+    getTeams(token) {
+        let headers = new Headers({'Authorization': this.tokenType + token});
+        let options = new RequestOptions ({headers: headers});
+        
+        console.log(options);
+        
+        return this.http.get(this.url + '/teams', options)
+        .map(this.extractData);
+    }
+
+    validateTeam(teamId, token) {
+        let headers = new Headers({'Authorization': this.tokenType + token});
+        let options = new RequestOptions ({headers: headers});
+
+        return this.http.post(this.url + '/teams/' + teamId + '/accept', null, options)
         .map(this.extractData)
     }
 
