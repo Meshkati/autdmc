@@ -4,7 +4,12 @@
             <img src="../../assets/dmc-menu-logo-trans.png" alt="">
         </a>
         <a routerLink="/competition" routerLinkActive="active" class="item" routerLinkActive="active">مسابقه</a>
-        <a routerLink="/past" routerLinkActive="active" class="item" routerLinkActive="active">دوره‌ی قبل</a>
+        <a routerLink="/past" routerLinkActive="active" class="item" routerLinkActive="active">
+            دوره‌ی قبل
+            <div class="ui orange label">
+                سال ۹۶
+            </div>
+        </a>
         <div class="right menu">
             <a class="item" routerLinkActive="active">
                 <div class="ui primary button" *ngIf="!haveUser" routerLink="/panel">
