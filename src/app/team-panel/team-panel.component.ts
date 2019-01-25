@@ -15,6 +15,18 @@ enum MenuState {
     scoreBoard
 }
 
+export interface INews {
+    title: string
+    body: string
+    date: Date
+}
+
+export interface IScoreBoardEntry {
+    _id: string
+    team_name: string
+    score: number
+}
+
 export interface SubmittionHistory {
     fileName: string
     uploadTime: string
@@ -38,6 +50,7 @@ export class TeamPanelComponent implements OnInit {
     private errorMessage: string
     private submittionHistory
     private selectedFile: File;
+    private scoreBoard: Array<IScoreBoardEntry>
     public uploader:FileUploader = new FileUploader({url: this.uploadURL, authToken: this.auth.token});
     
     constructor(
@@ -50,14 +63,6 @@ export class TeamPanelComponent implements OnInit {
     
     ngOnInit() {
         this.team = JSON.parse(localStorage.getItem('currentUser'))
-        
-        // this.getHistory()
-
-        // setInterval((dbs) => {
-        //     dbs.getSubmittionHistory().subscribe(res => {
-        //         this.submittionHistory = <Array<SubmittionHistory>>res;
-        //     })
-        // }, 5000, this.dbs)
 
         this.dbs.getTeamDashboard().subscribe(
             res => {
@@ -76,6 +81,23 @@ export class TeamPanelComponent implements OnInit {
             },
             err => {
                 console.log("Error on getting problems");
+                console.error(err);
+            }
+        )
+
+        this.dbs.getScoreBoard().subscribe(
+            res => {
+                this.scoreBoard = <Array<IScoreBoardEntry>>res
+                this.scoreBoard.sort((a, b) => {
+                    if (a.score > b.score)
+                        return 1
+                    if (a.score == b.score)
+                        return 0
+                    return -1
+                })
+            },
+            err => {
+                console.log("Error on getting ScoreBoard!");
                 console.error(err);
             }
         )
