@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../_service/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FileUploader, FileSelectDirective} from 'ng2-file-upload';
+import { ITeam } from "../admin-panel/admin-panel.component";
 
 enum MenuState {
     questions = 0,
@@ -27,7 +28,7 @@ export interface SubmittionHistory {
 
 export class TeamPanelComponent implements OnInit {
     private menuState = MenuState.importantNotes
-    private team: any;
+    private team: ITeam;
     private fileName;
     private uploadURL = '/api/submittion/upload';
     private isUploading = false
@@ -53,6 +54,16 @@ export class TeamPanelComponent implements OnInit {
         //         this.submittionHistory = <Array<SubmittionHistory>>res;
         //     })
         // }, 5000, this.dbs)
+
+        this.dbs.getTeamDashboard().subscribe(
+            res => {
+                this.team = <ITeam>res["team"]
+            },
+            err =>{
+                console.log("Error on getting team dashboard data");
+                console.error(err);
+            }
+        )
     }
     
     logout() {

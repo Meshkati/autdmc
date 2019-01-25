@@ -18,7 +18,7 @@
             </a>
         </div>
     </div>
-
+    
     <div class="ui segment submit-section imp-section" *ngIf="menuState == 3">
         <h3 class="ui header">
             نکات مهم
@@ -76,14 +76,10 @@
                 توجه
             </h4>
             <p>
-                حداکثر حجم فایل برای آپلود ۵۰ مگابایت است.
+                حداکثر حجم فایل برای آپلود ۱ مگابایت است.
             </p>
             <p>
                 آخرین فایلی که آپلود می‌کنید به عنوان جواب نهایی در نظر گرفته خواهد شد.
-            </p>
-            <p>
-                <strong class="red-strong">تمدید شد: </strong>
-                مهلت ارسال پاسخ ها تا ۵ آبان ساعت ۲۳:۵۵ خواهد بود.
             </p>
         </div>
         
@@ -112,51 +108,69 @@
                 </tbody>
             </table>
         </div>
-        <sui-dimmer [isDimmed]="checkDayCounter(1548135000000)" [isClickable]="!!false">
-            <h2 class="ui inverted icon header">
-                <i class="hourglass empty icon"></i>
-                <app-day-counter [startDay]="1548135000000" [messageType]="2"></app-day-counter>
-            </h2>
-        </sui-dimmer>
-        <div class="ui segment" *ngIf="menuState == 2">
-            <table class="ui celled table">
-                <thead>
-                    <tr>
-                        <th>نام</th>
-                        <th>ایمیل</th>
-                        <th>تلفن</th>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                    <tr *ngFor="let member of team.user.members">
-                        <td>
-                            {{ member.name }}
-                        </td>
-                        <td>
-                            {{ member.email }}
-                        </td>
-                        <td>
-                            {{ member.number }}
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th>
-                            نام تیم:
-                            {{ team.user.name }}
-                        </th>
-                        <th *ngIf="team.verification">
-                            وضعیت پرداخت:
-                            موفق
-                        </th>
-                        <th *ngIf="!team.verification">
-                            وضعیت پرداخت:
-                            انجام نشده
-                        </th>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
     </div>
+    
+    <div class="ui" *ngIf="menuState == 2">
+        <table class="ui celled table" [ngClass]="{orange: !team.validated, green: team.validated}">
+            <thead>
+                <tr>
+                    <th>نام</th>
+                    <th>نام خانوادگی</th>
+                    <th>ایمیل</th>
+                    <th>تلفن</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                    <td>
+                        <i class="user icon"></i>
+                        {{ team.team_lead.first_name }}
+                    </td>
+                    <td>
+                        {{ team.team_lead.last_name }}
+                    </td>
+                    <td>
+                        {{ team.team_lead.email }}
+                    </td>
+                    <td>
+                        {{ team.team_lead.cellphone }}
+                    </td>
+                </tr>
+                <tr *ngFor="let member of team.team_members">
+                    <td>
+                        <i class="user outline icon"></i>
+                        {{ member.first_name }}
+                    </td>
+                    <td>
+                        {{ member.last_name }}
+                    </td>
+                    <td>
+                        {{ member.email }}
+                    </td>
+                    <td>
+                        {{ member.cellphone }}
+                    </td>
+                </tr>
+            </tbody>
+            
+            <tfoot>
+                <tr>
+                    <th>
+                        نام تیم:
+                        {{ team.team_name }}
+                    </th>
+                    <th>
+                        تعداد اعضا:
+                        {{ team.size }}
+                    </th>
+                    <th>
+                        <button *ngIf="!team.validated" (click)="validateTeam(team._id)" class="positive ui button">
+                            تایید تیم
+                        </button>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
