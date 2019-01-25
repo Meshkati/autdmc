@@ -139,4 +139,9 @@ export class DatabaseService {
         return this.http.post(this.url + '/submission/' + problemID, formData, options)
         .map(this.extractData)
     }
+
+    getScoreBoard() {
+        return this.http.get(this.url + '/scoreboard')
+        .map(this.extractData)
+    }
 }
