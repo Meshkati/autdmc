@@ -87,24 +87,18 @@
         </div>
         <!-- Upload section -->
         <div class="ui">
-            <div style="display: none" class="ui selection dropdown">
-                <input type="hidden" name="selectedProblem">
-                <i class="dropdown icon"></i>
-                <div class="default text">
-                    {{ selectedProblem.title }}
-                </div>
-                <div class="menu">
-                    <div class="item" data-value="1">
-                        {{ selectedProblem.title }}
-                    </div>
-                </div>
-            </div>
             <!-- Upload button -->
             <span class="upload-fields">
                 <input type="file" style="display: none;" #uploadInput (change)="onFileInputChanged($event)">
-                <button class="ui button" (click)="uploadInput.click()">
-                    {{ selectedFile?selectedFile.name:'انتخاب فایل' }}
-                </button>
+                <div class="ui left labeled button" tabindex="0">
+                    <a class="ui basic right label">
+                        سوال: 
+                        {{ selectedProblem.title }}
+                    </a>
+                    <button class="ui button" (click)="uploadInput.click()">
+                        {{ selectedFile?selectedFile.name:'انتخاب فایل' }}
+                    </button>
+                </div>
             </span>
             <!-- Do upload -->
             <button class="ui primary button" [ngClass]="{'disabled': !selectedFile}" (click)="onUploadFile()">
