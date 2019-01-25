@@ -107,4 +107,17 @@ export class DatabaseService {
         return this.http.post(this.url + '/submittion/getHistory', requestData, options)
         .map(this.extractData)
     }
+
+    getTeamDashboard() {
+        let headers = new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': this.tokenType + this.auth.getToken()
+        });
+        let options = new RequestOptions ({headers: headers});
+        
+        console.log(options);
+        
+        return this.http.get(this.url + '/dashboard', options)
+        .map(this.extractData)
+    }
 }
