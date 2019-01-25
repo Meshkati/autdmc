@@ -161,10 +161,6 @@
                         {{ team.team_name }}
                     </th>
                     <th>
-                        تعداد اعضا:
-                        {{ team.size }}
-                    </th>
-                    <th>
                         <button *ngIf="!team.validated" (click)="validateTeam(team._id)" class="positive ui button">
                             تایید تیم
                         </button>
