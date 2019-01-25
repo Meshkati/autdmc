@@ -115,8 +115,6 @@ export class DatabaseService {
         });
         let options = new RequestOptions ({headers: headers});
         
-        console.log(options);
-        
         return this.http.get(this.url + '/dashboard', options)
         .map(this.extractData)
     }
@@ -129,4 +127,16 @@ export class DatabaseService {
         .map(this.extractData)
     }
 
+    submitFile(problemID, file) {
+        let headers = new Headers({
+            'Authorization': this.tokenType + this.auth.getToken()
+        });
+        let options = new RequestOptions ({headers: headers});
+        
+        let formData = new FormData()
+        formData.append('submit-file', file, file.name)
+
+        return this.http.post(this.url + '/submission/' + problemID, formData, options)
+        .map(this.extractData)
+    }
 }

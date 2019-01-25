@@ -9,6 +9,9 @@
         <a class="item" (click)="menuState = 1" [ngClass]="{'active': menuState == 1}">
             ارسال پاسخ
         </a>
+        <a class="item" (click)="menuState = 5" [ngClass]="{'active': menuState == 5}">
+            جدول امتیازات
+        </a>
         <a class="item" (click)="menuState = 2" [ngClass]="{'active': menuState == 2}">
             اطلاعات تیم
         </a>
@@ -82,7 +85,32 @@
                 آخرین فایلی که آپلود می‌کنید به عنوان جواب نهایی در نظر گرفته خواهد شد.
             </p>
         </div>
-        
+        <!-- Upload section -->
+        <div class="ui">
+            <div style="display: none" class="ui selection dropdown">
+                <input type="hidden" name="selectedProblem">
+                <i class="dropdown icon"></i>
+                <div class="default text">
+                    {{ selectedProblem.title }}
+                </div>
+                <div class="menu">
+                    <div class="item" data-value="1">
+                        {{ selectedProblem.title }}
+                    </div>
+                </div>
+            </div>
+            <!-- Upload button -->
+            <span class="upload-fields">
+                <input type="file" style="display: none;" #uploadInput (change)="onFileInputChanged($event)">
+                <button class="ui button" (click)="uploadInput.click()">
+                    {{ selectedFile?selectedFile.name:'انتخاب فایل' }}
+                </button>
+            </span>
+            <!-- Do upload -->
+            <button class="ui primary button" [ngClass]="{'disabled': !selectedFile}" (click)="onUploadFile()">
+                ارسال پاسخ
+            </button>
+        </div>
         <div class="ui divider"></div>
         <div *ngIf="submittionHistory" class="submittion-history">
             <h4 class="ui header">
@@ -108,6 +136,29 @@
                 </tbody>
             </table>
         </div>
+    </div>
+    
+    <div class="ui segment submit-section imp-section" *ngIf="menuState == 5">
+        <h3 class="ui header">
+            جدول امتیازات
+        </h3>
+        ۱. توجه داشته باشید که هر تیم می‌تواند حداکثر روزی ۵ آپلود جواب داشته باشد.
+        <br>
+        ۲. آخرین مهلت جهت ارسال فایل جواب تا
+        <strong>پایان روز ۱۴ بهمن</strong>
+        خواهد بود.
+        <br>
+        ۳. آخرین مهلت جهت ارسال گزارش و کد تا 
+        <strong>پایان روز ۱۵ بهمن</strong>
+        خواهد بود. در ضمن بدون داشتن گزارش و کد امکان حضور در مرحله دوم
+        <strong>وجود ندارد</strong>.
+        <br>
+        ۴. پس از بررسی نتایج و گزارشات توسط تیم داوری رنک لیست نهایی تیم‌ها اعلام خواهد شد و بر اساس نظر این گروه حداقل ۱۵ تیم به مرحله دوم مسابقه راه پیدا خواهند کرد.
+        <br>
+        ۵. در صورت داشتن هرگونه ابهام و یا سوال از مسئله و یا دیتای مسابقه
+        <strong>فقط</strong>
+        با ایمیل autdmc@gmail.com در ارتباط باشید.
+        <br>
     </div>
     
     <div class="ui" *ngIf="menuState == 2">

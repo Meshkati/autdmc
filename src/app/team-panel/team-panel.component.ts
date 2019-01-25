@@ -11,7 +11,8 @@ enum MenuState {
     submit,
     teamInfo,
     importantNotes,
-    logout
+    logout,
+    scoreBoard
 }
 
 export interface SubmittionHistory {
@@ -29,11 +30,14 @@ export interface SubmittionHistory {
 export class TeamPanelComponent implements OnInit {
     private menuState = MenuState.importantNotes
     private team: ITeam;
+    private problems: Array<IProblem>
+    private selectedProblem: IProblem
     private fileName;
     private uploadURL = '/api/submittion/upload';
     private isUploading = false
     private errorMessage: string
     private submittionHistory
+    private selectedFile: File;
     public uploader:FileUploader = new FileUploader({url: this.uploadURL, authToken: this.auth.token});
     
     constructor(
@@ -61,6 +65,17 @@ export class TeamPanelComponent implements OnInit {
             },
             err =>{
                 console.log("Error on getting team dashboard data");
+                console.error(err);
+            }
+        )
+
+        this.dbs.getProblems().subscribe(
+            res => {
+                this.problems = <Array<IProblem>>res
+                this.selectedProblem = this.problems[0]
+            },
+            err => {
+                console.log("Error on getting problems");
                 console.error(err);
             }
         )
@@ -124,4 +139,33 @@ export class TeamPanelComponent implements OnInit {
         }
         return false
     }
+
+    onFileInputChanged(event) {
+        console.log("Changing");
+        this.selectedFile = event.target.files[0]
+        console.log(this.selectedFile);
+    }
+
+    onUploadFile() {
+        this.dbs.submitFile(this.selectedProblem._id, this.selectedFile).subscribe(
+            res => {
+                console.log(res);
+            }, 
+            err =>{
+                console.log("Error on submitting answer");
+                console.error(err);
+            }
+        )
+    }
+
+    toggleDownloadButton() {
+        
+    }
+}
+
+export class IProblem {
+    _id: string
+    title: string
+    body: string
+    submitted: boolean
 }
