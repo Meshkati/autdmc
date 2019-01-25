@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms/src/directives';
 import { Component, OnInit } from '@angular/core';
 import { IMember } from 'app/competition/competition.component';
 
-export interface Team {
+export interface ITeam {
     _id: string
     team_name: string
     size: number
@@ -19,7 +19,7 @@ export interface Team {
     styleUrls: ['./admin-panel.component.css']
 })
 export class AdminPanelComponent implements OnInit {
-    private teams: Array<Team>
+    private teams: Array<ITeam>
     private submittionHistories: Array<SubmittionHistory>
     private loggedIn = false;
     private token = "";
@@ -66,7 +66,7 @@ export class AdminPanelComponent implements OnInit {
     }
 
     parseTeams(teamsData) {
-        this.teams = <Array<Team>>teamsData;
+        this.teams = <Array<ITeam>>teamsData;
         for (let team of this.teams) {
             team.size = team.team_members.length + 1;
         }
@@ -79,7 +79,7 @@ export class AdminPanelComponent implements OnInit {
                 for(let team of this.teams) {
                     if (team._id == teamId) {
                         let index = this.teams.indexOf(team);
-                        this.teams[index] = <Team>res;
+                        this.teams[index] = <ITeam>res;
                     }
                 }
                 
