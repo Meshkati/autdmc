@@ -9,6 +9,7 @@ enum MenuState {
     questions = 0,
     submit,
     teamInfo,
+    importantNotes,
     logout
 }
 
@@ -25,7 +26,7 @@ export interface SubmittionHistory {
 })
 
 export class TeamPanelComponent implements OnInit {
-    private menuState = MenuState.questions
+    private menuState = MenuState.importantNotes
     private team: any;
     private fileName;
     private uploadURL = '/api/submittion/upload';
@@ -45,13 +46,13 @@ export class TeamPanelComponent implements OnInit {
     ngOnInit() {
         this.team = JSON.parse(localStorage.getItem('currentUser'))
         
-        this.getHistory()
+        // this.getHistory()
 
-        setInterval((dbs) => {
-            dbs.getSubmittionHistory().subscribe(res => {
-                this.submittionHistory = <Array<SubmittionHistory>>res;
-            })
-        }, 5000, this.dbs)
+        // setInterval((dbs) => {
+        //     dbs.getSubmittionHistory().subscribe(res => {
+        //         this.submittionHistory = <Array<SubmittionHistory>>res;
+        //     })
+        // }, 5000, this.dbs)
     }
     
     logout() {
@@ -103,5 +104,13 @@ export class TeamPanelComponent implements OnInit {
         this.dbs.getSubmittionHistory().subscribe(res => {
             this.submittionHistory = <Array<SubmittionHistory>>res;
         })
+    }
+
+    checkDayCounter(day) {
+        const today = new Date().getTime();
+        if ( day - today > 0) {
+            return true
+        }
+        return false
     }
 }

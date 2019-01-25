@@ -52,9 +52,9 @@ export class CompetitionComponent implements OnInit {
         this.dbs.competitionRegister(members, teamName, members.pop()).subscribe(
             res => {
                 console.log(res);
-                let status = res['status']
-                if (status == 200) {
-                    if ((window.location.href = res['url']) == undefined) {
+                let status = res['result']['ok']
+                if (status === 1) {
+                    if ((window.location.href = "https://educenter.aut.ac.ir/dmc2019") == undefined) {
                         window.open("https://educenter.aut.ac.ir/dmc2019");
                     }
                 } else if (status == 1001) {
@@ -67,6 +67,7 @@ export class CompetitionComponent implements OnInit {
             },
             err => {
                 console.log('competition register error');
+                console.error(err);
                 
             }
         )

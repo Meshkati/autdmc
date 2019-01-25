@@ -90,7 +90,7 @@
                                 اعلام نتایج مرحله‌ی دوم
                             </div>
                             <div class="description">
-                                ۱۲ اسفند ۱۳۹۷
+                                ۱۱ اسفند ۱۳۹۷
                             </div>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                                 ارائه‌ی حضوری و اهدا جوایز
                             </div>
                             <div class="description">
-                                ۱۵ اسفند ۱۳۹۷
+                                ۱۳ اسفند ۱۳۹۷
                             </div>
                         </div>
                     </div>
@@ -199,12 +199,6 @@
 
             </div>
             <form class="ui form" #registerForm="ngForm" (ngSubmit)="sendRegisterRequest(registerForm)">
-                <sui-dimmer [isDimmed]="!!1">
-                    <h2 class="ui inverted icon header">
-                        <i class="hourglass empty icon"></i>
-                        ۱ روز مانده به آغاز ثبت نام
-                    </h2>
-                </sui-dimmer>
                 <h4 class="ui dividing header">
                     ثبت نام
                     {{ selected | json }}
@@ -275,7 +269,13 @@
                             </div>
                         </div>
                         <div class="field">
-                            <input type="tel" name="{{'phone' + member}}" placeholder="تلفن" ngModel required>
+                            <input type="tel" name="{{'phone' + member}}" placeholder="تلفن" [(ngModel)]="member.phone" required #phone="ngModel">
+                            <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="alert alert-danger" class="error-message">
+                                
+                                <div *ngIf="phone.errors.required">
+                                    این فیلد الزامی است
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

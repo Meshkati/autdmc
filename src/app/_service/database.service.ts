@@ -8,7 +8,7 @@ import { HttpModule, JsonpModule, Headers, RequestOptions, Http, Response, } fro
 
 @Injectable()
 export class DatabaseService {
-    private url = "http://localhost:3000/api/v2";
+    private url = "http://api.autdmc.ir/api/v2";
     tokenType = "Bearer "
 
     constructor(

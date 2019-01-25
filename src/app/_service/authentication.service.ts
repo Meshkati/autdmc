@@ -10,7 +10,7 @@ export enum AuthState{
 
 @Injectable()
 export class AuthenticationService {
-    private url = "/api";
+    private url = "http://api.autdmc.ir/api/v2";
     token: string;
     private authEvents: Subject<AuthState>
     
@@ -43,11 +43,11 @@ export class AuthenticationService {
             if (token) {
                 this.token = token
                 
-                localStorage.setItem('currentUser', JSON.stringify(response.json()))
+                localStorage.setItem('currentUser', JSON.stringify(response.json().token))
                 this.authEvents.next(AuthState.Login)
-                return response.json().status
+                return response.status
             } else {
-                return response.json().status
+                return response.status
             }
         });
     }

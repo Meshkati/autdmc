@@ -24,3 +24,11 @@
 .red-strong {
     color: #f44336;
 }
+
+.imp-section {
+    line-height: 2.5em;
+}
+
+.imp-section strong {
+    color: #f44336;
+}

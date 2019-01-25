@@ -1,5 +1,8 @@
 <div class="ui container">
     <div class="ui secondary pointing menu">
+        <a class="item" (click)="menuState = 3" [ngClass]="{'active': menuState == 3}">
+            نکات مهم
+        </a>
         <a class="item" (click)="menuState = 0" [ngClass]="{'active': menuState == 0}">
             سوالات
         </a>
@@ -15,37 +18,56 @@
             </a>
         </div>
     </div>
+
+    <div class="ui segment submit-section imp-section" *ngIf="menuState == 3">
+        <h3 class="ui header">
+            نکات مهم
+        </h3>
+        ۱. توجه داشته باشید که هر تیم می‌تواند حداکثر روزی ۵ آپلود جواب داشته باشد.
+        <br>
+        ۲. آخرین مهلت جهت ارسال فایل جواب تا
+        <strong>پایان روز ۱۴ بهمن</strong>
+        خواهد بود.
+        <br>
+        ۳. آخرین مهلت جهت ارسال گزارش و کد تا 
+        <strong>پایان روز ۱۵ بهمن</strong>
+        خواهد بود. در ضمن بدون داشتن گزارش و کد امکان حضور در مرحله دوم
+        <strong>وجود ندارد</strong>.
+        <br>
+        ۴. پس از بررسی نتایج و گزارشات توسط تیم داوری رنک لیست نهایی تیم‌ها اعلام خواهد شد و بر اساس نظر این گروه حداقل ۱۵ تیم به مرحله دوم مسابقه راه پیدا خواهند کرد.
+        <br>
+        ۵. در صورت داشتن هرگونه ابهام و یا سوال از مسئله و یا دیتای مسابقه
+        <strong>فقط</strong>
+        با ایمیل autdmc@gmail.com در ارتباط باشید.
+        <br>
+    </div>
     
     <div class="ui segment" *ngIf="menuState == 0">
+        <sui-dimmer [isDimmed]="checkDayCounter(1548048600000)" [isClickable]="!!false">
+            <h2 class="ui inverted icon header">
+                <i class="hourglass empty icon"></i>
+                لطفا تا شروع مسابقه صبر کنید.
+            </h2>
+        </sui-dimmer>
         <h3 class="ui header">
             توضیحات
         </h3>
         <p>
-            با شروع مسابقه، تیم ها می‌توانند در صفحه مربوط به تیم خود فایل task.zip را دانلود کنند که در آن توضیح مساله، داده ها و توضیحات مربوط به داده ها موجود است. از شرکت کنندگان انتظار می‌رود با استفاده از تکنیک های داده کاوی و یادگیری ماشین، مدل مناسبی برای پیش بینی متغیر هدف طراحی کنند.
-            تیم ها تا قبل از پایان مسابقه فرصت دارند یک فایل csv با فرمتی که در توضیحات مساله شرح داده شده است، در صفحه تیم خود بارگذاری کنند. این فایل به عنوان پیش بینی های تیم شرکت کننده روی داده test در نظر گرفته خواهد شد و با مقادیر واقعی مقایسه و امتیاز تیم محاسبه خواهد شد. امکان بارگذاری مجدد وجود دارد، ولی فقط آخرین بارگذاری به عنوان پاسخ نهایی تیم در نظر گرفته خواهد شد.
+            
         </p>
         
-        <div class="ui primary button" (click)="downloadFile('AUT DMC 2017 - Task.pdf')">
+        <a href="http://autdmc.ir/problem/task.zip" class="ui primary button">
             <i class="cloud download icon"></i>
             فایل تسک
-        </div>
-        <div class="ui primary button" (click)="downloadFile('AUT DMC 2017 - Features.pdf')">
+        </a>
+        <a href="http://autdmc.ir/problem/test.csv" class="ui primary button">
             <i class="cloud download icon"></i>
-            فایل ویژگی ها
-        </div>
-        <div class="ui primary button" (click)="downloadFile('data_v2.zip')">
+            فایل داده‌های تست
+        </a>
+        <a href="http://autdmc.ir/problem/data.zip" class="ui primary button">
             <i class="cloud download icon"></i>
-            فایل دیتاها
-        </div>
-        <div class="ui info message">
-            <h3 class="ui header">
-                <i class="warning icon"></i>
-                توجه
-            </h3>
-            <p>
-                فایل دیتاها در تاریخ ۱۸ مهر بروز رسانی شد. لطفا از دیتاهای جدید استفاده نمایید.
-            </p>
-        </div>
+            فایل داده‌های اصلی
+        </a>
     </div>
     
     <div class="ui segment submit-section" *ngIf="menuState == 1">
@@ -90,10 +112,10 @@
                 </tbody>
             </table>
         </div>
-        <sui-dimmer [isDimmed]="!!1">
+        <sui-dimmer [isDimmed]="checkDayCounter(1548135000000)" [isClickable]="!!false">
             <h2 class="ui inverted icon header">
                 <i class="hourglass empty icon"></i>
-                پایان یافت
+                <app-day-counter [startDay]="1548135000000" [messageType]="2"></app-day-counter>
             </h2>
         </sui-dimmer>
         <div class="ui segment" *ngIf="menuState == 2">

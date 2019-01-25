@@ -22,7 +22,9 @@ export class LoginComponent implements OnInit {
         console.log(this.model);
         this.auth.login(this.model.username, this.model.password)
         .subscribe(
-            res => {                
+            res => {
+                console.log(res);
+                                
                 if (res == 200) {
                     this.router.navigate(['/panel'])
                 } else {

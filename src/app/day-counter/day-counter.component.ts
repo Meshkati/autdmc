@@ -7,6 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class DayCounterComponent implements OnInit {
     @Input() startDay;
+    @Input() messageType;
     
     constructor() { }
     

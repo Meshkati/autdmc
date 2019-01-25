@@ -1,9 +1,19 @@
-<div>
-  <h3 *ngIf="checkDayCounter()">
-      {{ startDay | dayCounter | persianNumber }}
-      به شروع مسابقه
-  </h3>
-  <h3 *ngIf="!checkDayCounter()">
-      مهلت ثبت نام پایان یافت
-  </h3>
+<div *ngIf="messageType === 1">
+    <h3 *ngIf="checkDayCounter()">
+        {{ startDay | dayCounter | persianNumber }}
+        به شروع مسابقه
+    </h3>
+    <h3 *ngIf="!checkDayCounter()">
+        مسابقه شروع شده است. مهلت ثبت نام تا ۵ بهمن تمدید شد.
+    </h3>
+</div>
+
+<div *ngIf="messageType === 2">
+    <h3 *ngIf="checkDayCounter()">
+        {{ startDay | dayCounter | persianNumber }}
+        تا شروع ارسال پاسخ
+    </h3>
+    <h3 *ngIf="!checkDayCounter()">
+        
+    </h3>
 </div>
