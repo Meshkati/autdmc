@@ -8,7 +8,7 @@ import { HttpModule, JsonpModule, Headers, RequestOptions, Http, Response, } fro
 
 @Injectable()
 export class DatabaseService {
-    private url = "http://api.autdmc.ir/api/v2";
+    private url = "http://api.autdmcst.ir/api/v2";
     tokenType = "Bearer "
 
     constructor(
@@ -120,4 +120,13 @@ export class DatabaseService {
         return this.http.get(this.url + '/dashboard', options)
         .map(this.extractData)
     }
+
+    getProblems() {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        let options = new RequestOptions ({headers: headers});
+
+        return this.http.get(this.url + '/problems', options)
+        .map(this.extractData)
+    }
+
 }
