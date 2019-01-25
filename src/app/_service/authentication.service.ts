@@ -22,7 +22,7 @@ export class AuthenticationService {
             currentUser = JSON.parse(localStorage.getItem('currentUser'))
         }
         if (!(currentUser == null || currentUser == undefined)) {
-            this.token = currentUser['token']
+            this.token = currentUser
         }
     }
     
@@ -66,9 +66,9 @@ export class AuthenticationService {
         return body;
     }
     
-    public getUser() {
+    public getToken() {
         if (this.token) {
-            return JSON.parse(localStorage.getItem('currentUser'))
+            return this.token
         } else {
             return null
         }
