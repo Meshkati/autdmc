@@ -8,7 +8,7 @@ import { HttpModule, JsonpModule, Headers, RequestOptions, Http, Response, } fro
 
 @Injectable()
 export class DatabaseService {
-    private url = "http://api.autdmcst.ir/api/v2";
+    private url = "http://api.autdmc.ir/api/v2";
     tokenType = "Bearer "
 
     constructor(
@@ -98,13 +98,10 @@ export class DatabaseService {
     }
 
     getSubmittionHistory() {
-        let headers = new Headers({'Content-Type': 'application/json'});
+        let headers = new Headers({'Authorization': this.tokenType + this.auth.getToken()});
         let options = new RequestOptions ({headers: headers});
-        const requestData = {
-            token: this.auth.token
-        }
 
-        return this.http.post(this.url + '/submittion/getHistory', requestData, options)
+        return this.http.get(this.url + '/submission', options)
         .map(this.extractData)
     }
 
