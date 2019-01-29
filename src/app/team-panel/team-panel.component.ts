@@ -27,11 +27,19 @@ export interface IScoreBoardEntry {
     score: number
 }
 
-export interface SubmittionHistory {
-    fileName: string
-    uploadTime: string
-    user: string
+export interface ISubmittionHistory {
+    _id: string
+    problem_id: string
+    file_name: string
+    is_judged: boolean
+    judge_score: number
+    judge_error: boolean
+    submitted_at: Date
+    submission_day: number
+    submission_month: number
+    submission_year: number
 }
+
 
 @Component({
     selector: 'app-team-panel',
@@ -51,6 +59,7 @@ export class TeamPanelComponent implements OnInit {
     private submittionHistory
     private selectedFile: File;
     private scoreBoard: Array<IScoreBoardEntry>
+    private news: Array<INews>
     public uploader:FileUploader = new FileUploader({url: this.uploadURL, authToken: this.auth.token});
     
     constructor(
@@ -150,7 +159,7 @@ export class TeamPanelComponent implements OnInit {
     
     getHistory() {
         this.dbs.getSubmittionHistory().subscribe(res => {
-            this.submittionHistory = <Array<SubmittionHistory>>res;
+            this.submittionHistory = <Array<ISubmittionHistory>>res;
         })
     }
 

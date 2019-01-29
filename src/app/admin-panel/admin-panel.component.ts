@@ -1,4 +1,4 @@
-import { SubmittionHistory } from '../team-panel/team-panel.component';
+import { ISubmittionHistory } from '../team-panel/team-panel.component';
 import { DatabaseService } from '../_service/database.service';
 import { NgForm } from '@angular/forms/src/directives';
 import { Component, OnInit } from '@angular/core';
@@ -20,7 +20,7 @@ export interface ITeam {
 })
 export class AdminPanelComponent implements OnInit {
     private teams: Array<ITeam>
-    private submittionHistories: Array<SubmittionHistory>
+    private submittionHistories: Array<ISubmittionHistory>
     private loggedIn = false;
     private token = "";
 
