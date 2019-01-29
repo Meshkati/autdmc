@@ -7,7 +7,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PersianDatePipe implements PipeTransform {
     transform(value: any, format): any {
         let date = new Date(value);
-        let jDate = new JDate(new Date(parseInt(value) * 1000));
+        
+        let jDate = new JDate(date);        
         if (!format) {
             format = 'dddd DD MMMM YYYY'
         }
