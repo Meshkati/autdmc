@@ -1,7 +1,7 @@
 <div class="ui container">
     <div class="ui secondary pointing menu">
         <a class="item" (click)="menuState = 3" [ngClass]="{'active': menuState == 3}">
-            نکات مهم
+            اخبار
         </a>
         <a class="item" (click)="menuState = 0" [ngClass]="{'active': menuState == 0}">
             سوالات
@@ -23,6 +23,16 @@
     </div>
     
     <div class="ui segment submit-section imp-section" *ngIf="menuState == 3">
+        <h3 class="ui header">
+            اخبار
+        </h3>
+        <div class="ui green message" *ngFor="let n of news">
+            <h4>
+                {{n.title}}
+            </h4>
+            <p [innerHTML]="n.body">
+            </p>
+        </div>
         <h3 class="ui header">
             نکات مهم
         </h3>
@@ -101,7 +111,7 @@
                 </div>
             </span>
             <!-- Do upload -->
-            <button class="ui primary button" [ngClass]="{'disabled': !selectedFile}" (click)="onUploadFile()">
+            <button class="ui primary button" [ngClass]="{'disabled': !selectedFile, 'loading': isUploading}" (click)="onUploadFile()">
                 ارسال پاسخ
             </button>
         </div>
@@ -110,21 +120,33 @@
             <h4 class="ui header">
                 تاریخچه پاسخ های ارسال شده
             </h4>
-            <table class="ui basic table">
+            <table class="ui celled table">
                 <thead>
                     <tr>
-                        <th>نام فایل</th>
+                        <th>
+                            #
+                        </th>
+                        <th>وضعیت</th>
+                        <th>امتیاز</th>
                         <th>تاریخ ثبت</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let submittion of submittionHistory">
+                    <tr *ngFor="let submittion of submittionHistory; index as index" [ngClass]="{'positive': index == 0}">
                         <td>
-                            {{ submittion.fileName }}
+                            {{ index+1 | persianNumber }}
                         </td>
                         <td>
-                            {{ submittion.uploadTime / 1000 | persianDate }}
-                            {{ submittion.uploadTime / 1000 | hourMin }}
+                            {{ submittion.is_judged?'داوری شده':'داوری نشده' }}
+                        </td>
+                        <td>
+                            {{ submittion.is_judged&&submittion.judge_error?'خطای داوری':'' }}
+                            {{ submittion.is_judged&&!submittion.judge_error?submittion.judge_score:''|number:'1.1-3'  }}
+                        </td>
+                        <td>
+                            {{ submittion.submitted_at | persianDate | persianNumber }}
+                            --
+                            {{ submittion.submitted_at | date:'HH:mm' | persianNumber }}
                         </td>
                     </tr>
                 </tbody>
@@ -209,11 +231,6 @@
                     <th>
                         نام تیم:
                         {{ team.team_name }}
-                    </th>
-                    <th>
-                        <button *ngIf="!team.validated" (click)="validateTeam(team._id)" class="positive ui button">
-                            تایید تیم
-                        </button>
                     </th>
                 </tr>
             </tfoot>

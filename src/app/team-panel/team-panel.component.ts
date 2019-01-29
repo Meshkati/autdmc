@@ -71,11 +71,12 @@ export class TeamPanelComponent implements OnInit {
     }
     
     ngOnInit() {
-        this.team = JSON.parse(localStorage.getItem('currentUser'))
+        this.getHistory();
 
         this.dbs.getTeamDashboard().subscribe(
             res => {
                 this.team = <ITeam>res["team"]
+                this.news = <Array<INews>>res["news"]
             },
             err =>{
                 console.log("Error on getting team dashboard data");
@@ -160,6 +161,11 @@ export class TeamPanelComponent implements OnInit {
     getHistory() {
         this.dbs.getSubmittionHistory().subscribe(res => {
             this.submittionHistory = <Array<ISubmittionHistory>>res;
+            this.submittionHistory.sort((a, b) => {
+                if (a > b)
+                    return 1
+                return -1
+            })
         })
     }
 
@@ -178,13 +184,17 @@ export class TeamPanelComponent implements OnInit {
     }
 
     onUploadFile() {
+        this.isUploading = true;
         this.dbs.submitFile(this.selectedProblem._id, this.selectedFile).subscribe(
             res => {
                 console.log(res);
+                this.getHistory()
+                this.isUploading = false;
             }, 
             err =>{
                 console.log("Error on submitting answer");
                 console.error(err);
+                this.isUploading = false;
             }
         )
     }
