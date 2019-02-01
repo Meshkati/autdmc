@@ -22,8 +22,9 @@
               "src/favicon.png"
             ],
             "styles": [
+              "semantic/dist/semantic.rtl.min.css",
               "src/styles/main.css",
-              "semantic/dist/semantic.rtl.min.css"
+              "src/styles.css"
             ],
             "scripts": [
               "semantic/dist/semantic.js",
