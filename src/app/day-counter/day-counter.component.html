@@ -17,3 +17,13 @@
         
     </h3>
 </div>
+
+<div *ngIf="messageType === 3">
+    <h3 *ngIf="checkDayCounter()">
+        {{ startDay | dayCounter | persianNumber }}
+        به شروع مسابقه
+    </h3>
+    <h3 *ngIf="!checkDayCounter()">
+        مهلت ارسال تا ۱۷ بهمن‌ماه تمدید شد.
+    </h3>
+</div>
