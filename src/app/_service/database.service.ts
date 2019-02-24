@@ -137,8 +137,30 @@ export class DatabaseService {
         .map(this.extractData)
     }
 
+    submitReport(file) {
+        let headers = new Headers({
+            'Authorization': this.tokenType + this.auth.getToken()
+        });
+        let options = new RequestOptions ({headers: headers});
+        
+        let formData = new FormData()
+        formData.append('report-file', file, file.name)
+
+        return this.http.post(this.url + '/reports', formData, options)
+        .map(this.extractData)
+    }
+
     getScoreBoard() {
         return this.http.get(this.url + '/scoreboard')
+        .map(this.extractData)
+    }
+    getFinalScoreBoard() {
+        return this.http.get(this.url + '/scoreboard/final')
+        .map(this.extractData)
+    }
+
+    getFinalResult() {
+        return this.http.get(this.url + '/final-result')
         .map(this.extractData)
     }
 }

@@ -19,14 +19,18 @@ export class LoginComponent implements OnInit {
     }
     
     login() {
-        console.log(this.model);
+        // console.log(this.model);
         this.auth.login(this.model.username, this.model.password)
         .subscribe(
             res => {
                 console.log(res);
-                                
+                
                 if (res == 200) {
                     this.router.navigate(['/panel'])
+                } else if (res == 401) {
+                    this.errorMessage = 'نام کاربری یا رمز عبور اشتباه است'
+                } else if (res == 1003) {
+                    this.errorMessage = 'شما برای شرکت در مرحله‌ی دوم مسابقه مجاز نیستید.'
                 } else {
                     if (res == 2001) {
                         this.errorMessage = 'تمام فیلد ها را پر کنید'
@@ -35,6 +39,19 @@ export class LoginComponent implements OnInit {
                     }                    
                 }
                 
+            },
+            res => {
+                if (res == 401) {
+                    this.errorMessage = 'نام کاربری یا رمز عبور اشتباه است'
+                } else if (res == 1003) {
+                    this.errorMessage = 'شما برای شرکت در مرحله‌ی دوم مسابقه مجاز نیستید.'
+                } else {
+                    if (res == 2001) {
+                        this.errorMessage = 'تمام فیلد ها را پر کنید'
+                    } else if (res == 2002 || res == 2003) {
+                        this.errorMessage = 'نام کاربری یا رمز عبور اشتباه است'
+                    }                    
+                }
             }
         )
     }

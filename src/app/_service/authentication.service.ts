@@ -33,10 +33,13 @@ export class AuthenticationService {
             username: username,
             password: password
         }
-        
+
+        // Forgive me for this code
         return this.http.post(this.url + '/login', requestData, options)
-        .map((response: Response) => {
+        .map((response: Response) => {    
             console.log(response);
+            console.log(response.json());
+            
             
             let token = response.json() && response.json().token
             
@@ -47,9 +50,24 @@ export class AuthenticationService {
                 this.authEvents.next(AuthState.Login)
                 return response.status
             } else {
+                if (response.status == 403) {
+                    if (response.json()['errorCode'] == 1003) {
+                        return 1003
+                    }
+                }
+
                 return response.status
             }
-        });
+        })
+        .catch(response => {
+            if (response.status == 403) {
+                if (response.json()['errorCode'] == 1003) {
+                    return Observable.throw(1003)
+                }
+            }
+            
+            return Observable.throw(response.status)
+        })
     }
     
     logout() {

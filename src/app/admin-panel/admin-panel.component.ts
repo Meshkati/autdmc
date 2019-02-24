@@ -11,6 +11,11 @@ export interface ITeam {
     team_lead: IMember
     team_members: Array<IMember>
     validated: boolean
+    report: {
+        file_name: string
+        file_storage_name: string
+        submitted_at: Date
+    }
 }
 
 @Component({

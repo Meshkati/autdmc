@@ -34,6 +34,7 @@ export interface ISubmittionHistory {
     is_judged: boolean
     judge_score: number
     judge_error: boolean
+    judge_status: boolean
     submitted_at: Date
     submission_day: number
     submission_month: number
@@ -55,9 +56,11 @@ export class TeamPanelComponent implements OnInit {
     private fileName;
     private uploadURL = '/api/submittion/upload';
     private isUploading = false
+    private isReportUploading = false
     private errorMessage: string
     private submittionHistory
     private selectedFile: File;
+    private selectedReportFile: File;
     private scoreBoard: Array<IScoreBoardEntry>
     private news: Array<INews>
     public uploader:FileUploader = new FileUploader({url: this.uploadURL, authToken: this.auth.token});
@@ -73,16 +76,7 @@ export class TeamPanelComponent implements OnInit {
     ngOnInit() {
         this.getHistory();
 
-        this.dbs.getTeamDashboard().subscribe(
-            res => {
-                this.team = <ITeam>res["team"]
-                this.news = <Array<INews>>res["news"]
-            },
-            err =>{
-                console.log("Error on getting team dashboard data");
-                console.error(err);
-            }
-        )
+        this.getDashboard();
 
         this.dbs.getProblems().subscribe(
             res => {
@@ -183,6 +177,12 @@ export class TeamPanelComponent implements OnInit {
         console.log(this.selectedFile);
     }
 
+    onReportFileInputChanged(event) {
+        console.log("Changing Report");
+        this.selectedReportFile = event.target.files[0]
+        console.log(this.selectedReportFile);
+    }
+
     onUploadFile() {
         this.isUploading = true;
         this.dbs.submitFile(this.selectedProblem._id, this.selectedFile).subscribe(
@@ -195,6 +195,37 @@ export class TeamPanelComponent implements OnInit {
                 console.log("Error on submitting answer");
                 console.error(err);
                 this.isUploading = false;
+            }
+        )
+    }
+
+    onUploadReport() {
+        this.isReportUploading = true;
+        this.dbs.submitReport(this.selectedReportFile).subscribe(
+            res => {
+                console.log(res);
+                this.getDashboard()
+                this.isReportUploading = false;
+            }, 
+            err =>{
+                console.log("Error on submitting answer");
+                console.error(err);
+                this.isReportUploading = false;
+            }
+        )
+    }
+
+    getDashboard() {
+        this.dbs.getTeamDashboard().subscribe(
+            res => {
+                console.log(res);
+                
+                this.team = <ITeam>res["team"]
+                this.news = <Array<INews>>res["news"]
+            },
+            err =>{
+                console.log("Error on getting team dashboard data");
+                console.error(err);
             }
         )
     }

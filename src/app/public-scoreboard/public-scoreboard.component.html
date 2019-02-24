@@ -1,0 +1,73 @@
+<div class="ui container" style="padding-top: 2em;">
+  
+  <h3 class="ui header">
+    جدول امتیازات
+  </h3>
+  <!-- First result table -->
+  <!-- <table class="ui celled table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>تیم</th>
+        <th>خطای نهایی</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of scoreBoard; index as index">
+        <td>
+          {{ index + 1 | persianNumber }}
+        </td>
+        <td>
+          {{ entry.team_name }}
+        </td>
+        <td>
+          {{ entry.final_score | number:'1.1-3' | persianNumber}}
+        </td>
+      </tr>
+    </tbody>
+  </table> -->
+  
+  <!-- Final Result table -->
+  <table class="ui celled table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>تیم</th>
+        <th>امتیاز مدل</th>
+        <th>امتیاز فهم کسب و کار</th>
+        <th>خطای خام پیش‌بینی</th>
+        <th>امتیاز پیش‌بینی</th>
+        <th>امتیاز نهایی</th>
+        <th>وضعیت</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of finalResult">
+        <td>
+          {{ entry.rank==null?'-':entry.rank | persianNumber }}
+        </td>
+        <td>
+          {{ entry.team_name }}
+        </td>
+        <td>
+          {{ entry.model_score | persianNumber}}
+        </td>
+        <td>
+          {{ entry.business_understanding_score | persianNumber}}
+        </td>
+        <td>
+          {{ entry.raw_error | persianNumber}}
+        </td>
+        <td>
+          {{ entry.estimation_score | persianNumber}}
+        </td>
+        <td>
+          {{ entry.final | persianNumber}}
+        </td>
+        <td>
+          {{ entry.status | persianNumber}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
