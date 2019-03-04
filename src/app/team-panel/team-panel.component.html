@@ -29,7 +29,7 @@
             ارسال پاسخ
         </a>
         <a class="item" (click)="menuState = 5" [ngClass]="{'active': menuState == 5}">
-            جدول امتیازات مرحله ۱
+            جدول امتیازات
         </a>
         <a class="item" (click)="menuState = 2" [ngClass]="{'active': menuState == 2}">
             اطلاعات تیم
@@ -58,11 +58,11 @@
         ۱. توجه داشته باشید که هر تیم می‌تواند حداکثر روزی ۸ آپلود جواب داشته باشد.
         <br>
         ۲. آخرین مهلت جهت ارسال فایل جواب تا
-        <strong>پایان روز ۹ اسفند</strong>
+        <strong>پایان روز ۱۲ اسفند</strong>
         خواهد بود.
         <br>
         ۳. آخرین مهلت جهت ارسال گزارش و کد تا 
-        <strong>پایان روز ۹ اسفند</strong>
+        <strong>پایان روز ۱۳ اسفند</strong>
         خواهد بود. در ضمن بدون داشتن گزارش و کد امکان حضور به عنوان ۵ تیم برتر
         <strong>وجود ندارد</strong>.
         <br>
@@ -139,7 +139,7 @@
             </button>
         </div>
         <!-- Report Submission -->
-        <!-- <h3 class="ui dividing header">
+        <h3 class="ui dividing header">
             <i class="clipboard outline icon"></i>
             ارسال گزارش
         </h3>
@@ -170,7 +170,7 @@
             {{ team.report.submitted_at | persianDate | persianNumber }}
             --
             {{ team.report.submitted_at | date:'HH:mm' | persianNumber }}
-        </h4> -->
+        </h4>
         <!-- Submission History -->
         <br>
         <br>

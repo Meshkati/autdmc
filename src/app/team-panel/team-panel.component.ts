@@ -92,13 +92,13 @@ export class TeamPanelComponent implements OnInit {
         this.dbs.getScoreBoard().subscribe(
             res => {
                 this.scoreBoard = <Array<IScoreBoardEntry>>res
-                this.scoreBoard.sort((a, b) => {
-                    if (a.score > b.score)
-                        return 1
-                    if (a.score == b.score)
-                        return 0
-                    return -1
-                })
+                // this.scoreBoard.sort((a, b) => {
+                //     if (a.score > b.score)
+                //         return 1
+                //     if (a.score == b.score)
+                //         return 0
+                //     return -1
+                // })
             },
             err => {
                 console.log("Error on getting ScoreBoard!");
@@ -155,11 +155,11 @@ export class TeamPanelComponent implements OnInit {
     getHistory() {
         this.dbs.getSubmittionHistory().subscribe(res => {
             this.submittionHistory = <Array<ISubmittionHistory>>res;
-            this.submittionHistory.sort((a, b) => {
-                if (a > b)
-                    return 1
-                return -1
-            })
+            // this.submittionHistory.sort((a, b) => {
+            //     if (a > b)
+            //         return 1
+            //     return -1
+            // })
         })
     }
 
